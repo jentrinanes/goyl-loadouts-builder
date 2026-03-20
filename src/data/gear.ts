@@ -655,7 +655,7 @@ export const GEARS: Gear[] = [
     id: 'affliction_caltrops',
     name: 'Affliction Caltrops',
     category: 'Ghost Tool',
-    rarity: 'Epic',
+    rarity: 'Legendary',
     icon: '☠️',
     description: 'Caltrops coated in a potent affliction toxin. Every step deepens the wound.',
     stats: { attack: 35, defense: 5, health: 0, resolve: 10, stealth: 15, ranged: 25 },
