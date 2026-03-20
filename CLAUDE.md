@@ -23,6 +23,7 @@ src/
     buildStore.ts         # localStorage build save/load helpers
   context/
     AuthContext.tsx       # useAuth() hook — throws if used outside provider
+    ThemeContext.tsx      # useTheme() hook + ThemeProvider; persists to localStorage
   components/
     GearCard.tsx          # Gear item card (compact + full variants)
     WeaponIcon.tsx        # SVG icons per MeleeWeaponType; falls back to emoji
@@ -31,9 +32,9 @@ src/
     AuthPage.tsx          # Public login / register page
     DashboardPage.tsx     # Lists saved builds
     BuilderPage.tsx       # 3-step build creator (Class → Gear → Review)
-  App.tsx                 # Routes
+  App.tsx                 # Routes — wrapped in ThemeProvider > AuthProvider
   main.tsx                # Entry point
-  index.css               # @import "tailwindcss" + custom scrollbar/focus styles
+  index.css               # @import "tailwindcss" + @custom-variant dark + scrollbar styles
 ```
 
 ## Key Types (src/types/index.ts)
@@ -124,14 +125,34 @@ Each weapon has 3 independent attribute dropdowns. Attribute pools are **per wea
 | Epic | `#a855f7` | `purple-500` |
 | Legendary | `#f59e0b` | `amber-400` |
 
-## Tailwind Conventions
-- Dark theme base colours map to Tailwind's built-in palette:
-  - Page background: `bg-gray-950` (`#030712`)
-  - Nav / panels: `bg-slate-900` (`#0f172a`)
-  - Cards: `bg-gray-900` (`#111827`)
-  - Borders: `border-gray-800` / `border-gray-700`
+## Light / Dark Theme
+- **Class-based dark mode** via `@custom-variant dark (&:where(.dark, .dark *));` in `index.css`
+- `ThemeProvider` (in `App.tsx`) adds/removes the `dark` class on `<html>` and persists to `localStorage`
+- Defaults to **dark**. An inline `<script>` in `index.html` applies `dark` before React mounts to prevent flash
+- Toggle button (☀️ / 🌙) is in the navbar on Dashboard & Builder, and fixed top-right on AuthPage
+- `useTheme()` returns `{ theme, toggleTheme }`
+
+### Tailwind colour pairs (light → dark)
+| Element | Light | Dark |
+|---|---|---|
+| Page background | `bg-gray-100` | `dark:bg-gray-950` |
+| Nav / panels | `bg-white` | `dark:bg-slate-900` |
+| Sidebar panel | `bg-gray-50` | `dark:bg-[#0a0f1a]` |
+| Cards | `bg-white` | `dark:bg-gray-900` |
+| Input / button bg | `bg-gray-100` | `dark:bg-gray-800` |
+| Panel borders | `border-gray-200` | `dark:border-gray-800` |
+| Input borders | `border-gray-300` | `dark:border-gray-700` |
+| Body text | `text-gray-900` | `dark:text-gray-100` |
+| Secondary text | `text-gray-700` | `dark:text-gray-200` |
+| Muted text | `text-gray-600` | `dark:text-gray-400` |
+| Very muted | `text-gray-400` | `dark:text-gray-600` |
+| StatBar track | `bg-gray-200` | `dark:bg-gray-800` |
+| Selected slot/card | `bg-blue-50` | `dark:bg-[#1e3a5f]` |
+| Selected class card | `bg-green-50` | `dark:bg-[#1e3a2f]` |
+| Disabled button | `bg-gray-200 text-gray-400` | `dark:bg-gray-700 dark:text-gray-500` |
+
 - **Inline styles are only used for runtime-dynamic values** — rarity colour stripes, class card border glow/shadow, stat bar fill width
-- Accent colour for actions: `bg-amber-400` / `text-amber-400`
+- Accent colour for actions: `bg-amber-400` / `text-amber-400` (same in both modes)
 - SVG weapon icons in `WeaponIcon.tsx` — add new `MeleeWeaponType` values there and in `src/types/index.ts`
 
 ## Builder Page Behaviour
