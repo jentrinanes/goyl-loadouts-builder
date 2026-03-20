@@ -21,7 +21,7 @@ export interface ClassDef {
   color: string;
   accentColor: string;
   meleeSlotTypes?: Record<string, MeleeWeaponType>;
-  rangeSlotTypes?: Record<string, RangedWeaponType>;
+  rangeSlotTypes?: Record<string, RangedWeaponType[]>;
 }
 
 export type GearCategory = 'Melee' | 'Range' | 'Charm' | 'Ghost Tool';

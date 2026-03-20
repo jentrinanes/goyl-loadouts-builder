@@ -681,15 +681,15 @@ export const GEARS: Gear[] = [
 export const getGearsByCategory = (
   category: GearCategory,
   meleeWeaponType?: MeleeWeaponType,
-  rangedWeaponType?: RangedWeaponType,
+  rangedWeaponTypes?: RangedWeaponType[],
 ): Gear[] =>
   GEARS.filter((g) => {
     if (g.category !== category) return false;
     if (category === 'Melee' && meleeWeaponType) {
       return g.weaponType === meleeWeaponType;
     }
-    if (category === 'Range' && rangedWeaponType) {
-      return g.rangedWeaponType === rangedWeaponType;
+    if (category === 'Range' && rangedWeaponTypes && rangedWeaponTypes.length > 0) {
+      return g.rangedWeaponType !== undefined && rangedWeaponTypes.includes(g.rangedWeaponType);
     }
     return true;
   });
