@@ -21,11 +21,13 @@ export interface ClassDef {
   color: string;
   accentColor: string;
   meleeSlotTypes?: Record<string, MeleeWeaponType>;
+  rangeSlotTypes?: Record<string, RangedWeaponType>;
 }
 
 export type GearCategory = 'Melee' | 'Range' | 'Charm' | 'Ghost Tool';
 export type GearRarity = 'Common' | 'Rare' | 'Epic' | 'Legendary';
 export type MeleeWeaponType = 'katana' | 'dual_katana' | 'yari' | 'kusarigama' | 'odachi';
+export type RangedWeaponType = 'hankyu' | 'tanegashima' | 'yumi' | 'bomb';
 
 export interface Gear {
   id: string;
@@ -40,6 +42,7 @@ export interface Gear {
   attributes2: string[];
   attributes3: string[];
   weaponType?: MeleeWeaponType;
+  rangedWeaponType?: RangedWeaponType;
 }
 
 export interface GearSlot {

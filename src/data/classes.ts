@@ -23,6 +23,7 @@ export const CLASSES: ClassDef[] = [
     color: '#16a34a',
     accentColor: '#86efac',
     meleeSlotTypes: { melee1: 'katana', melee2: 'yari', melee3: 'kusarigama' },
+    rangeSlotTypes: { range1: 'yumi' },
   },
   {
     id: 'mercenary',

@@ -1,4 +1,4 @@
-import type { Gear, GearCategory, GearRarity, GearSlot, MeleeWeaponType, StatKey } from '../types';
+import type { Gear, GearCategory, GearRarity, GearSlot, MeleeWeaponType, RangedWeaponType, StatKey } from '../types';
 
 export const GEAR_CATEGORIES: Record<string, GearCategory> = {
   MELEE: 'Melee',
@@ -276,6 +276,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Hankyu Damage', 'Rapid Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Point Blank Damage'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Quick Draw', 'Volley', 'Barrage'],
+    rangedWeaponType: 'hankyu' as const,
   },
   {
     id: 'storm_hankyu',
@@ -289,6 +290,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Hankyu Damage', 'Rapid Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Point Blank Damage'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Storm Barrage', 'Electric Arrow', 'Chain Shot'],
+    rangedWeaponType: 'hankyu' as const,
   },
   {
     id: 'hurricane_hankyu',
@@ -302,6 +304,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Hankyu Damage', 'Rapid Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Point Blank Damage'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Gale Force', 'Whirlwind Volley', 'Eye Of The Storm'],
+    rangedWeaponType: 'hankyu' as const,
   },
 
   // --- RANGE: TANEGASHIMA (Rifle) ---
@@ -317,6 +320,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Tanegashima Damage', 'Charged Shot Damage', 'All Ranged Damage', 'Armor Pierce Damage', 'Spirit Gain On Ranged', 'Long Range Damage'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Iron Shot', 'Penetrating Round', 'Deadeye'],
+    rangedWeaponType: 'tanegashima' as const,
   },
   {
     id: 'lightning_tanegashima',
@@ -330,6 +334,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Tanegashima Damage', 'Charged Shot Damage', 'All Ranged Damage', 'Armor Pierce Damage', 'Spirit Gain On Ranged', 'Long Range Damage'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Thunder Shot', 'Blinding Flash', 'Overcharge'],
+    rangedWeaponType: 'tanegashima' as const,
   },
 
   // --- RANGE: YUMI (Long Bow) ---
@@ -345,6 +350,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Yumi Damage', 'Drawn Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Headshot Damage'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Precise Draw', 'Long Shot', 'Arching Arrow'],
+    rangedWeaponType: 'yumi' as const,
   },
   {
     id: 'skipping_stone_bow',
@@ -358,6 +364,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Yumi Damage', 'Drawn Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Headshot Damage'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Stone Skip', 'Bouncing Arrow', 'Ricochet Shot'],
+    rangedWeaponType: 'yumi' as const,
   },
   {
     id: 'true_aim_yumi',
@@ -371,6 +378,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Yumi Damage', 'Drawn Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Headshot Damage'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['True Flight', 'Perfect Draw', 'Unwavering Aim'],
+    rangedWeaponType: 'yumi' as const,
   },
 
   // --- RANGE: BOMBS ---
@@ -386,6 +394,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Shockwave', 'Stun Blast', 'Ripple Force'],
+    rangedWeaponType: 'bomb' as const,
   },
   {
     id: 'vengeful_onibi_bomb',
@@ -399,6 +408,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Spirit Flame', 'Cursed Burn', 'Onibi Surge'],
+    rangedWeaponType: 'bomb' as const,
   },
   {
     id: 'blind_bomb',
@@ -412,6 +422,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Smoke Veil', 'Blinding Cloud', 'Shadow Veil'],
+    rangedWeaponType: 'bomb' as const,
   },
   {
     id: 'healing_blind_bomb',
@@ -425,6 +436,7 @@ export const GEARS: Gear[] = [
     attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Healing Mist', 'Restorative Smoke', 'Ward Of Life'],
+    rangedWeaponType: 'bomb' as const,
   },
 
   // --- CHARM ---
@@ -669,11 +681,15 @@ export const GEARS: Gear[] = [
 export const getGearsByCategory = (
   category: GearCategory,
   meleeWeaponType?: MeleeWeaponType,
+  rangedWeaponType?: RangedWeaponType,
 ): Gear[] =>
   GEARS.filter((g) => {
     if (g.category !== category) return false;
     if (category === 'Melee' && meleeWeaponType) {
       return g.weaponType === meleeWeaponType;
+    }
+    if (category === 'Range' && rangedWeaponType) {
+      return g.rangedWeaponType === rangedWeaponType;
     }
     return true;
   });

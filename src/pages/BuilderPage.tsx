@@ -62,10 +62,11 @@ export default function BuilderPage() {
   ).length;
   const activeSlotIsLegendary = getGearById(gears[activeSlot])?.rarity === 'Legendary';
 
-  const activeSlotMeta     = GEAR_SLOTS.find((s) => s.id === activeSlot);
-  const slotWeaponType     = cls?.meleeSlotTypes?.[activeSlot];
-  const gearsForActiveSlot = activeSlotMeta
-    ? getGearsByCategory(activeSlotMeta.category, slotWeaponType)
+  const activeSlotMeta      = GEAR_SLOTS.find((s) => s.id === activeSlot);
+  const slotWeaponType      = cls?.meleeSlotTypes?.[activeSlot];
+  const slotRangedType      = cls?.rangeSlotTypes?.[activeSlot];
+  const gearsForActiveSlot  = activeSlotMeta
+    ? getGearsByCategory(activeSlotMeta.category, slotWeaponType, slotRangedType)
     : [];
   const selectAttribute = (slotId: string, index: 0 | 1 | 2, value: string) => {
     setGearAttributes((prev) => {
