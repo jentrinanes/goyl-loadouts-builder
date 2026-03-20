@@ -40,7 +40,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 60, defense: 10, health: 5, resolve: 15, stealth: 10, ranged: 0 },
     perk: 'First strike of each encounter deals bonus damage',
     attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
-    attributes3: ['Swift Draw', 'First Strike', 'Momentum Slash'],
+    attributes3: ['Expert Combo', 'Resolve Of Lightning', 'Burning Blade', 'Poison Blade'],
     weaponType: 'katana',
   },
   {
@@ -53,7 +53,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 75, defense: 15, health: 10, resolve: 10, stealth: 0, ranged: 0 },
     perk: 'Breaks enemy guard on heavy attacks',
     attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
-    attributes3: ['Guard Break', 'Armor Shatter', 'Crushing Blow'],
+    attributes3: ['Expert Combo', 'Resolve Of Lightning', 'Burning Blade', 'Poison Blade'],
     weaponType: 'katana',
   },
   {
@@ -66,7 +66,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 90, defense: 15, health: 10, resolve: 20, stealth: 0, ranged: 0 },
     perk: 'Strikes chain lightning to nearby enemies',
     attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
-    attributes3: ['Resolve Of Lightning', 'Thunder Clap', 'Storm Surge'],
+    attributes3: ['Expert Combo', 'Resolve Of Lightning', 'Burning Blade', 'Poison Blade'],
     weaponType: 'katana',
   },
 
