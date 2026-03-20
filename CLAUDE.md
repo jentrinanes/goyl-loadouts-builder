@@ -1,12 +1,13 @@
 # Yotei Legends — Claude Context
 
 ## What This Is
-A Ghost of Yotei fan app for creating and saving character builds. Built with React 19 + Vite + TypeScript (strict). No CSS framework — all inline styles. Data is persisted to localStorage.
+A Ghost of Yotei fan app for creating and saving character builds. Built with React 19 + Vite + TypeScript (strict). Styled with **Tailwind CSS v4**. Data is persisted to localStorage.
 
 ## Tech Stack
 - **React 19** + **React Router v7**
 - **TypeScript** (strict, `noEmit` via `tsconfig.json`)
-- **Vite** (`vite.config.ts`)
+- **Vite** (`vite.config.ts`) with `@tailwindcss/vite` plugin
+- **Tailwind CSS v4** — utility classes throughout; inline styles only for runtime-dynamic colours (rarity, class)
 - **ESLint** flat config (`eslint.config.js`) with typescript-eslint v8
 - **localStorage** for auth and build persistence (no backend)
 
@@ -25,13 +26,14 @@ src/
   components/
     GearCard.tsx          # Gear item card (compact + full variants)
     WeaponIcon.tsx        # SVG icons per MeleeWeaponType; falls back to emoji
-    StatBar.tsx           # Horizontal stat bar
+    StatBar.tsx           # Horizontal stat bar with Tailwind colour classes
   pages/
-    LandingPage.tsx       # Public landing / login / register
+    AuthPage.tsx          # Public login / register page
     DashboardPage.tsx     # Lists saved builds
     BuilderPage.tsx       # 3-step build creator (Class → Gear → Review)
   App.tsx                 # Routes
   main.tsx                # Entry point
+  index.css               # @import "tailwindcss" + custom scrollbar/focus styles
 ```
 
 ## Key Types (src/types/index.ts)
@@ -70,30 +72,35 @@ All non-legendaries are **Epic** (purple). Legendaries marked with *.
 - **Odachi:** Odachi, Restoring Odachi, Blade of Mountains*
 
 ### Ranged (src/data/gear.ts)
+All non-legendaries are **Epic** (purple). Legendaries marked with *.
 - **Hankyu:** Hankyu, Storm Hankyu, Hurricane Hankyu*
 - **Tanegashima:** Tanegashima, Lightning Tanegashima*
 - **Yumi:** Yumi, Skipping Stone Bow*, True Aim Yumi*
 - **Bombs:** Concussion Bomb, Vengeful Onibi Bomb*, Blind Bomb, Healing Blind Bomb*
 
 ## Rarity Colours
-| Rarity | Colour |
-|---|---|
-| Common | `#9ca3af` |
-| Rare | `#3b82f6` |
-| Epic | `#a855f7` |
-| Legendary | `#f59e0b` |
+| Rarity | Hex | Tailwind |
+|---|---|---|
+| Common | `#9ca3af` | `gray-400` |
+| Rare | `#3b82f6` | `blue-500` |
+| Epic | `#a855f7` | `purple-500` |
+| Legendary | `#f59e0b` | `amber-400` |
+
+## Tailwind Conventions
+- Dark theme base colours map to Tailwind's built-in palette:
+  - Page background: `bg-gray-950` (`#030712`)
+  - Nav / panels: `bg-slate-900` (`#0f172a`)
+  - Cards: `bg-gray-900` (`#111827`)
+  - Borders: `border-gray-800` / `border-gray-700`
+- **Inline styles are only used for runtime-dynamic values** — rarity colour stripes, class card border glow/shadow, stat bar fill width
+- Accent colour for actions: `bg-amber-400` / `text-amber-400`
+- SVG weapon icons in `WeaponIcon.tsx` — add new `MeleeWeaponType` values there and in `src/types/index.ts`
 
 ## Builder Page Behaviour
 - 3 steps: Class selection → Gear selection → Review & Save
 - Selecting a weapon does **not** auto-advance to the next slot — it stays on the current slot and shows the attribute panel
 - Each equipped weapon can have up to **3 attributes** selected (capped, with a counter display)
 - Attributes reset when a different weapon is selected for the same slot
-
-## Design Conventions
-- Dark theme: background `#030712`, cards `#111827`, nav `#0f172a`
-- All styling via inline `style` props — no CSS classes or external stylesheets
-- Accent colour for actions: `#f59e0b` (gold)
-- SVG weapon icons in `WeaponIcon.tsx` — add new `MeleeWeaponType` values there and in `src/types/index.ts`
 
 ## Common Commands
 ```bash
