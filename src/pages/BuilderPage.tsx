@@ -62,8 +62,6 @@ export default function BuilderPage() {
   const gearsForActiveSlot = activeSlotMeta
     ? getGearsByCategory(activeSlotMeta.category, slotWeaponType)
     : [];
-  const activeGear = gears[activeSlot] ? getGearById(gears[activeSlot]) : undefined;
-
   const toggleAttribute = (slotId: string, attr: string) => {
     setGearAttributes((prev) => {
       const current  = prev[slotId] ?? [];
@@ -273,63 +271,26 @@ export default function BuilderPage() {
                   <p className="mt-1 text-gray-600 text-xs sm:text-[13px]">Select a weapon, then configure its attributes below.</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
-                  {gearsForActiveSlot.map((gear) => (
-                    <GearCard
-                      key={gear.id}
-                      gear={gear}
-                      selected={gears[activeSlot] === gear.id}
-                      onClick={() => {
-                        const wasNew = gears[activeSlot] !== gear.id;
-                        setGears((prev) => ({ ...prev, [activeSlot]: gear.id }));
-                        if (wasNew) setGearAttributes((prev) => ({ ...prev, [activeSlot]: [] }));
-                      }}
-                    />
-                  ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {gearsForActiveSlot.map((gear) => {
+                    const isSelected = gears[activeSlot] === gear.id;
+                    return (
+                      <GearCard
+                        key={gear.id}
+                        gear={gear}
+                        selected={isSelected}
+                        onClick={() => {
+                          const wasNew = gears[activeSlot] !== gear.id;
+                          setGears((prev) => ({ ...prev, [activeSlot]: gear.id }));
+                          if (wasNew) setGearAttributes((prev) => ({ ...prev, [activeSlot]: [] }));
+                        }}
+                        selectedAttributes={isSelected ? (gearAttributes[activeSlot] ?? []) : undefined}
+                        onAttributeToggle={isSelected ? (attr) => toggleAttribute(activeSlot, attr) : undefined}
+                        maxAttributes={MAX_ATTRIBUTES}
+                      />
+                    );
+                  })}
                 </div>
-
-                {/* Attribute panel */}
-                {activeGear && (
-                  <div className="bg-slate-900 border border-gray-800 rounded-xl p-3 sm:p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <div className="font-bold text-sm" style={{ color: RARITY_COLOR[activeGear.rarity] }}>
-                          {activeGear.name}
-                        </div>
-                        <div className="text-[11px] text-gray-600">Select up to 3 attributes</div>
-                      </div>
-                      <div className={`text-xs font-semibold ${
-                        (gearAttributes[activeSlot] ?? []).length >= MAX_ATTRIBUTES
-                          ? 'text-amber-400'
-                          : 'text-gray-600'
-                      }`}>
-                        {(gearAttributes[activeSlot] ?? []).length} / {MAX_ATTRIBUTES}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      {activeGear.attributes.map((attr) => {
-                        const active = (gearAttributes[activeSlot] ?? []).includes(attr);
-                        const capped = !active && (gearAttributes[activeSlot] ?? []).length >= MAX_ATTRIBUTES;
-                        return (
-                          <button
-                            key={attr}
-                            onClick={() => toggleAttribute(activeSlot, attr)}
-                            disabled={capped}
-                            className={`px-3 py-1.5 rounded-full text-xs sm:text-[13px] transition-all duration-150 border
-                              ${active
-                                ? 'bg-amber-900 border-amber-400 text-amber-200 font-semibold cursor-pointer'
-                                : capped
-                                  ? 'bg-gray-800 border-gray-800 text-gray-700 cursor-not-allowed'
-                                  : 'bg-gray-800 border-gray-700 text-gray-500 cursor-pointer hover:border-gray-500 hover:text-gray-300'}`}
-                          >
-                            {active ? '✦ ' : ''}{attr}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
 

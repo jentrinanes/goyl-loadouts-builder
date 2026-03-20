@@ -7,10 +7,22 @@ interface GearCardProps {
   selected?: boolean;
   onClick?: () => void;
   compact?: boolean;
+  selectedAttributes?: string[];
+  onAttributeToggle?: (attr: string) => void;
+  maxAttributes?: number;
 }
 
-export default function GearCard({ gear, selected = false, onClick, compact = false }: GearCardProps) {
-  const rarityColor = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
+export default function GearCard({
+  gear,
+  selected = false,
+  onClick,
+  compact = false,
+  selectedAttributes,
+  onAttributeToggle,
+  maxAttributes = 3,
+}: GearCardProps) {
+  const rarityColor    = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
+  const showAttributes = selected && !compact && onAttributeToggle && gear.attributes.length > 0;
 
   return (
     <div
@@ -31,6 +43,7 @@ export default function GearCard({ gear, selected = false, onClick, compact = fa
       />
 
       <div className="pl-2">
+        {/* Header row */}
         <div className={`flex items-center gap-2 ${compact ? '' : 'mb-1'}`}>
           <GearIcon
             weaponType={gear.weaponType}
@@ -51,10 +64,49 @@ export default function GearCard({ gear, selected = false, onClick, compact = fa
           )}
         </div>
 
+        {/* Description */}
         {!compact && (
-          <p className="text-xs text-gray-400 mt-1.5 mb-2.5 leading-relaxed">
+          <p className="text-xs text-gray-400 mt-1.5 leading-relaxed">
             {gear.description}
           </p>
+        )}
+
+        {/* Inline attribute selector — only when selected */}
+        {showAttributes && (
+          <div
+            className="mt-3 pt-3 border-t border-blue-900"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] text-gray-500 uppercase tracking-widest">Attributes</span>
+              <span className={`text-[11px] font-semibold ${
+                (selectedAttributes?.length ?? 0) >= maxAttributes ? 'text-amber-400' : 'text-gray-600'
+              }`}>
+                {selectedAttributes?.length ?? 0} / {maxAttributes}
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {gear.attributes.map((attr) => {
+                const active = selectedAttributes?.includes(attr) ?? false;
+                const capped = !active && (selectedAttributes?.length ?? 0) >= maxAttributes;
+                return (
+                  <button
+                    key={attr}
+                    onClick={() => onAttributeToggle(attr)}
+                    disabled={capped}
+                    className={`px-3 py-1 rounded-full text-xs border transition-all duration-150
+                      ${active
+                        ? 'bg-amber-900 border-amber-400 text-amber-200 font-semibold cursor-pointer'
+                        : capped
+                          ? 'bg-gray-800 border-gray-800 text-gray-700 cursor-not-allowed'
+                          : 'bg-gray-800 border-gray-700 text-gray-500 cursor-pointer hover:border-gray-500 hover:text-gray-300'}`}
+                  >
+                    {active ? '✦ ' : ''}{attr}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         )}
       </div>
     </div>
