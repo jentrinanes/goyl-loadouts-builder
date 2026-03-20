@@ -13,6 +13,7 @@ const STEP_GEAR   = 1;
 const STEP_REVIEW = 2;
 
 const STAT_KEYS: StatKey[] = ['attack', 'defense', 'health', 'resolve', 'stealth', 'ranged'];
+const MAX_ATTRIBUTES = 3;
 
 function computeTotalStats(classId: string | null, gears: Record<string, string>): StatSet {
   const base: StatSet = { attack: 0, defense: 0, health: 0, resolve: 0, stealth: 0, ranged: 0 };
@@ -26,9 +27,9 @@ function computeTotalStats(classId: string | null, gears: Record<string, string>
 }
 
 export default function BuilderPage() {
-  const { id }      = useParams<{ id: string }>();
-  const { user }    = useAuth();
-  const navigate    = useNavigate();
+  const { id }   = useParams<{ id: string }>();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const [step, setStep]                     = useState(STEP_CLASS);
   const [buildName, setBuildName]           = useState('My Build');
@@ -61,15 +62,13 @@ export default function BuilderPage() {
   const gearsForActiveSlot = activeSlotMeta
     ? getGearsByCategory(activeSlotMeta.category, slotWeaponType)
     : [];
-  const activeGear         = gears[activeSlot] ? getGearById(gears[activeSlot]) : undefined;
-
-  const MAX_ATTRIBUTES = 3;
+  const activeGear = gears[activeSlot] ? getGearById(gears[activeSlot]) : undefined;
 
   const toggleAttribute = (slotId: string, attr: string) => {
     setGearAttributes((prev) => {
-      const current = prev[slotId] ?? [];
+      const current  = prev[slotId] ?? [];
       const isActive = current.includes(attr);
-      if (!isActive && current.length >= MAX_ATTRIBUTES) return prev; // cap reached
+      if (!isActive && current.length >= MAX_ATTRIBUTES) return prev;
       return {
         ...prev,
         [slotId]: isActive ? current.filter((a) => a !== attr) : [...current, attr],
@@ -84,71 +83,88 @@ export default function BuilderPage() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#030712', color: '#f3f4f6', display: 'flex', flexDirection: 'column' }}>
-      {/* Navbar */}
-      <header style={{ background: '#0f172a', borderBottom: '1px solid #1f2937', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60, flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <button onClick={() => navigate('/dashboard')} style={{ background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer', fontSize: 18, padding: '0 8px 0 0', lineHeight: 1 }}>←</button>
-          <span style={{ fontSize: 20 }}>⛩️</span>
-          <span style={{ color: '#f59e0b', fontWeight: 900, fontSize: 16, letterSpacing: 2 }}>BUILD CREATOR</span>
+    <div className="min-h-screen bg-gray-950 text-gray-100 flex flex-col">
+
+      {/* ── Navbar ── */}
+      <header className="bg-slate-900 border-b border-gray-800 px-6 flex items-center justify-between h-[60px] shrink-0">
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="bg-transparent border-none text-gray-500 cursor-pointer text-lg pr-2 leading-none hover:text-gray-300 transition-colors"
+          >
+            ←
+          </button>
+          <span className="text-xl">⛩️</span>
+          <span className="text-amber-400 font-black text-base tracking-widest">BUILD CREATOR</span>
         </div>
 
-        <div style={{ display: 'flex', gap: 8 }}>
+        {/* Step indicators */}
+        <div className="flex gap-2">
           {['Class', 'Gear', 'Review'].map((label, i) => (
-            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 6, opacity: step === i ? 1 : 0.4 }}>
-              <div style={{ width: 24, height: 24, borderRadius: '50%', background: step > i ? '#22c55e' : step === i ? '#f59e0b' : '#374151', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: '#030712' }}>
+            <div key={label} className={`flex items-center gap-1.5 transition-opacity ${step === i ? 'opacity-100' : 'opacity-40'}`}>
+              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold text-gray-950
+                ${step > i ? 'bg-green-500' : step === i ? 'bg-amber-400' : 'bg-gray-700 text-gray-100'}`}>
                 {step > i ? '✓' : i + 1}
               </div>
-              {i < 2 && <span style={{ color: '#374151' }}>—</span>}
+              {i < 2 && <span className="text-gray-700">—</span>}
             </div>
           ))}
         </div>
 
-        <div style={{ width: 120 }} />
+        <div className="w-[120px]" />
       </header>
 
-      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+      <div className="flex-1 flex overflow-hidden">
 
-        {/* ====== STEP 0: CLASS SELECTION ====== */}
+        {/* ══════ STEP 0 — CLASS SELECTION ══════ */}
         {step === STEP_CLASS && (
-          <div style={{ flex: 1, overflowY: 'auto', padding: '32px 24px' }}>
-            <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 6, textAlign: 'center' }}>Choose Your Class</h2>
-            <p style={{ color: '#6b7280', fontSize: 14, textAlign: 'center', marginBottom: 32 }}>
+          <div className="flex-1 overflow-y-auto px-6 py-8">
+            <h2 className="text-[22px] font-extrabold mb-1.5 text-center">Choose Your Class</h2>
+            <p className="text-gray-500 text-sm text-center mb-8">
               Your class determines your base stats and unique perk.
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, maxWidth: 700, margin: '0 auto' }}>
+
+            <div className="grid grid-cols-2 gap-4 max-w-[700px] mx-auto">
               {CLASSES.map((c) => (
                 <div
                   key={c.id}
                   onClick={() => setSelectedClass(c.id)}
+                  className={`rounded-2xl p-5 cursor-pointer transition-all duration-200
+                    ${selectedClass === c.id ? 'bg-[#1e3a2f]' : 'bg-gray-900'}`}
                   style={{
-                    background: selectedClass === c.id ? '#1e3a2f' : '#111827',
                     border: `2px solid ${selectedClass === c.id ? c.color : '#1f2937'}`,
-                    borderRadius: 14, padding: 20, cursor: 'pointer', transition: 'all 0.2s',
                     boxShadow: selectedClass === c.id ? `0 0 20px ${c.color}44` : 'none',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-                    <span style={{ fontSize: 36 }}>{c.icon}</span>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-4xl">{c.icon}</span>
                     <div>
-                      <div style={{ fontWeight: 800, fontSize: 18, color: selectedClass === c.id ? c.accentColor : '#f3f4f6' }}>
+                      <div
+                        className="font-extrabold text-lg"
+                        style={{ color: selectedClass === c.id ? c.accentColor : '#f3f4f6' }}
+                      >
                         {c.name}
                       </div>
                       {selectedClass === c.id && (
-                        <div style={{ fontSize: 11, color: c.accentColor, fontWeight: 600 }}>SELECTED</div>
+                        <div className="text-[11px] font-semibold" style={{ color: c.accentColor }}>
+                          SELECTED
+                        </div>
                       )}
                     </div>
                   </div>
-                  <p style={{ fontSize: 13, color: '#9ca3af', lineHeight: 1.5 }}>{c.description}</p>
+                  <p className="text-[13px] text-gray-400 leading-relaxed">{c.description}</p>
                 </div>
               ))}
             </div>
 
-            <div style={{ textAlign: 'center', marginTop: 32 }}>
+            <div className="text-center mt-8">
               <button
                 disabled={!selectedClass}
                 onClick={() => setStep(STEP_GEAR)}
-                style={{ background: selectedClass ? '#f59e0b' : '#374151', color: selectedClass ? '#030712' : '#6b7280', border: 'none', borderRadius: 10, padding: '14px 48px', fontWeight: 700, fontSize: 15, cursor: selectedClass ? 'pointer' : 'not-allowed', letterSpacing: 1 }}
+                className={`border-none rounded-xl px-12 py-3.5 font-bold text-[15px] tracking-widest transition-colors
+                  ${selectedClass
+                    ? 'bg-amber-400 text-gray-950 cursor-pointer hover:bg-amber-300'
+                    : 'bg-gray-700 text-gray-500 cursor-not-allowed'}`}
               >
                 Choose Gear →
               </button>
@@ -156,48 +172,56 @@ export default function BuilderPage() {
           </div>
         )}
 
-        {/* ====== STEP 1: GEAR SELECTION ====== */}
+        {/* ══════ STEP 1 — GEAR SELECTION ══════ */}
         {step === STEP_GEAR && (
-          <div style={{ flex: 1, display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
-            <div style={{ background: '#0f172a', borderBottom: '1px solid #1f2937', padding: '10px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: 18 }}>{cls?.icon}</span>
-                <span style={{ color: cls?.accentColor ?? '#f59e0b', fontWeight: 700, fontSize: 14 }}>{cls?.name}</span>
+          <div className="flex-1 flex flex-col overflow-hidden">
+            {/* Sub-header */}
+            <div className="bg-slate-900 border-b border-gray-800 px-5 py-2.5 flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">{cls?.icon}</span>
+                <span className="font-bold text-sm" style={{ color: cls?.accentColor ?? '#f59e0b' }}>
+                  {cls?.name}
+                </span>
               </div>
-              <div style={{ flex: 1 }}>
+              <div className="flex-1">
                 <input
                   value={buildName}
                   onChange={(e) => setBuildName(e.target.value)}
-                  style={{ background: '#1f2937', border: '1px solid #374151', borderRadius: 6, padding: '5px 12px', color: '#f3f4f6', fontSize: 14, width: '100%', maxWidth: 280, outline: 'none', boxSizing: 'border-box' }}
+                  className="bg-gray-800 border border-gray-700 rounded-md px-3 py-1.5 text-gray-100 text-sm w-full max-w-[280px] outline-none"
                   placeholder="Build name..."
                 />
               </div>
-              <span style={{ color: '#6b7280', fontSize: 13 }}>{gearsSelected}/7 gear slots filled</span>
+              <span className="text-gray-500 text-sm">{gearsSelected}/7 gear slots filled</span>
             </div>
 
-            <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-              {/* Left: slot list + totals */}
-              <div style={{ width: 230, background: '#0a0f1a', borderRight: '1px solid #1f2937', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
-                <div style={{ padding: '14px 12px', flex: 1, overflowY: 'auto' }}>
-                  <div style={{ fontSize: 11, color: '#4b5563', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Gear Slots</div>
+            <div className="flex-1 flex overflow-hidden">
+              {/* ── Left sidebar: slot list + total stats ── */}
+              <div className="w-[230px] bg-[#0a0f1a] border-r border-gray-800 flex flex-col shrink-0">
+                <div className="p-3.5 flex-1 overflow-y-auto">
+                  <div className="text-[11px] text-gray-600 uppercase tracking-widest mb-2">Gear Slots</div>
                   {GEAR_SLOTS.map((slot) => {
                     const equipped = gears[slot.id] ? getGearById(gears[slot.id]) : undefined;
+                    const isActive = activeSlot === slot.id;
                     return (
                       <div
                         key={slot.id}
                         onClick={() => setActiveSlot(slot.id)}
-                        style={{ padding: '10px 12px', borderRadius: 8, marginBottom: 4, cursor: 'pointer', background: activeSlot === slot.id ? '#1e3a5f' : 'transparent', border: `1px solid ${activeSlot === slot.id ? '#3b82f6' : 'transparent'}`, transition: 'all 0.15s' }}
+                        className={`px-3 py-2.5 rounded-lg mb-1 cursor-pointer transition-all duration-150
+                          ${isActive ? 'bg-[#1e3a5f] border border-blue-500' : 'border border-transparent hover:bg-gray-800'}`}
                       >
-                        <div style={{ fontSize: 11, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>{slot.label}</div>
+                        <div className="text-[11px] text-gray-500 uppercase tracking-wide">{slot.label}</div>
                         {equipped ? (
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 3 }}>
-                            <span style={{ fontSize: 14 }}>{equipped.icon}</span>
-                            <span style={{ fontSize: 12, color: RARITY_COLOR[equipped.rarity], fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          <div className="flex items-center gap-1.5 mt-0.5">
+                            <span className="text-sm">{equipped.icon}</span>
+                            <span
+                              className="text-xs font-semibold truncate"
+                              style={{ color: RARITY_COLOR[equipped.rarity] }}
+                            >
                               {equipped.name}
                             </span>
                           </div>
                         ) : (
-                          <div style={{ fontSize: 12, color: '#374151', marginTop: 3 }}>— empty —</div>
+                          <div className="text-xs text-gray-700 mt-0.5">— empty —</div>
                         )}
                       </div>
                     );
@@ -205,8 +229,8 @@ export default function BuilderPage() {
                 </div>
 
                 {totalStats && (
-                  <div style={{ padding: '14px 12px', borderTop: '1px solid #1f2937' }}>
-                    <div style={{ fontSize: 11, color: '#4b5563', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Total Stats</div>
+                  <div className="px-3 py-3.5 border-t border-gray-800">
+                    <div className="text-[11px] text-gray-600 uppercase tracking-widest mb-2">Total Stats</div>
                     {STAT_KEYS.map((k) => (
                       <StatBar key={k} stat={k} value={Math.min(totalStats[k], 100)} compact />
                     ))}
@@ -214,16 +238,17 @@ export default function BuilderPage() {
                 )}
               </div>
 
-              {/* Right: gear list + attribute panel */}
-              <div style={{ flex: 1, overflowY: 'auto', padding: 16 }}>
-                <div style={{ marginBottom: 12 }}>
-                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700 }}>
-                    {activeSlotMeta?.label} — <span style={{ color: '#6b7280', fontSize: 14, fontWeight: 400 }}>{activeSlotMeta?.category}</span>
+              {/* ── Right: gear grid + attribute panel ── */}
+              <div className="flex-1 overflow-y-auto p-4">
+                <div className="mb-3">
+                  <h3 className="m-0 text-base font-bold">
+                    {activeSlotMeta?.label}{' '}
+                    <span className="text-gray-500 text-sm font-normal">— {activeSlotMeta?.category}</span>
                   </h3>
-                  <p style={{ margin: '4px 0 0', color: '#4b5563', fontSize: 13 }}>Select a weapon, then configure its attributes below.</p>
+                  <p className="mt-1 text-gray-600 text-[13px]">Select a weapon, then configure its attributes below.</p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 12, marginBottom: 20 }}>
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-3 mb-5">
                   {gearsForActiveSlot.map((gear) => (
                     <GearCard
                       key={gear.id}
@@ -238,39 +263,40 @@ export default function BuilderPage() {
                   ))}
                 </div>
 
+                {/* Attribute panel */}
                 {activeGear && (
-                  <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: 12, padding: 16 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <div>
-                          <div style={{ fontWeight: 700, fontSize: 14, color: RARITY_COLOR[activeGear.rarity] }}>{activeGear.name}</div>
-                          <div style={{ fontSize: 11, color: '#4b5563' }}>Select up to 3 attributes</div>
+                  <div className="bg-slate-900 border border-gray-800 rounded-xl p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <div className="font-bold text-sm" style={{ color: RARITY_COLOR[activeGear.rarity] }}>
+                          {activeGear.name}
                         </div>
+                        <div className="text-[11px] text-gray-600">Select up to 3 attributes</div>
                       </div>
-                      <div style={{ fontSize: 12, color: (gearAttributes[activeSlot] ?? []).length >= MAX_ATTRIBUTES ? '#f59e0b' : '#4b5563', fontWeight: 600 }}>
+                      <div className={`text-xs font-semibold ${
+                        (gearAttributes[activeSlot] ?? []).length >= MAX_ATTRIBUTES
+                          ? 'text-amber-400'
+                          : 'text-gray-600'
+                      }`}>
                         {(gearAttributes[activeSlot] ?? []).length} / {MAX_ATTRIBUTES}
                       </div>
                     </div>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+
+                    <div className="flex flex-wrap gap-2">
                       {activeGear.attributes.map((attr) => {
-                        const active   = (gearAttributes[activeSlot] ?? []).includes(attr);
-                        const capped   = !active && (gearAttributes[activeSlot] ?? []).length >= MAX_ATTRIBUTES;
+                        const active = (gearAttributes[activeSlot] ?? []).includes(attr);
+                        const capped = !active && (gearAttributes[activeSlot] ?? []).length >= MAX_ATTRIBUTES;
                         return (
                           <button
                             key={attr}
                             onClick={() => toggleAttribute(activeSlot, attr)}
                             disabled={capped}
-                            style={{
-                              padding: '6px 14px',
-                              borderRadius: 20,
-                              border: `1px solid ${active ? '#f59e0b' : capped ? '#1f2937' : '#374151'}`,
-                              background: active ? '#78350f' : '#1f2937',
-                              color: active ? '#fde68a' : capped ? '#374151' : '#6b7280',
-                              fontSize: 13,
-                              fontWeight: active ? 600 : 400,
-                              cursor: capped ? 'not-allowed' : 'pointer',
-                              transition: 'all 0.15s',
-                            }}
+                            className={`px-3.5 py-1.5 rounded-full text-[13px] transition-all duration-150 border
+                              ${active
+                                ? 'bg-amber-900 border-amber-400 text-amber-200 font-semibold cursor-pointer'
+                                : capped
+                                  ? 'bg-gray-800 border-gray-800 text-gray-700 cursor-not-allowed'
+                                  : 'bg-gray-800 border-gray-700 text-gray-500 cursor-pointer hover:border-gray-500 hover:text-gray-300'}`}
                           >
                             {active ? '✦ ' : ''}{attr}
                           </button>
@@ -282,14 +308,21 @@ export default function BuilderPage() {
               </div>
             </div>
 
-            <div style={{ background: '#0f172a', borderTop: '1px solid #1f2937', padding: '12px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <button onClick={() => setStep(STEP_CLASS)} style={{ background: '#1f2937', border: '1px solid #374151', color: '#9ca3af', borderRadius: 8, padding: '10px 20px', cursor: 'pointer', fontSize: 14, fontWeight: 600 }}>
+            {/* Footer */}
+            <div className="bg-slate-900 border-t border-gray-800 px-5 py-3 flex justify-between items-center">
+              <button
+                onClick={() => setStep(STEP_CLASS)}
+                className="bg-gray-800 border border-gray-700 text-gray-400 rounded-lg px-5 py-2.5 cursor-pointer text-sm font-semibold hover:text-gray-200 transition-colors"
+              >
                 ← Change Class
               </button>
               <button
                 disabled={!allGearSelected}
                 onClick={() => setStep(STEP_REVIEW)}
-                style={{ background: allGearSelected ? '#f59e0b' : '#374151', color: allGearSelected ? '#030712' : '#6b7280', border: 'none', borderRadius: 10, padding: '10px 28px', fontWeight: 700, fontSize: 14, cursor: allGearSelected ? 'pointer' : 'not-allowed' }}
+                className={`border-none rounded-xl px-7 py-2.5 font-bold text-sm transition-colors
+                  ${allGearSelected
+                    ? 'bg-amber-400 text-gray-950 cursor-pointer hover:bg-amber-300'
+                    : 'bg-gray-700 text-gray-500 cursor-not-allowed'}`}
               >
                 Review Build →
               </button>
@@ -297,50 +330,60 @@ export default function BuilderPage() {
           </div>
         )}
 
-        {/* ====== STEP 2: REVIEW ====== */}
+        {/* ══════ STEP 2 — REVIEW ══════ */}
         {step === STEP_REVIEW && totalStats && (
-          <div style={{ flex: 1, overflowY: 'auto', padding: '32px 24px' }}>
-            <div style={{ maxWidth: 860, margin: '0 auto' }}>
-              <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4, textAlign: 'center' }}>Review Your Build</h2>
-              <p style={{ color: '#6b7280', fontSize: 14, textAlign: 'center', marginBottom: 28 }}>Confirm your selections before saving.</p>
+          <div className="flex-1 overflow-y-auto px-6 py-8">
+            <div className="max-w-[860px] mx-auto">
+              <h2 className="text-[22px] font-extrabold mb-1 text-center">Review Your Build</h2>
+              <p className="text-gray-500 text-sm text-center mb-7">Confirm your selections before saving.</p>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+              <div className="grid grid-cols-2 gap-5">
+                {/* Left column */}
                 <div>
-                  <div style={{ background: '#111827', border: '1px solid #1f2937', borderRadius: 12, padding: 20, marginBottom: 16 }}>
-                    <div style={{ fontSize: 12, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Build Name</div>
+                  {/* Build name */}
+                  <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 mb-4">
+                    <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Build Name</div>
                     <input
                       value={buildName}
                       onChange={(e) => setBuildName(e.target.value)}
-                      style={{ background: '#1f2937', border: '1px solid #374151', borderRadius: 8, padding: '10px 14px', color: '#f3f4f6', fontSize: 18, fontWeight: 700, width: '100%', outline: 'none', boxSizing: 'border-box' }}
+                      className="bg-gray-800 border border-gray-700 rounded-lg px-3.5 py-2.5 text-gray-100 text-lg font-bold w-full outline-none"
                     />
                   </div>
 
-                  <div style={{ background: '#111827', border: `1px solid ${cls?.color ?? '#1f2937'}66`, borderRadius: 12, padding: 20, marginBottom: 16 }}>
-                    <div style={{ fontSize: 12, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10 }}>Class</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-                      <span style={{ fontSize: 32 }}>{cls?.icon}</span>
+                  {/* Class */}
+                  <div
+                    className="bg-gray-900 rounded-xl p-5 mb-4"
+                    style={{ border: `1px solid ${cls?.color ?? '#1f2937'}66` }}
+                  >
+                    <div className="text-xs text-gray-500 uppercase tracking-widest mb-2.5">Class</div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-[32px]">{cls?.icon}</span>
                       <div>
-                        <div style={{ fontWeight: 800, fontSize: 18, color: cls?.accentColor }}>{cls?.name}</div>
-                        <div style={{ fontSize: 12, color: '#6b7280' }}>{cls?.description}</div>
+                        <div className="font-extrabold text-lg" style={{ color: cls?.accentColor }}>
+                          {cls?.name}
+                        </div>
+                        <div className="text-xs text-gray-500">{cls?.description}</div>
                       </div>
                     </div>
-                    <div style={{ background: '#0f172a', borderRadius: 6, padding: '6px 10px', fontSize: 12, color: '#fbbf24' }}>
+                    <div className="bg-slate-900 rounded-md px-2.5 py-1.5 text-xs text-amber-300">
                       ✦ {cls?.perk}
                     </div>
                   </div>
 
-                  <div style={{ background: '#111827', border: '1px solid #1f2937', borderRadius: 12, padding: 20 }}>
-                    <div style={{ fontSize: 12, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Total Stats</div>
+                  {/* Total stats */}
+                  <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                    <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Total Stats</div>
                     {STAT_KEYS.map((k) => (
                       <StatBar key={k} stat={k} value={Math.min(totalStats[k], 100)} />
                     ))}
                   </div>
                 </div>
 
+                {/* Right column — equipped gear */}
                 <div>
-                  <div style={{ background: '#111827', border: '1px solid #1f2937', borderRadius: 12, padding: 20 }}>
-                    <div style={{ fontSize: 12, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Equipped Gear</div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                    <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Equipped Gear</div>
+                    <div className="flex flex-col gap-2.5">
                       {GEAR_SLOTS.map((slot) => {
                         const gear        = getGearById(gears[slot.id]);
                         const activeAttrs = gearAttributes[slot.id] ?? [];
@@ -348,9 +391,12 @@ export default function BuilderPage() {
                           <div key={slot.id}>
                             <GearCard gear={gear} compact />
                             {activeAttrs.length > 0 && (
-                              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 6, paddingLeft: 4 }}>
+                              <div className="flex flex-wrap gap-1.5 mt-1.5 pl-1">
                                 {activeAttrs.map((attr) => (
-                                  <span key={attr} style={{ padding: '3px 10px', borderRadius: 20, background: '#78350f', border: '1px solid #f59e0b', color: '#fde68a', fontSize: 11, fontWeight: 600 }}>
+                                  <span
+                                    key={attr}
+                                    className="px-2.5 py-0.5 rounded-full bg-amber-900 border border-amber-400 text-amber-200 text-[11px] font-semibold"
+                                  >
                                     ✦ {attr}
                                   </span>
                                 ))}
@@ -358,7 +404,7 @@ export default function BuilderPage() {
                             )}
                           </div>
                         ) : (
-                          <div key={slot.id} style={{ padding: '10px 12px', background: '#1f2937', borderRadius: 8, color: '#4b5563', fontSize: 13 }}>
+                          <div key={slot.id} className="px-3 py-2.5 bg-gray-800 rounded-lg text-gray-600 text-sm">
                             {slot.label}: Not selected
                           </div>
                         );
@@ -368,14 +414,20 @@ export default function BuilderPage() {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 28, gap: 12 }}>
-                <button onClick={() => setStep(STEP_GEAR)} style={{ background: '#1f2937', border: '1px solid #374151', color: '#9ca3af', borderRadius: 10, padding: '12px 24px', cursor: 'pointer', fontSize: 14, fontWeight: 600 }}>
+              <div className="flex justify-between mt-7 gap-3">
+                <button
+                  onClick={() => setStep(STEP_GEAR)}
+                  className="bg-gray-800 border border-gray-700 text-gray-400 rounded-xl px-6 py-3 cursor-pointer text-sm font-semibold hover:text-gray-200 transition-colors"
+                >
                   ← Back to Gear
                 </button>
                 <button
                   onClick={handleSave}
                   disabled={saving || !buildName.trim()}
-                  style={{ background: saving ? '#374151' : '#f59e0b', color: saving ? '#6b7280' : '#030712', border: 'none', borderRadius: 10, padding: '12px 40px', fontWeight: 800, fontSize: 15, cursor: saving ? 'not-allowed' : 'pointer', letterSpacing: 1 }}
+                  className={`border-none rounded-xl px-10 py-3 font-extrabold text-[15px] tracking-widest transition-colors
+                    ${saving || !buildName.trim()
+                      ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                      : 'bg-amber-400 text-gray-950 cursor-pointer hover:bg-amber-300'}`}
                 >
                   {saving ? 'Saving...' : '💾 Save Build'}
                 </button>

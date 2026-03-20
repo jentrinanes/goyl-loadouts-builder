@@ -1,19 +1,16 @@
-*, *::before, *::after {
-  box-sizing: border-box;
+@import "tailwindcss";
+
+@theme {
+  --color-app-bg:    #030712;
+  --color-app-nav:   #0f172a;
+  --color-app-card:  #111827;
+  --color-app-panel: #0a0f1a;
 }
 
 body {
-  margin: 0;
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #030712;
-  color: #f3f4f6;
-}
-
-#root {
-  width: 100%;
-  min-height: 100vh;
 }
 
 * {
@@ -21,18 +18,9 @@ body {
   scrollbar-color: #374151 #0f172a;
 }
 
-*::-webkit-scrollbar {
-  width: 6px;
-}
-
-*::-webkit-scrollbar-track {
-  background: #0f172a;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: #374151;
-  border-radius: 4px;
-}
+*::-webkit-scrollbar        { width: 6px; }
+*::-webkit-scrollbar-track  { background: #0f172a; }
+*::-webkit-scrollbar-thumb  { background: #374151; border-radius: 4px; }
 
 input:focus {
   border-color: #f59e0b !important;

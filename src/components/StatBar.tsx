@@ -2,19 +2,17 @@ import type { StatKey } from '../types';
 
 interface StatMeta {
   label: string;
-  color: string;
+  barClass: string;
 }
 
-const STAT_LABELS: Record<StatKey, StatMeta> = {
-  attack:  { label: 'Attack',  color: '#ef4444' },
-  defense: { label: 'Defense', color: '#3b82f6' },
-  health:  { label: 'Health',  color: '#22c55e' },
-  resolve: { label: 'Resolve', color: '#f59e0b' },
-  stealth: { label: 'Stealth', color: '#8b5cf6' },
-  ranged:  { label: 'Ranged',  color: '#06b6d4' },
+const STAT_META: Record<StatKey, StatMeta> = {
+  attack:  { label: 'Attack',  barClass: 'bg-red-500'    },
+  defense: { label: 'Defense', barClass: 'bg-blue-500'   },
+  health:  { label: 'Health',  barClass: 'bg-green-500'  },
+  resolve: { label: 'Resolve', barClass: 'bg-amber-400'  },
+  stealth: { label: 'Stealth', barClass: 'bg-violet-500' },
+  ranged:  { label: 'Ranged',  barClass: 'bg-cyan-500'   },
 };
-
-const MAX_STAT = 100;
 
 interface StatBarProps {
   stat: StatKey;
@@ -23,26 +21,23 @@ interface StatBarProps {
 }
 
 export default function StatBar({ stat, value, compact = false }: StatBarProps) {
-  const meta = STAT_LABELS[stat];
+  const meta = STAT_META[stat];
   if (!meta) return null;
 
   return (
-    <div style={{ marginBottom: compact ? 4 : 8 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
-        <span style={{ fontSize: compact ? 11 : 12, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: 1 }}>
+    <div className={compact ? 'mb-1' : 'mb-2'}>
+      <div className="flex justify-between mb-0.5">
+        <span className={`${compact ? 'text-[11px]' : 'text-xs'} text-gray-400 uppercase tracking-widest`}>
           {meta.label}
         </span>
-        <span style={{ fontSize: compact ? 11 : 12, color: '#e5e7eb', fontWeight: 600 }}>{value}</span>
+        <span className={`${compact ? 'text-[11px]' : 'text-xs'} text-gray-200 font-semibold`}>
+          {value}
+        </span>
       </div>
-      <div style={{ background: '#1f2937', borderRadius: 4, height: compact ? 4 : 6, overflow: 'hidden' }}>
+      <div className={`bg-gray-800 rounded overflow-hidden ${compact ? 'h-1' : 'h-1.5'}`}>
         <div
-          style={{
-            width: `${Math.min((value / MAX_STAT) * 100, 100)}%`,
-            height: '100%',
-            background: meta.color,
-            borderRadius: 4,
-            transition: 'width 0.4s ease',
-          }}
+          className={`h-full rounded transition-[width] duration-[400ms] ease-in-out ${meta.barClass}`}
+          style={{ width: `${Math.min((value / 100) * 100, 100)}%` }}
         />
       </div>
     </div>

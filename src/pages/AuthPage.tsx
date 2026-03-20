@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type MouseEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -29,36 +29,32 @@ export default function AuthPage() {
     }
   };
 
-  const handleHover = (e: MouseEvent<HTMLButtonElement>, opacity: number) => {
-    (e.target as HTMLButtonElement).style.opacity = String(opacity);
-  };
-
   return (
-    <div style={{ minHeight: '100vh', background: '#030712', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-      <div style={{ textAlign: 'center', marginBottom: 40 }}>
-        <div style={{ fontSize: 64, marginBottom: 8 }}>⛩️</div>
-        <h1 style={{ color: '#f59e0b', fontSize: 32, fontWeight: 900, letterSpacing: 2, margin: 0, textShadow: '0 0 30px #f59e0b88' }}>
+    <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-5">
+      {/* Hero */}
+      <div className="text-center mb-10">
+        <div className="text-6xl mb-2">⛩️</div>
+        <h1
+          className="text-amber-400 text-3xl font-black tracking-widest m-0"
+          style={{ textShadow: '0 0 30px #f59e0b88' }}
+        >
           YOTEI LEGENDS
         </h1>
-        <p style={{ color: '#6b7280', fontSize: 14, marginTop: 6, letterSpacing: 3, textTransform: 'uppercase' }}>
-          Build Creator
-        </p>
+        <p className="text-gray-500 text-sm mt-1.5 tracking-widest uppercase">Build Creator</p>
       </div>
 
-      <div style={{ background: '#111827', border: '1px solid #1f2937', borderRadius: 16, padding: 36, width: '100%', maxWidth: 400, boxShadow: '0 25px 50px rgba(0,0,0,0.5)' }}>
+      {/* Card */}
+      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-9 w-full max-w-sm shadow-2xl">
         {/* Tabs */}
-        <div style={{ display: 'flex', marginBottom: 28, background: '#0f172a', borderRadius: 8, padding: 4, gap: 4 }}>
+        <div className="flex mb-7 bg-slate-900 rounded-lg p-1 gap-1">
           {(['login', 'register'] as AuthMode[]).map((m) => (
             <button
               key={m}
               onClick={() => { setMode(m); setError(''); }}
-              style={{
-                flex: 1, padding: '8px 0', borderRadius: 6, border: 'none', cursor: 'pointer',
-                fontWeight: 600, fontSize: 14, transition: 'all 0.2s',
-                background: mode === m ? '#f59e0b' : 'transparent',
-                color: mode === m ? '#030712' : '#6b7280',
-                textTransform: 'capitalize',
-              }}
+              className={`flex-1 py-2 rounded-md border-none cursor-pointer font-semibold text-sm transition-all
+                ${mode === m
+                  ? 'bg-amber-400 text-gray-950'
+                  : 'bg-transparent text-gray-500 hover:text-gray-300'}`}
             >
               {m === 'login' ? 'Sign In' : 'Register'}
             </button>
@@ -66,8 +62,8 @@ export default function AuthPage() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: 16 }}>
-            <label style={{ display: 'block', color: '#9ca3af', fontSize: 12, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>
+          <div className="mb-4">
+            <label className="block text-gray-400 text-xs mb-1.5 uppercase tracking-widest">
               Username
             </label>
             <input
@@ -75,13 +71,13 @@ export default function AuthPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              style={{ width: '100%', background: '#1f2937', border: '1px solid #374151', borderRadius: 8, padding: '10px 14px', color: '#f3f4f6', fontSize: 15, outline: 'none', boxSizing: 'border-box' }}
               placeholder="Enter your username"
+              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3.5 py-2.5 text-gray-100 text-base outline-none"
             />
           </div>
 
-          <div style={{ marginBottom: 20 }}>
-            <label style={{ display: 'block', color: '#9ca3af', fontSize: 12, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>
+          <div className="mb-5">
+            <label className="block text-gray-400 text-xs mb-1.5 uppercase tracking-widest">
               Password
             </label>
             <input
@@ -89,26 +85,20 @@ export default function AuthPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              style={{ width: '100%', background: '#1f2937', border: '1px solid #374151', borderRadius: 8, padding: '10px 14px', color: '#f3f4f6', fontSize: 15, outline: 'none', boxSizing: 'border-box' }}
               placeholder="Enter your password"
+              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3.5 py-2.5 text-gray-100 text-base outline-none"
             />
           </div>
 
           {error && (
-            <div style={{ background: '#450a0a', border: '1px solid #dc2626', borderRadius: 8, padding: '10px 14px', color: '#fca5a5', fontSize: 13, marginBottom: 16 }}>
+            <div className="bg-red-950 border border-red-600 rounded-lg px-3.5 py-2.5 text-red-300 text-sm mb-4">
               {error}
             </div>
           )}
 
           <button
             type="submit"
-            onMouseOver={(e) => handleHover(e, 0.85)}
-            onMouseOut={(e)  => handleHover(e, 1)}
-            style={{
-              width: '100%', padding: '12px 0', background: '#f59e0b', color: '#030712',
-              border: 'none', borderRadius: 8, fontSize: 15, fontWeight: 700, cursor: 'pointer',
-              letterSpacing: 1, textTransform: 'uppercase', transition: 'opacity 0.2s',
-            }}
+            className="w-full py-3 bg-amber-400 text-gray-950 border-none rounded-lg text-base font-bold cursor-pointer tracking-widest uppercase transition-opacity hover:opacity-85"
           >
             {mode === 'login' ? 'Enter the Legend' : 'Create Account'}
           </button>

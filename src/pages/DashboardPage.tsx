@@ -12,18 +12,15 @@ function computeTotalStats(build: Build): StatSet {
   const cls = getClassById(build.classId);
   if (cls) (Object.keys(base) as StatKey[]).forEach((k) => (base[k] += cls.bonuses[k] ?? 0));
   GEAR_SLOTS.forEach((slot) => {
-    const gearId = build.gears?.[slot.id];
-    if (gearId) {
-      const gear = getGearById(gearId);
-      if (gear) (Object.keys(base) as StatKey[]).forEach((k) => (base[k] += gear.stats[k] ?? 0));
-    }
+    const gear = getGearById(build.gears?.[slot.id]);
+    if (gear) (Object.keys(base) as StatKey[]).forEach((k) => (base[k] += gear.stats[k] ?? 0));
   });
   return base;
 }
 
 export default function DashboardPage() {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const navigate         = useNavigate();
   const [builds, setBuilds] = useState<Build[]>([]);
 
   const loadBuilds = () => setBuilds(getBuildsForUser(user!.id));
@@ -37,96 +34,100 @@ export default function DashboardPage() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#030712', color: '#f3f4f6' }}>
+    <div className="min-h-screen bg-gray-950 text-gray-100">
       {/* Navbar */}
-      <header style={{ background: '#0f172a', borderBottom: '1px solid #1f2937', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: 24 }}>⛩️</span>
-          <span style={{ color: '#f59e0b', fontWeight: 900, fontSize: 18, letterSpacing: 2 }}>YOTEI LEGENDS</span>
+      <header className="bg-slate-900 border-b border-gray-800 px-6 flex items-center justify-between h-[60px]">
+        <div className="flex items-center gap-2.5">
+          <span className="text-2xl">⛩️</span>
+          <span className="text-amber-400 font-black text-lg tracking-widest">YOTEI LEGENDS</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <span style={{ color: '#6b7280', fontSize: 13 }}>
-            ⚔️ <strong style={{ color: '#e5e7eb' }}>{user?.username}</strong>
+        <div className="flex items-center gap-4">
+          <span className="text-gray-500 text-sm">
+            ⚔️ <strong className="text-gray-200">{user?.username}</strong>
           </span>
           <button
             onClick={() => { logout(); navigate('/'); }}
-            style={{ background: '#1f2937', border: '1px solid #374151', color: '#9ca3af', borderRadius: 8, padding: '6px 14px', cursor: 'pointer', fontSize: 13 }}
+            className="bg-gray-800 border border-gray-700 text-gray-400 rounded-lg px-3.5 py-1.5 cursor-pointer text-sm hover:text-gray-200 transition-colors"
           >
             Sign Out
           </button>
         </div>
       </header>
 
-      <main style={{ maxWidth: 1100, margin: '0 auto', padding: '32px 20px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 28 }}>
+      <main className="max-w-[1100px] mx-auto px-5 py-8">
+        <div className="flex justify-between items-center mb-7">
           <div>
-            <h2 style={{ margin: 0, fontSize: 24, fontWeight: 800 }}>Your Builds</h2>
-            <p style={{ margin: '4px 0 0', color: '#6b7280', fontSize: 14 }}>
+            <h2 className="m-0 text-2xl font-extrabold">Your Builds</h2>
+            <p className="mt-1 text-gray-500 text-sm">
               {builds.length} build{builds.length !== 1 ? 's' : ''} saved
             </p>
           </div>
           <button
             onClick={() => navigate('/builder')}
-            style={{ background: '#f59e0b', color: '#030712', border: 'none', borderRadius: 10, padding: '12px 24px', fontWeight: 700, fontSize: 14, cursor: 'pointer', letterSpacing: 1 }}
+            className="bg-amber-400 text-gray-950 border-none rounded-xl px-6 py-3 font-bold text-sm cursor-pointer tracking-widest hover:bg-amber-300 transition-colors"
           >
             + New Build
           </button>
         </div>
 
         {builds.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '80px 20px', color: '#4b5563' }}>
-            <div style={{ fontSize: 64, marginBottom: 16 }}>🥷</div>
-            <h3 style={{ fontSize: 20, color: '#6b7280', marginBottom: 8 }}>No builds yet</h3>
-            <p style={{ fontSize: 14 }}>Create your first character build to begin your legend.</p>
+          <div className="text-center py-20 px-5 text-gray-600">
+            <div className="text-6xl mb-4">🥷</div>
+            <h3 className="text-xl text-gray-500 mb-2">No builds yet</h3>
+            <p className="text-sm">Create your first character build to begin your legend.</p>
             <button
               onClick={() => navigate('/builder')}
-              style={{ marginTop: 20, background: '#f59e0b', color: '#030712', border: 'none', borderRadius: 10, padding: '12px 28px', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}
+              className="mt-5 bg-amber-400 text-gray-950 border-none rounded-xl px-7 py-3 font-bold text-sm cursor-pointer hover:bg-amber-300 transition-colors"
             >
               Create First Build
             </button>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 20 }}>
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-5">
             {builds.map((build) => {
               const cls   = getClassById(build.classId);
               const stats = computeTotalStats(build);
               return (
                 <div
                   key={build.id}
-                  style={{ background: '#111827', border: `1px solid ${cls?.color ?? '#1f2937'}44`, borderRadius: 14, overflow: 'hidden', transition: 'transform 0.15s', cursor: 'pointer' }}
-                  onMouseOver={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
-                  onMouseOut={(e)  => (e.currentTarget.style.transform = 'translateY(0)')}
+                  className="bg-gray-900 rounded-2xl overflow-hidden transition-transform duration-150 cursor-pointer hover:-translate-y-0.5"
+                  style={{ border: `1px solid ${(cls?.color ?? '#374151')}44` }}
                   onClick={() => navigate(`/builder/${build.id}`)}
                 >
-                  <div style={{ background: cls?.color ?? '#374151', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <span style={{ fontSize: 28 }}>{cls?.icon ?? '❓'}</span>
+                  {/* Class header */}
+                  <div
+                    className="px-4 py-3.5 flex items-center gap-3"
+                    style={{ background: cls?.color ?? '#374151' }}
+                  >
+                    <span className="text-[28px]">{cls?.icon ?? '❓'}</span>
                     <div>
-                      <div style={{ fontWeight: 800, fontSize: 16 }}>{build.name}</div>
-                      <div style={{ fontSize: 12, opacity: 0.85, textTransform: 'uppercase', letterSpacing: 1 }}>
+                      <div className="font-extrabold text-base text-gray-950">{build.name}</div>
+                      <div className="text-xs opacity-85 uppercase tracking-widest text-gray-950">
                         {cls?.name ?? 'Unknown Class'}
                       </div>
                     </div>
                   </div>
 
-                  <div style={{ padding: '14px 18px' }}>
+                  {/* Stats */}
+                  <div className="px-4 py-3.5">
                     {(Object.entries(stats) as [StatKey, number][]).map(([stat, val]) => (
                       <StatBar key={stat} stat={stat} value={Math.min(val, 100)} compact />
                     ))}
 
-                    <div style={{ marginTop: 14, paddingTop: 14, borderTop: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: 11, color: '#4b5563' }}>
+                    <div className="mt-3.5 pt-3.5 border-t border-gray-800 flex justify-between items-center">
+                      <span className="text-[11px] text-gray-600">
                         {new Date(build.createdAt).toLocaleDateString()}
                       </span>
-                      <div style={{ display: 'flex', gap: 8 }}>
+                      <div className="flex gap-2">
                         <button
                           onClick={(e) => { e.stopPropagation(); navigate(`/builder/${build.id}`); }}
-                          style={{ background: '#1f2937', border: '1px solid #374151', color: '#9ca3af', borderRadius: 6, padding: '4px 12px', cursor: 'pointer', fontSize: 12 }}
+                          className="bg-gray-800 border border-gray-700 text-gray-400 rounded-md px-3 py-1 cursor-pointer text-xs hover:text-gray-200 transition-colors"
                         >
                           Edit
                         </button>
                         <button
                           onClick={(e) => { e.stopPropagation(); handleDelete(build.id); }}
-                          style={{ background: '#450a0a', border: '1px solid #7f1d1d', color: '#fca5a5', borderRadius: 6, padding: '4px 12px', cursor: 'pointer', fontSize: 12 }}
+                          className="bg-red-950 border border-red-900 text-red-300 rounded-md px-3 py-1 cursor-pointer text-xs hover:bg-red-900 transition-colors"
                         >
                           Delete
                         </button>

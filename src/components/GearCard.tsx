@@ -15,58 +15,47 @@ export default function GearCard({ gear, selected = false, onClick, compact = fa
   return (
     <div
       onClick={onClick}
+      className={`relative overflow-hidden rounded-xl transition-all duration-200
+        ${compact ? 'px-3 py-2.5' : 'p-4'}
+        ${onClick ? 'cursor-pointer' : 'cursor-default'}
+        ${selected ? 'bg-[#1e3a5f]' : 'bg-gray-900'}`}
       style={{
-        background: selected ? '#1e3a5f' : '#111827',
         border: `2px solid ${selected ? '#60a5fa' : rarityColor + '55'}`,
-        borderRadius: 10,
-        padding: compact ? '10px 12px' : 16,
-        cursor: onClick ? 'pointer' : 'default',
-        transition: 'all 0.2s',
         boxShadow: selected ? '0 0 12px #60a5fa66' : 'none',
-        position: 'relative',
-        overflow: 'hidden',
       }}
     >
       {/* Rarity stripe */}
       <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: 4,
-          height: '100%',
-          background: rarityColor,
-          borderRadius: '10px 0 0 10px',
-        }}
+        className="absolute top-0 left-0 w-1 h-full rounded-l-xl"
+        style={{ background: rarityColor }}
       />
 
-      <div style={{ paddingLeft: 8 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+      <div className="pl-2">
+        <div className={`flex items-center gap-2 ${compact ? '' : 'mb-1'}`}>
           <GearIcon
             weaponType={gear.weaponType}
             fallback={gear.icon}
             size={compact ? 18 : 24}
             color={rarityColor}
           />
-          <div style={{ flex: 1 }}>
-            <div style={{ fontWeight: 700, fontSize: compact ? 13 : 15, color: '#f3f4f6' }}>
+          <div className="flex-1">
+            <div className={`font-bold text-gray-100 ${compact ? 'text-[13px]' : 'text-[15px]'}`}>
               {gear.name}
             </div>
-            <div style={{ fontSize: 11, color: rarityColor, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>
+            <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: rarityColor }}>
               {gear.rarity} · {gear.category}
             </div>
           </div>
           {selected && (
-            <span style={{ color: '#60a5fa', fontSize: 18, fontWeight: 700 }}>✓</span>
+            <span className="text-blue-400 text-lg font-bold">✓</span>
           )}
         </div>
 
         {!compact && (
-          <p style={{ fontSize: 12, color: '#9ca3af', margin: '6px 0 10px', lineHeight: 1.5 }}>
+          <p className="text-xs text-gray-400 mt-1.5 mb-2.5 leading-relaxed">
             {gear.description}
           </p>
         )}
-
       </div>
     </div>
   );
