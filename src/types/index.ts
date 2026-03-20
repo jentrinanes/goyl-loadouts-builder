@@ -23,7 +23,7 @@ export interface ClassDef {
   meleeSlotTypes?: Record<string, MeleeWeaponType>;
 }
 
-export type GearCategory = 'Melee' | 'Range' | 'Charm' | 'Ghost Weapon';
+export type GearCategory = 'Melee' | 'Range' | 'Charm' | 'Ghost Tool';
 export type GearRarity = 'Common' | 'Rare' | 'Epic' | 'Legendary';
 export type MeleeWeaponType = 'katana' | 'dual_katana' | 'yari' | 'kusarigama' | 'odachi';
 

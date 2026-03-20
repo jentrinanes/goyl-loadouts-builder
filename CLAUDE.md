@@ -38,7 +38,7 @@ src/
 
 ## Key Types (src/types/index.ts)
 - `MeleeWeaponType` — `'katana' | 'dual_katana' | 'yari' | 'kusarigama' | 'odachi'`
-- `GearCategory` — `'Melee' | 'Range' | 'Charm' | 'Ghost Weapon'`
+- `GearCategory` — `'Melee' | 'Range' | 'Charm' | 'Ghost Tool'`
 - `GearRarity` — `'Common' | 'Rare' | 'Epic' | 'Legendary'`
 - `ClassDef` — includes optional `meleeSlotTypes?: Record<string, MeleeWeaponType>` to restrict per-slot weapon choices
 - `Gear` — includes `attributes: string[]` (up to 3 selectable per equipped weapon) and optional `weaponType?: MeleeWeaponType`
@@ -53,7 +53,7 @@ src/
 | range1 | Range I | Range |
 | range2 | Range II | Range |
 | charm | Charm | Charm |
-| ghostWeapon | Ghost Weapon | Ghost Weapon |
+| ghostWeapon | Ghost Tool | Ghost Tool |
 
 ## Classes
 - **Samurai** — attack/defense focused

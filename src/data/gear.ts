@@ -4,7 +4,7 @@ export const GEAR_CATEGORIES: Record<string, GearCategory> = {
   MELEE: 'Melee',
   RANGE: 'Range',
   CHARM: 'Charm',
-  GHOST_WEAPON: 'Ghost Weapon',
+  GHOST_WEAPON: 'Ghost Tool',
 };
 
 export const GEAR_SLOTS: GearSlot[] = [
@@ -14,7 +14,7 @@ export const GEAR_SLOTS: GearSlot[] = [
   { id: 'range1',      label: 'Range I',      category: 'Range'        },
   { id: 'range2',      label: 'Range II',     category: 'Range'        },
   { id: 'charm',       label: 'Charm',        category: 'Charm'        },
-  { id: 'ghostWeapon', label: 'Ghost Weapon', category: 'Ghost Weapon' },
+  { id: 'ghostWeapon', label: 'Ghost Tool', category: 'Ghost Tool' },
 ];
 
 export const GEARS: Gear[] = [
@@ -432,7 +432,7 @@ export const GEARS: Gear[] = [
   {
     id: 'kunai_storm',
     name: 'Kunai Storm',
-    category: 'Ghost Weapon',
+    category: 'Ghost Tool',
     rarity: 'Legendary',
     icon: '🌀',
     description: 'Unleashes a volley of spirit-blessed kunai.',
@@ -443,7 +443,7 @@ export const GEARS: Gear[] = [
   {
     id: 'smoke_bomb',
     name: 'Shadow Smoke',
-    category: 'Ghost Weapon',
+    category: 'Ghost Tool',
     rarity: 'Epic',
     icon: '💨',
     description: 'Dense spirit smoke blinds and disorients enemies.',
@@ -454,7 +454,7 @@ export const GEARS: Gear[] = [
   {
     id: 'spirit_bomb',
     name: 'Spirit Bomb',
-    category: 'Ghost Weapon',
+    category: 'Ghost Tool',
     rarity: 'Legendary',
     icon: '💣',
     description: 'A volatile orb of condensed spirit energy. Devastating AoE.',
@@ -465,7 +465,7 @@ export const GEARS: Gear[] = [
   {
     id: 'jade_horn',
     name: 'Jade War Horn',
-    category: 'Ghost Weapon',
+    category: 'Ghost Tool',
     rarity: 'Epic',
     icon: '📯',
     description: 'A horn carved from sacred jade. Its call rallies spirits.',
@@ -476,7 +476,7 @@ export const GEARS: Gear[] = [
   {
     id: 'phantom_shuriken',
     name: 'Phantom Shuriken',
-    category: 'Ghost Weapon',
+    category: 'Ghost Tool',
     rarity: 'Epic',
     icon: '⭐',
     description: 'Shurikens that phase through walls before striking.',
