@@ -17,6 +17,17 @@ export const GEAR_SLOTS: GearSlot[] = [
   { id: 'ghostWeapon', label: 'Ghost Tool', category: 'Ghost Tool' },
 ];
 
+export const ATTR2_OPTIONS: string[] = [
+  'Enemy Staggered Damage',
+  'Execution Damage',
+  'Ultimate Gain',
+  'Ultimate Damage',
+  'Spirit Move Damage',
+  'Thrown Weapon Damage',
+  'Perfect Parry Window',
+  'Class Ability Cooldown Reduction',
+];
+
 export const GEARS: Gear[] = [
   // --- MELEE: KATANA ---
   {
@@ -28,7 +39,8 @@ export const GEARS: Gear[] = [
     description: 'A katana honed for the swift Iaido draw. First strike is everything.',
     stats: { attack: 60, defense: 10, health: 5, resolve: 15, stealth: 10, ranged: 0 },
     perk: 'First strike of each encounter deals bonus damage',
-    attributes: ['Perfect Parry', 'Swift Strike', 'Spirit Gain', 'Counter Strike'],
+    attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
+    attributes3: ['Swift Draw', 'First Strike', 'Momentum Slash'],
     weaponType: 'katana',
   },
   {
@@ -40,7 +52,8 @@ export const GEARS: Gear[] = [
     description: 'Forged with brutal force in mind. Breaks guards and crushes armor.',
     stats: { attack: 75, defense: 15, health: 10, resolve: 10, stealth: 0, ranged: 0 },
     perk: 'Breaks enemy guard on heavy attacks',
-    attributes: ['Brutal Force', 'Stagger', 'Iron Will', 'Counter Strike'],
+    attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
+    attributes3: ['Guard Break', 'Armor Shatter', 'Crushing Blow'],
     weaponType: 'katana',
   },
   {
@@ -52,7 +65,8 @@ export const GEARS: Gear[] = [
     description: 'Crackling with storm energy, each slash calls down thunder.',
     stats: { attack: 90, defense: 15, health: 10, resolve: 20, stealth: 0, ranged: 0 },
     perk: 'Strikes chain lightning to nearby enemies',
-    attributes: ['Ghost Stance', 'Perfect Parry', 'Spirit Gain', 'Counter Strike'],
+    attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
+    attributes3: ['Resolve Of Lightning', 'Thunder Clap', 'Storm Surge'],
     weaponType: 'katana',
   },
 
@@ -66,7 +80,8 @@ export const GEARS: Gear[] = [
     description: 'Twin blades that never stop. A relentless storm of slashes.',
     stats: { attack: 80, defense: 5, health: 5, resolve: 10, stealth: 10, ranged: 0 },
     perk: 'Each consecutive hit increases attack speed',
-    attributes: ['Chain Attack', 'Relentless Strikes', 'Swift Strike', 'Spirit Gain'],
+    attributes1: ['Dual Katana Damage', 'Dual Katana Speed', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Flurry Strike Damage'],
+    attributes3: ['Endless Assault', 'Rapid Flurry', 'Twin Fang'],
     weaponType: 'dual_katana',
   },
   {
@@ -78,7 +93,8 @@ export const GEARS: Gear[] = [
     description: 'Dual blades kept in perfect balance — one for offense, one for defense.',
     stats: { attack: 65, defense: 25, health: 10, resolve: 15, stealth: 5, ranged: 0 },
     perk: 'Parrying with dual katana restores resolve',
-    attributes: ['Perfect Parry', 'Deflect', 'Spirit Gain', 'Counter Strike'],
+    attributes1: ['Dual Katana Damage', 'Dual Katana Speed', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Flurry Strike Damage'],
+    attributes3: ['Counter Stance', 'Parry Master', 'Dual Guard'],
     weaponType: 'dual_katana',
   },
   {
@@ -90,7 +106,8 @@ export const GEARS: Gear[] = [
     description: 'Two blades fused with raw lightning. Enemies struck are paralyzed.',
     stats: { attack: 85, defense: 10, health: 5, resolve: 25, stealth: 5, ranged: 0 },
     perk: 'Dual strikes have a chance to stun enemies',
-    attributes: ['Chain Attack', 'Ghost Stance', 'Swift Strike', 'Spirit Drain'],
+    attributes1: ['Dual Katana Damage', 'Dual Katana Speed', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Flurry Strike Damage'],
+    attributes3: ['Lightning Chain', 'Arc Strike', 'Volt Rush'],
     weaponType: 'dual_katana',
   },
 
@@ -104,7 +121,8 @@ export const GEARS: Gear[] = [
     description: 'A spear built for aggressive, relentless pressure.',
     stats: { attack: 70, defense: 10, health: 10, resolve: 5, stealth: 0, ranged: 0 },
     perk: 'Spear thrusts have extended reach',
-    attributes: ['Brutal Force', 'Stagger', 'War Cry', 'Iron Will'],
+    attributes1: ['Yari Damage', 'Yari Thrust Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Reach Bonus Damage'],
+    attributes3: ['Polearm Mastery', 'Thrust Combo', 'Spear Wall'],
     weaponType: 'yari',
   },
   {
@@ -116,7 +134,8 @@ export const GEARS: Gear[] = [
     description: 'A lightweight spear made for speed over power.',
     stats: { attack: 60, defense: 5, health: 5, resolve: 10, stealth: 15, ranged: 0 },
     perk: 'Faster recovery after each thrust',
-    attributes: ['Swift Strike', 'Chain Attack', 'Spirit Gain', 'Deflect'],
+    attributes1: ['Yari Damage', 'Yari Thrust Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Reach Bonus Damage'],
+    attributes3: ['Quick Thrust', 'Spear Dance', 'Fleeting Strike'],
     weaponType: 'yari',
   },
   {
@@ -128,7 +147,8 @@ export const GEARS: Gear[] = [
     description: 'A disciplined spear trained for counter-attacks and stance holding.',
     stats: { attack: 65, defense: 30, health: 15, resolve: 10, stealth: 0, ranged: 0 },
     perk: 'Counter-attacks deal significantly more damage',
-    attributes: ['Perfect Parry', 'Counter Strike', 'Iron Will', 'Deflect'],
+    attributes1: ['Yari Damage', 'Yari Thrust Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Reach Bonus Damage'],
+    attributes3: ['Defensive Stance', 'Guard Thrust', 'Hold The Line'],
     weaponType: 'yari',
   },
   {
@@ -140,7 +160,8 @@ export const GEARS: Gear[] = [
     description: 'A storm-blessed spear that crackles with thunder on every thrust.',
     stats: { attack: 88, defense: 20, health: 10, resolve: 20, stealth: 0, ranged: 0 },
     perk: 'Charged thrusts release a lightning shockwave',
-    attributes: ['Brutal Force', 'Stagger', 'Ghost Stance', 'War Cry'],
+    attributes1: ['Yari Damage', 'Yari Thrust Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Reach Bonus Damage'],
+    attributes3: ['Storm Pierce', 'Thunder Lance', 'Bolt Thrust'],
     weaponType: 'yari',
   },
 
@@ -154,7 +175,8 @@ export const GEARS: Gear[] = [
     description: 'A light chain sickle favored by agile fighters who dance around enemies.',
     stats: { attack: 60, defense: 10, health: 5, resolve: 15, stealth: 20, ranged: 0 },
     perk: 'Dodge distance increased while equipped',
-    attributes: ['Swift Strike', 'Shadow Step', 'Chain Attack', 'Spirit Gain'],
+    attributes1: ['Kusarigama Damage', 'Chain Pull Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Sweep Attack Damage'],
+    attributes3: ['Chain Whip', 'Entangle', 'Quick Chain'],
     weaponType: 'kusarigama',
   },
   {
@@ -166,7 +188,8 @@ export const GEARS: Gear[] = [
     description: 'A chain sickle swung with savage momentum. Hard to block, harder to stop.',
     stats: { attack: 78, defense: 5, health: 5, resolve: 10, stealth: 10, ranged: 0 },
     perk: 'Chain hits reduce enemy block effectiveness',
-    attributes: ['Chain Attack', 'Relentless Strikes', 'Brutal Force', 'Stagger'],
+    attributes1: ['Kusarigama Damage', 'Chain Pull Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Sweep Attack Damage'],
+    attributes3: ['Chain Frenzy', 'Whirlwind Chain', 'Pull And Strike'],
     weaponType: 'kusarigama',
   },
   {
@@ -178,7 +201,8 @@ export const GEARS: Gear[] = [
     description: 'A spirit-woven chain sickle that fades in and out of sight mid-swing.',
     stats: { attack: 75, defense: 10, health: 5, resolve: 20, stealth: 40, ranged: 0 },
     perk: 'Kills with this weapon briefly turn you invisible',
-    attributes: ['Shadow Step', 'Stealth Strike', 'Spirit Drain', 'Ghost Stance'],
+    attributes1: ['Kusarigama Damage', 'Chain Pull Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Sweep Attack Damage'],
+    attributes3: ['Shadow Chain', 'Phantom Strike', 'Disappear'],
     weaponType: 'kusarigama',
   },
 
@@ -192,7 +216,8 @@ export const GEARS: Gear[] = [
     description: 'A massive two-handed sword. Slow but devastatingly powerful.',
     stats: { attack: 85, defense: 20, health: 15, resolve: 0, stealth: 0, ranged: 0 },
     perk: 'Heavy attacks stagger all nearby enemies',
-    attributes: ['Brutal Force', 'Stagger', 'Ground Slam', 'Iron Will'],
+    attributes1: ['Odachi Damage', 'Heavy Strike Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Overhead Slam Damage'],
+    attributes3: ['Heavy Impact', 'Wide Sweep', 'Brute Force'],
     weaponType: 'odachi',
   },
   {
@@ -204,7 +229,8 @@ export const GEARS: Gear[] = [
     description: 'An odachi imbued with restorative spirits. Each kill mends wounds.',
     stats: { attack: 75, defense: 20, health: 35, resolve: 15, stealth: 0, ranged: 0 },
     perk: 'Kills restore a portion of health',
-    attributes: ['Lifesteal', 'Iron Will', 'War Cry', 'Stagger'],
+    attributes1: ['Odachi Damage', 'Heavy Strike Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Overhead Slam Damage'],
+    attributes3: ['Life Drain', 'Healing Strike', 'Vampiric Blade'],
     weaponType: 'odachi',
   },
   {
@@ -216,7 +242,8 @@ export const GEARS: Gear[] = [
     description: 'Carved from the heart of Yotei itself. Immovable. Unstoppable.',
     stats: { attack: 95, defense: 35, health: 20, resolve: 10, stealth: 0, ranged: 0 },
     perk: 'Cannot be staggered while attacking',
-    attributes: ['Brutal Force', 'Ground Slam', 'Iron Will', 'War Cry'],
+    attributes1: ['Odachi Damage', 'Heavy Strike Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Overhead Slam Damage'],
+    attributes3: ['Earthshaker', 'Mountain Crush', 'Avalanche Strike'],
     weaponType: 'odachi',
   },
 
@@ -230,7 +257,8 @@ export const GEARS: Gear[] = [
     description: 'A compact short bow prized for its speed. Ideal for quick follow-up shots.',
     stats: { attack: 45, defense: 5, health: 5, resolve: 10, stealth: 10, ranged: 60 },
     perk: 'Faster draw speed on consecutive shots',
-    attributes: ['Rapid Fire', 'Headshot Focus', 'Spirit Gain', 'Wind Aim'],
+    attributes1: ['Hankyu Damage', 'Rapid Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Point Blank Damage'],
+    attributes3: ['Quick Draw', 'Volley', 'Barrage'],
   },
   {
     id: 'storm_hankyu',
@@ -241,7 +269,8 @@ export const GEARS: Gear[] = [
     description: 'A short bow strung with storm-treated sinew. Arrows fly with crackling force.',
     stats: { attack: 55, defense: 5, health: 0, resolve: 10, stealth: 5, ranged: 70 },
     perk: 'Rapid shots build up a static charge',
-    attributes: ['Rapid Fire', 'Eagle Eye', 'Chain Lightning', 'Spirit Gain'],
+    attributes1: ['Hankyu Damage', 'Rapid Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Point Blank Damage'],
+    attributes3: ['Storm Barrage', 'Electric Arrow', 'Chain Shot'],
   },
   {
     id: 'hurricane_hankyu',
@@ -252,7 +281,8 @@ export const GEARS: Gear[] = [
     description: 'A legendary short bow that fires like a hurricane. Each volley is a tempest.',
     stats: { attack: 65, defense: 5, health: 5, resolve: 20, stealth: 10, ranged: 85 },
     perk: 'Volleys of arrows knock back groups of enemies',
-    attributes: ['Rapid Fire', 'Eagle Eye', 'Chain Lightning', 'Spirit Gain'],
+    attributes1: ['Hankyu Damage', 'Rapid Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Point Blank Damage'],
+    attributes3: ['Gale Force', 'Whirlwind Volley', 'Eye Of The Storm'],
   },
 
   // --- RANGE: TANEGASHIMA (Rifle) ---
@@ -265,7 +295,8 @@ export const GEARS: Gear[] = [
     description: 'A matchlock rifle of foreign make. Slow to reload but devastating at any range.',
     stats: { attack: 80, defense: 5, health: 0, resolve: 5, stealth: 0, ranged: 80 },
     perk: 'Fully-charged shot penetrates armor',
-    attributes: ['Piercing Shot', 'Headshot Focus', 'Brutal Force', 'Eagle Eye'],
+    attributes1: ['Tanegashima Damage', 'Charged Shot Damage', 'All Ranged Damage', 'Armor Pierce Damage', 'Spirit Gain On Ranged', 'Long Range Damage'],
+    attributes3: ['Iron Shot', 'Penetrating Round', 'Deadeye'],
   },
   {
     id: 'lightning_tanegashima',
@@ -276,7 +307,8 @@ export const GEARS: Gear[] = [
     description: 'A rifle blessed by storm spirits. Each shot crackles and blinds enemies.',
     stats: { attack: 95, defense: 5, health: 0, resolve: 15, stealth: 0, ranged: 95 },
     perk: 'Shots release a lightning burst on impact',
-    attributes: ['Piercing Shot', 'Chain Lightning', 'Headshot Focus', 'Eagle Eye'],
+    attributes1: ['Tanegashima Damage', 'Charged Shot Damage', 'All Ranged Damage', 'Armor Pierce Damage', 'Spirit Gain On Ranged', 'Long Range Damage'],
+    attributes3: ['Thunder Shot', 'Blinding Flash', 'Overcharge'],
   },
 
   // --- RANGE: YUMI (Long Bow) ---
@@ -289,7 +321,8 @@ export const GEARS: Gear[] = [
     description: 'The traditional Japanese longbow. Balanced power and precision.',
     stats: { attack: 60, defense: 5, health: 10, resolve: 10, stealth: 5, ranged: 70 },
     perk: 'Drawn shots deal bonus damage beyond close range',
-    attributes: ['Headshot Focus', 'Piercing Shot', 'Eagle Eye', 'Wind Aim'],
+    attributes1: ['Yumi Damage', 'Drawn Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Headshot Damage'],
+    attributes3: ['Precise Draw', 'Long Shot', 'Arching Arrow'],
   },
   {
     id: 'skipping_stone_bow',
@@ -300,7 +333,8 @@ export const GEARS: Gear[] = [
     description: 'A legendary yumi whose arrows bounce between enemies like stones on water.',
     stats: { attack: 70, defense: 0, health: 5, resolve: 20, stealth: 15, ranged: 85 },
     perk: 'Arrows ricochet to hit up to 2 additional enemies',
-    attributes: ['Chain Effect', 'Eagle Eye', 'Headshot Focus', 'Spirit Gain'],
+    attributes1: ['Yumi Damage', 'Drawn Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Headshot Damage'],
+    attributes3: ['Stone Skip', 'Bouncing Arrow', 'Ricochet Shot'],
   },
   {
     id: 'true_aim_yumi',
@@ -311,7 +345,8 @@ export const GEARS: Gear[] = [
     description: 'A yumi carved for a single purpose: never missing. Accuracy above all.',
     stats: { attack: 65, defense: 5, health: 5, resolve: 10, stealth: 5, ranged: 90 },
     perk: 'Aim sway is eliminated at full draw',
-    attributes: ['Eagle Eye', 'Headshot Focus', 'Wind Aim', 'Piercing Shot'],
+    attributes1: ['Yumi Damage', 'Drawn Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Headshot Damage'],
+    attributes3: ['True Flight', 'Perfect Draw', 'Unwavering Aim'],
   },
 
   // --- RANGE: BOMBS ---
@@ -324,7 +359,8 @@ export const GEARS: Gear[] = [
     description: 'A bomb that releases a powerful shockwave on detonation, staggering all nearby foes.',
     stats: { attack: 55, defense: 0, health: 0, resolve: 5, stealth: 0, ranged: 40 },
     perk: 'Staggered enemies take increased damage',
-    attributes: ['AoE Blast', 'Stagger', 'Brutal Force', 'Fear'],
+    attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
+    attributes3: ['Shockwave', 'Stun Blast', 'Ripple Force'],
   },
   {
     id: 'vengeful_onibi_bomb',
@@ -335,7 +371,8 @@ export const GEARS: Gear[] = [
     description: 'A cursed bomb filled with wrathful spirit fire. Burns enemies from within.',
     stats: { attack: 75, defense: 0, health: 0, resolve: 15, stealth: 0, ranged: 50 },
     perk: 'Spirit fire lingers and spreads between enemies',
-    attributes: ['AoE Blast', 'Spirit Drain', 'Fear', 'Chain Effect'],
+    attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
+    attributes3: ['Spirit Flame', 'Cursed Burn', 'Onibi Surge'],
   },
   {
     id: 'blind_bomb',
@@ -346,7 +383,8 @@ export const GEARS: Gear[] = [
     description: 'Releases a cloud of blinding ash. Enemies caught inside cannot target the user.',
     stats: { attack: 20, defense: 15, health: 0, resolve: 10, stealth: 30, ranged: 30 },
     perk: 'Blinded enemies lose track of your position',
-    attributes: ['Blind', 'Silence', 'Stealth Veil', 'AoE Blast'],
+    attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
+    attributes3: ['Smoke Veil', 'Blinding Cloud', 'Shadow Veil'],
   },
   {
     id: 'healing_blind_bomb',
@@ -357,7 +395,8 @@ export const GEARS: Gear[] = [
     description: 'A sacred bomb that blinds foes and mends wounds. Spirit and body restored together.',
     stats: { attack: 20, defense: 10, health: 30, resolve: 20, stealth: 20, ranged: 30 },
     perk: 'Restores health to self and allies caught in the blast',
-    attributes: ['Blind', 'Healing Pulse', 'AoE Blast', 'Spirit Ward'],
+    attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
+    attributes3: ['Healing Mist', 'Restorative Smoke', 'Ward Of Life'],
   },
 
   // --- CHARM ---
@@ -370,7 +409,8 @@ export const GEARS: Gear[] = [
     description: "A fox spirit's blessing that sharpens the warrior's resolve.",
     stats: { attack: 0, defense: 0, health: 20, resolve: 40, stealth: 10, ranged: 10 },
     perk: '+2 resolve on kill',
-    attributes: ['Spirit Ward', 'Resolve Surge', 'Stealth Veil', "Nature's Grace"],
+    attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes3: ['Fox Blessing', 'Spirit Link', 'Divine Favor'],
   },
   {
     id: 'charm_of_fortitude',
@@ -381,7 +421,8 @@ export const GEARS: Gear[] = [
     description: 'Stone-carved charm that hardens the spirit against pain.',
     stats: { attack: 0, defense: 40, health: 35, resolve: 10, stealth: 0, ranged: 0 },
     perk: 'Reduce damage taken by 10%',
-    attributes: ['Fortitude', 'Iron Will', 'Spirit Ward', 'Stone Skin'],
+    attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes3: ['Unbreakable', 'Stone Barrier', 'Last Stand'],
   },
   {
     id: 'charm_of_silence',
@@ -392,7 +433,8 @@ export const GEARS: Gear[] = [
     description: 'Muffles footsteps and heartbeat. The ghost walks unseen.',
     stats: { attack: 0, defense: 5, health: 10, resolve: 10, stealth: 45, ranged: 0 },
     perk: 'Detection meter fills 20% slower',
-    attributes: ['Stealth Veil', 'Shadow Step', 'Spirit Ward', 'Silence'],
+    attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes3: ['Ghost Walk', 'Shadow Meld', 'Unseen Blade'],
   },
   {
     id: 'charm_of_vengeance',
@@ -403,7 +445,8 @@ export const GEARS: Gear[] = [
     description: 'Fueled by fallen allies. Wrath made manifest.',
     stats: { attack: 35, defense: 0, health: 0, resolve: 25, stealth: 0, ranged: 15 },
     perk: '+5% attack for each fallen ally (max 30%)',
-    attributes: ['Vengeance', 'War Cry', 'Resolve Surge', 'Brutal Force'],
+    attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes3: ['Blood Oath', 'Wrath Ignited', "Martyr's Fury"],
   },
   {
     id: 'charm_of_winds',
@@ -414,7 +457,8 @@ export const GEARS: Gear[] = [
     description: 'Calls upon the mountain winds to guide arrows and blades.',
     stats: { attack: 20, defense: 0, health: 10, resolve: 15, stealth: 5, ranged: 25 },
     perk: '+10% attack and ranged damage',
-    attributes: ['Wind Blessing', 'Eagle Eye', "Nature's Grace", 'Swift Strike'],
+    attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes3: ['Gust Step', 'Tailwind', 'Storm Rider'],
   },
   {
     id: 'charm_of_earth',
@@ -425,7 +469,8 @@ export const GEARS: Gear[] = [
     description: 'Ground yourself in stone. Immovable when standing still.',
     stats: { attack: 0, defense: 50, health: 40, resolve: 0, stealth: 0, ranged: 0 },
     perk: '+20% defense while not moving',
-    attributes: ['Stone Skin', 'Iron Will', 'Fortitude', 'Ground Slam'],
+    attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes3: ['Rooted Power', 'Tremor', 'Immovable'],
   },
 
   // --- GHOST WEAPON ---
@@ -438,7 +483,8 @@ export const GEARS: Gear[] = [
     description: 'Unleashes a volley of spirit-blessed kunai.',
     stats: { attack: 50, defense: 0, health: 0, resolve: 0, stealth: 15, ranged: 40 },
     perk: 'Hits 3 enemies simultaneously',
-    attributes: ['Chain Effect', 'Piercing Shot', 'Spirit Drain', 'Rapid Fire'],
+    attributes1: ['Ghost Tool Damage', 'Tool Cooldown Reduction', 'All Ghost Tool Damage', 'Status Effect Duration', 'Spirit Gain On Kill', 'Tool Range Bonus'],
+    attributes3: ['Phantom Volley', 'Spirit Pierce', 'Kunai Rain'],
   },
   {
     id: 'smoke_bomb',
@@ -449,7 +495,8 @@ export const GEARS: Gear[] = [
     description: 'Dense spirit smoke blinds and disorients enemies.',
     stats: { attack: 20, defense: 15, health: 0, resolve: 10, stealth: 50, ranged: 0 },
     perk: 'Enemies in smoke take +30% damage from stealth',
-    attributes: ['Silence', 'Stealth Veil', 'Shadow Step', 'Fear'],
+    attributes1: ['Ghost Tool Damage', 'Tool Cooldown Reduction', 'All Ghost Tool Damage', 'Status Effect Duration', 'Spirit Gain On Kill', 'Tool Range Bonus'],
+    attributes3: ['Deep Concealment', 'Smoke Dash', 'Ghost Veil'],
   },
   {
     id: 'spirit_bomb',
@@ -460,7 +507,8 @@ export const GEARS: Gear[] = [
     description: 'A volatile orb of condensed spirit energy. Devastating AoE.',
     stats: { attack: 70, defense: 0, health: 0, resolve: 5, stealth: 0, ranged: 30 },
     perk: 'Explosion stuns all enemies in range for 2s',
-    attributes: ['AoE Blast', 'Shock Pulse', 'Fear', 'Stagger'],
+    attributes1: ['Ghost Tool Damage', 'Tool Cooldown Reduction', 'All Ghost Tool Damage', 'Status Effect Duration', 'Spirit Gain On Kill', 'Tool Range Bonus'],
+    attributes3: ['Soul Explosion', 'Spirit Nova', 'Cascade Blast'],
   },
   {
     id: 'jade_horn',
@@ -471,7 +519,8 @@ export const GEARS: Gear[] = [
     description: 'A horn carved from sacred jade. Its call rallies spirits.',
     stats: { attack: 10, defense: 20, health: 30, resolve: 40, stealth: 0, ranged: 0 },
     perk: '+15% resolve generation for the team',
-    attributes: ['Resolve Surge', 'Spirit Ward', 'War Cry', "Nature's Grace"],
+    attributes1: ['Ghost Tool Damage', 'Tool Cooldown Reduction', 'All Ghost Tool Damage', 'Status Effect Duration', 'Spirit Gain On Kill', 'Tool Range Bonus'],
+    attributes3: ['Battle Hymn', 'Rallying Cry', 'Sacred Echo'],
   },
   {
     id: 'phantom_shuriken',
@@ -482,7 +531,8 @@ export const GEARS: Gear[] = [
     description: 'Shurikens that phase through walls before striking.',
     stats: { attack: 40, defense: 0, health: 0, resolve: 15, stealth: 20, ranged: 45 },
     perk: 'Ignores cover and shields',
-    attributes: ['Phase Strike', 'Piercing Shot', 'Silence', 'Chain Effect'],
+    attributes1: ['Ghost Tool Damage', 'Tool Cooldown Reduction', 'All Ghost Tool Damage', 'Status Effect Duration', 'Spirit Gain On Kill', 'Tool Range Bonus'],
+    attributes3: ['Phase Throw', 'Spectral Return', 'Ghost Step'],
   },
 ];
 

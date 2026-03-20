@@ -13,7 +13,6 @@ const STEP_GEAR       = 1;
 const STEP_REVIEW     = 2;
 
 const STAT_KEYS: StatKey[]  = ['attack', 'defense', 'health', 'resolve', 'stealth', 'ranged'];
-const MAX_ATTRIBUTES        = 3;
 const MAX_LEGENDARIES       = 2;
 
 function computeTotalStats(classId: string | null, gears: Record<string, string>): StatSet {
@@ -36,7 +35,7 @@ export default function BuilderPage() {
   const [buildName, setBuildName]           = useState('My Build');
   const [selectedClass, setSelectedClass]   = useState<string | null>(null);
   const [gears, setGears]                   = useState<Record<string, string>>({});
-  const [gearAttributes, setGearAttributes] = useState<Record<string, string[]>>({});
+  const [gearAttributes, setGearAttributes] = useState<Record<string, [string, string, string]>>({});
   const [activeSlot, setActiveSlot]         = useState(GEAR_SLOTS[0].id);
   const [saving, setSaving]                 = useState(false);
 
@@ -68,15 +67,11 @@ export default function BuilderPage() {
   const gearsForActiveSlot = activeSlotMeta
     ? getGearsByCategory(activeSlotMeta.category, slotWeaponType)
     : [];
-  const toggleAttribute = (slotId: string, attr: string) => {
+  const selectAttribute = (slotId: string, index: 0 | 1 | 2, value: string) => {
     setGearAttributes((prev) => {
-      const current  = prev[slotId] ?? [];
-      const isActive = current.includes(attr);
-      if (!isActive && current.length >= MAX_ATTRIBUTES) return prev;
-      return {
-        ...prev,
-        [slotId]: isActive ? current.filter((a) => a !== attr) : [...current, attr],
-      };
+      const current: [string, string, string] = [...(prev[slotId] ?? ['', '', ''])] as [string, string, string];
+      current[index] = value;
+      return { ...prev, [slotId]: current };
     });
   };
 
@@ -300,11 +295,10 @@ export default function BuilderPage() {
                         onClick={() => {
                           const wasNew = gears[activeSlot] !== gear.id;
                           setGears((prev) => ({ ...prev, [activeSlot]: gear.id }));
-                          if (wasNew) setGearAttributes((prev) => ({ ...prev, [activeSlot]: [] }));
+                          if (wasNew) setGearAttributes((prev) => ({ ...prev, [activeSlot]: ['', '', ''] }));
                         }}
-                        selectedAttributes={isSelected ? (gearAttributes[activeSlot] ?? []) : undefined}
-                        onAttributeToggle={isSelected ? (attr) => toggleAttribute(activeSlot, attr) : undefined}
-                        maxAttributes={MAX_ATTRIBUTES}
+                        selectedAttributes={isSelected ? (gearAttributes[activeSlot] ?? ['', '', '']) : undefined}
+                        onAttributeChange={isSelected ? (index, value) => selectAttribute(activeSlot, index, value) : undefined}
                       />
                     );
                   })}
@@ -391,7 +385,7 @@ export default function BuilderPage() {
                     <div className="flex flex-col gap-2.5">
                       {GEAR_SLOTS.map((slot) => {
                         const gear        = getGearById(gears[slot.id]);
-                        const activeAttrs = gearAttributes[slot.id] ?? [];
+                        const activeAttrs = (gearAttributes[slot.id] ?? []).filter(Boolean);
                         return gear ? (
                           <div key={slot.id}>
                             <GearCard gear={gear} compact />

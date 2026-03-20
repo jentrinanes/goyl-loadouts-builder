@@ -1,4 +1,4 @@
-import { RARITY_COLOR } from '../data/gear';
+import { RARITY_COLOR, ATTR2_OPTIONS } from '../data/gear';
 import GearIcon from './WeaponIcon';
 import type { Gear } from '../types';
 
@@ -8,9 +8,8 @@ interface GearCardProps {
   onClick?: () => void;
   compact?: boolean;
   disabled?: boolean;
-  selectedAttributes?: string[];
-  onAttributeToggle?: (attr: string) => void;
-  maxAttributes?: number;
+  selectedAttributes?: [string, string, string];
+  onAttributeChange?: (index: 0 | 1 | 2, value: string) => void;
 }
 
 export default function GearCard({
@@ -20,11 +19,13 @@ export default function GearCard({
   compact = false,
   disabled = false,
   selectedAttributes,
-  onAttributeToggle,
-  maxAttributes = 3,
+  onAttributeChange,
 }: GearCardProps) {
   const rarityColor    = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
-  const showAttributes = selected && !compact && onAttributeToggle && gear.attributes.length > 0;
+  const showAttributes = selected && !compact && !!onAttributeChange;
+
+  const attrOptions: string[][] = [gear.attributes1, ATTR2_OPTIONS, gear.attributes3];
+  const attrLabels = ['Attribute 1', 'Attribute 2', 'Attribute 3'];
 
   return (
     <div
@@ -79,37 +80,26 @@ export default function GearCard({
         {/* Inline attribute selector — only when selected */}
         {showAttributes && (
           <div
-            className="mt-3 pt-3 border-t border-blue-900"
+            className="border-t border-blue-900 mt-3 pt-3"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] text-gray-500 uppercase tracking-widest">Attributes</span>
-              <span className={`text-[11px] font-semibold ${
-                (selectedAttributes?.length ?? 0) >= maxAttributes ? 'text-amber-400' : 'text-gray-600'
-              }`}>
-                {selectedAttributes?.length ?? 0} / {maxAttributes}
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {gear.attributes.map((attr) => {
-                const active = selectedAttributes?.includes(attr) ?? false;
-                const capped = !active && (selectedAttributes?.length ?? 0) >= maxAttributes;
-                return (
-                  <button
-                    key={attr}
-                    onClick={() => onAttributeToggle(attr)}
-                    disabled={capped}
-                    className={`px-3 py-1 rounded-full text-xs border transition-all duration-150
-                      ${active
-                        ? 'bg-amber-900 border-amber-400 text-amber-200 font-semibold cursor-pointer'
-                        : capped
-                          ? 'bg-gray-800 border-gray-800 text-gray-700 cursor-not-allowed'
-                          : 'bg-gray-800 border-gray-700 text-gray-500 cursor-pointer hover:border-gray-500 hover:text-gray-300'}`}
+            <span className="text-[11px] text-gray-500 uppercase tracking-widest block mb-2">Attributes</span>
+            <div className="flex flex-col gap-2">
+              {attrLabels.map((label, i) => (
+                <div key={i}>
+                  <div className="text-[11px] text-gray-500 mb-1">{label}</div>
+                  <select
+                    value={selectedAttributes?.[i] ?? ''}
+                    onChange={(e) => onAttributeChange!(i as 0 | 1 | 2, e.target.value)}
+                    className="bg-gray-800 border border-gray-700 rounded-lg text-gray-200 text-xs px-2 py-1.5 w-full outline-none cursor-pointer"
                   >
-                    {active ? '✦ ' : ''}{attr}
-                  </button>
-                );
-              })}
+                    <option value="">— Select —</option>
+                    {attrOptions[i].map((opt) => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                </div>
+              ))}
             </div>
           </div>
         )}

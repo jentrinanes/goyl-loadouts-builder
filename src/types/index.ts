@@ -36,7 +36,8 @@ export interface Gear {
   description: string;
   stats: StatSet;
   perk: string;
-  attributes: string[];
+  attributes1: string[];
+  attributes3: string[];
   weaponType?: MeleeWeaponType;
 }
 
@@ -65,7 +66,7 @@ export interface Build {
   name: string;
   classId: string;
   gears: Record<string, string>;
-  gearAttributes: Record<string, string[]>;
+  gearAttributes: Record<string, [string, string, string]>;
   createdAt: number;
 }
 
