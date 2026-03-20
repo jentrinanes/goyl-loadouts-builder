@@ -36,35 +36,35 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
       {/* Navbar */}
-      <header className="bg-slate-900 border-b border-gray-800 px-6 flex items-center justify-between h-[60px]">
+      <header className="bg-slate-900 border-b border-gray-800 px-4 sm:px-6 flex items-center justify-between h-14">
         <div className="flex items-center gap-2.5">
           <span className="text-2xl">⛩️</span>
-          <span className="text-amber-400 font-black text-lg tracking-widest">YOTEI LEGENDS</span>
+          <span className="text-amber-400 font-black text-base sm:text-lg tracking-widest">YOTEI LEGENDS</span>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="text-gray-500 text-sm">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <span className="text-gray-500 text-sm hidden sm:block">
             ⚔️ <strong className="text-gray-200">{user?.username}</strong>
           </span>
           <button
             onClick={() => { logout(); navigate('/'); }}
-            className="bg-gray-800 border border-gray-700 text-gray-400 rounded-lg px-3.5 py-1.5 cursor-pointer text-sm hover:text-gray-200 transition-colors"
+            className="bg-gray-800 border border-gray-700 text-gray-400 rounded-lg px-3 sm:px-3.5 py-1.5 cursor-pointer text-sm hover:text-gray-200 transition-colors"
           >
             Sign Out
           </button>
         </div>
       </header>
 
-      <main className="max-w-[1100px] mx-auto px-5 py-8">
-        <div className="flex justify-between items-center mb-7">
+      <main className="max-w-[1100px] mx-auto px-4 sm:px-5 py-6 sm:py-8">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6 sm:mb-7">
           <div>
-            <h2 className="m-0 text-2xl font-extrabold">Your Builds</h2>
+            <h2 className="m-0 text-xl sm:text-2xl font-extrabold">Your Builds</h2>
             <p className="mt-1 text-gray-500 text-sm">
               {builds.length} build{builds.length !== 1 ? 's' : ''} saved
             </p>
           </div>
           <button
             onClick={() => navigate('/builder')}
-            className="bg-amber-400 text-gray-950 border-none rounded-xl px-6 py-3 font-bold text-sm cursor-pointer tracking-widest hover:bg-amber-300 transition-colors"
+            className="bg-amber-400 text-gray-950 border-none rounded-xl px-5 sm:px-6 py-2.5 sm:py-3 font-bold text-sm cursor-pointer tracking-widest hover:bg-amber-300 transition-colors self-start sm:self-auto"
           >
             + New Build
           </button>
@@ -83,7 +83,7 @@ export default function DashboardPage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 sm:gap-5">
             {builds.map((build) => {
               const cls   = getClassById(build.classId);
               const stats = computeTotalStats(build);
