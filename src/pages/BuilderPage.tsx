@@ -252,14 +252,6 @@ export default function BuilderPage() {
                   })}
                 </div>
 
-                {totalStats && (
-                  <div className="px-3 py-3.5 border-t border-gray-800">
-                    <div className="text-[11px] text-gray-600 uppercase tracking-widest mb-2">Total Stats</div>
-                    {STAT_KEYS.map((k) => (
-                      <StatBar key={k} stat={k} value={Math.min(totalStats[k], 100)} compact />
-                    ))}
-                  </div>
-                )}
               </div>
 
               {/* ── Right: gear grid + attribute panel ── */}
