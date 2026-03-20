@@ -8,12 +8,13 @@ import GearCard from '../components/GearCard';
 import StatBar from '../components/StatBar';
 import type { StatSet, StatKey } from '../types';
 
-const STEP_CLASS  = 0;
-const STEP_GEAR   = 1;
-const STEP_REVIEW = 2;
+const STEP_CLASS      = 0;
+const STEP_GEAR       = 1;
+const STEP_REVIEW     = 2;
 
-const STAT_KEYS: StatKey[] = ['attack', 'defense', 'health', 'resolve', 'stealth', 'ranged'];
-const MAX_ATTRIBUTES = 3;
+const STAT_KEYS: StatKey[]  = ['attack', 'defense', 'health', 'resolve', 'stealth', 'ranged'];
+const MAX_ATTRIBUTES        = 3;
+const MAX_LEGENDARIES       = 2;
 
 function computeTotalStats(classId: string | null, gears: Record<string, string>): StatSet {
   const base: StatSet = { attack: 0, defense: 0, health: 0, resolve: 0, stealth: 0, ranged: 0 };
@@ -56,6 +57,11 @@ export default function BuilderPage() {
   const totalStats      = selectedClass ? computeTotalStats(selectedClass, gears) : null;
   const gearsSelected   = Object.keys(gears).length;
   const allGearSelected = gearsSelected === GEAR_SLOTS.length;
+
+  const legendaryCount = Object.values(gears).filter(
+    (gearId) => getGearById(gearId)?.rarity === 'Legendary'
+  ).length;
+  const activeSlotIsLegendary = getGearById(gears[activeSlot])?.rarity === 'Legendary';
 
   const activeSlotMeta     = GEAR_SLOTS.find((s) => s.id === activeSlot);
   const slotWeaponType     = cls?.meleeSlotTypes?.[activeSlot];
@@ -271,14 +277,26 @@ export default function BuilderPage() {
                   <p className="mt-1 text-gray-600 text-xs sm:text-[13px]">Select a weapon, then configure its attributes below.</p>
                 </div>
 
+                {legendaryCount >= MAX_LEGENDARIES && !activeSlotIsLegendary && (
+                  <div className="flex items-center gap-2 mb-3 px-3 py-2 bg-amber-950 border border-amber-800 rounded-lg text-amber-300 text-xs">
+                    🔒 Legendary cap reached ({MAX_LEGENDARIES}/{MAX_LEGENDARIES}) — unequip a legendary to swap
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {gearsForActiveSlot.map((gear) => {
-                    const isSelected = gears[activeSlot] === gear.id;
+                    const isSelected      = gears[activeSlot] === gear.id;
+                    const isLegendaryCapped =
+                      gear.rarity === 'Legendary' &&
+                      !activeSlotIsLegendary &&
+                      legendaryCount >= MAX_LEGENDARIES &&
+                      !isSelected;
                     return (
                       <GearCard
                         key={gear.id}
                         gear={gear}
                         selected={isSelected}
+                        disabled={isLegendaryCapped}
                         onClick={() => {
                           const wasNew = gears[activeSlot] !== gear.id;
                           setGears((prev) => ({ ...prev, [activeSlot]: gear.id }));

@@ -7,6 +7,7 @@ interface GearCardProps {
   selected?: boolean;
   onClick?: () => void;
   compact?: boolean;
+  disabled?: boolean;
   selectedAttributes?: string[];
   onAttributeToggle?: (attr: string) => void;
   maxAttributes?: number;
@@ -17,6 +18,7 @@ export default function GearCard({
   selected = false,
   onClick,
   compact = false,
+  disabled = false,
   selectedAttributes,
   onAttributeToggle,
   maxAttributes = 3,
@@ -26,10 +28,10 @@ export default function GearCard({
 
   return (
     <div
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
       className={`relative overflow-hidden rounded-xl transition-all duration-200
         ${compact ? 'px-3 py-2.5' : 'p-4'}
-        ${onClick ? 'cursor-pointer' : 'cursor-default'}
+        ${disabled ? 'opacity-40 cursor-not-allowed' : onClick ? 'cursor-pointer' : 'cursor-default'}
         ${selected ? 'bg-[#1e3a5f]' : 'bg-gray-900'}`}
       style={{
         border: `2px solid ${selected ? '#60a5fa' : rarityColor + '55'}`,
@@ -59,8 +61,11 @@ export default function GearCard({
               {gear.rarity} · {gear.category}
             </div>
           </div>
-          {selected && (
+          {selected && !disabled && (
             <span className="text-blue-400 text-lg font-bold">✓</span>
+          )}
+          {disabled && (
+            <span className="text-gray-600 text-xs font-semibold whitespace-nowrap">🔒 Cap reached</span>
           )}
         </div>
 
