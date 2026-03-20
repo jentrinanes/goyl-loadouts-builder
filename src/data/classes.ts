@@ -22,6 +22,7 @@ export const CLASSES: ClassDef[] = [
     perk: 'Eagle Eye: Headshots deal +40% damage and restore resolve',
     color: '#16a34a',
     accentColor: '#86efac',
+    meleeSlotTypes: { melee1: 'katana', melee2: 'yari', melee3: 'kusarigama' },
   },
   {
     id: 'mercenary',

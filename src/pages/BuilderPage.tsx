@@ -51,12 +51,16 @@ export default function BuilderPage() {
     }
   }, [id, user]);
 
+  const cls             = getClassById(selectedClass);
   const totalStats      = selectedClass ? computeTotalStats(selectedClass, gears) : null;
   const gearsSelected   = Object.keys(gears).length;
   const allGearSelected = gearsSelected === GEAR_SLOTS.length;
 
   const activeSlotMeta     = GEAR_SLOTS.find((s) => s.id === activeSlot);
-  const gearsForActiveSlot = activeSlotMeta ? getGearsByCategory(activeSlotMeta.category) : [];
+  const slotWeaponType     = cls?.meleeSlotTypes?.[activeSlot];
+  const gearsForActiveSlot = activeSlotMeta
+    ? getGearsByCategory(activeSlotMeta.category, slotWeaponType)
+    : [];
   const activeGear         = gears[activeSlot] ? getGearById(gears[activeSlot]) : undefined;
 
   const toggleAttribute = (slotId: string, attr: string) => {
@@ -74,8 +78,6 @@ export default function BuilderPage() {
     saveBuild({ id, userId: user!.id, name: buildName, classId: selectedClass!, gears, gearAttributes });
     setTimeout(() => navigate('/dashboard'), 400);
   };
-
-  const cls = getClassById(selectedClass);
 
   return (
     <div style={{ minHeight: '100vh', background: '#030712', color: '#f3f4f6', display: 'flex', flexDirection: 'column' }}>

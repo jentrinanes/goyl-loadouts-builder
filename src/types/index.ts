@@ -20,10 +20,12 @@ export interface ClassDef {
   perk: string;
   color: string;
   accentColor: string;
+  meleeSlotTypes?: Record<string, MeleeWeaponType>;
 }
 
 export type GearCategory = 'Melee' | 'Range' | 'Charm' | 'Ghost Weapon';
 export type GearRarity = 'Common' | 'Rare' | 'Epic' | 'Legendary';
+export type MeleeWeaponType = 'katana' | 'dual_katana' | 'yari' | 'kusarigama' | 'odachi';
 
 export interface Gear {
   id: string;
@@ -35,6 +37,7 @@ export interface Gear {
   stats: StatSet;
   perk: string;
   attributes: string[];
+  weaponType?: MeleeWeaponType;
 }
 
 export interface GearSlot {

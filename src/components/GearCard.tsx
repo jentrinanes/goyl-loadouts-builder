@@ -1,6 +1,6 @@
 import { RARITY_COLOR } from '../data/gear';
-import StatBar from './StatBar';
-import type { Gear, StatKey } from '../types';
+import GearIcon from './WeaponIcon';
+import type { Gear } from '../types';
 
 interface GearCardProps {
   gear: Gear;
@@ -42,7 +42,12 @@ export default function GearCard({ gear, selected = false, onClick, compact = fa
 
       <div style={{ paddingLeft: 8 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-          <span style={{ fontSize: compact ? 18 : 24 }}>{gear.icon}</span>
+          <GearIcon
+            weaponType={gear.weaponType}
+            fallback={gear.icon}
+            size={compact ? 18 : 24}
+            color={rarityColor}
+          />
           <div style={{ flex: 1 }}>
             <div style={{ fontWeight: 700, fontSize: compact ? 13 : 15, color: '#f3f4f6' }}>
               {gear.name}
@@ -62,29 +67,6 @@ export default function GearCard({ gear, selected = false, onClick, compact = fa
           </p>
         )}
 
-        <div style={{ marginBottom: compact ? 0 : 8 }}>
-          {(Object.entries(gear.stats) as [StatKey, number][])
-            .filter(([, v]) => v > 0)
-            .map(([stat, value]) => (
-              <StatBar key={stat} stat={stat} value={value} compact />
-            ))}
-        </div>
-
-        {!compact && (
-          <div
-            style={{
-              background: '#0f172a',
-              border: '1px solid #1e293b',
-              borderRadius: 6,
-              padding: '6px 10px',
-              fontSize: 12,
-              color: '#fbbf24',
-              marginTop: 8,
-            }}
-          >
-            ✦ {gear.perk}
-          </div>
-        )}
       </div>
     </div>
   );
