@@ -278,7 +278,7 @@ export default function BuilderPage() {
                   </div>
                 )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
                   {gearsForActiveSlot.map((gear) => {
                     const isSelected      = gears[activeSlot] === gear.id;
                     const isLegendaryCapped =
