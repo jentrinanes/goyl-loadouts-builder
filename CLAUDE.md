@@ -38,11 +38,12 @@ src/
 
 ## Key Types (src/types/index.ts)
 - `MeleeWeaponType` — `'katana' | 'dual_katana' | 'yari' | 'kusarigama' | 'odachi'`
+- `RangedWeaponType` — `'hankyu' | 'tanegashima' | 'yumi' | 'bomb'`
 - `GearCategory` — `'Melee' | 'Range' | 'Charm' | 'Ghost Tool'`
 - `GearRarity` — `'Common' | 'Rare' | 'Epic' | 'Legendary'`
-- `ClassDef` — includes optional `meleeSlotTypes?: Record<string, MeleeWeaponType>` to restrict per-slot weapon choices
-- `Gear` — includes `attributes: string[]` (up to 3 selectable per equipped weapon) and optional `weaponType?: MeleeWeaponType`
-- `Build` — stores `gears: Record<string, string>` (slotId → gearId) and `gearAttributes: Record<string, string[]>`
+- `ClassDef` — includes optional `meleeSlotTypes`, `rangeSlotTypes`, `slotAllowedItems` for per-slot restrictions
+- `Gear` — includes `attributes1`, `attributes2`, `attributes3: string[]` (3 structured dropdown selects per weapon), optional `weaponType?: MeleeWeaponType`, optional `rangedWeaponType?: RangedWeaponType`
+- `Build` — stores `gears: Record<string, string>` (slotId → gearId) and `gearAttributes: Record<string, [string, string, string]>`
 
 ## Gear Slots (in order)
 | ID | Label | Category |
@@ -56,10 +57,26 @@ src/
 | ghostWeapon | Ghost Tool | Ghost Tool |
 
 ## Classes
-- **Samurai** — attack/defense focused
-- **Archer** — ranged focused; melee slots are restricted: Melee I = katana only, Melee II = yari only, Melee III = kusarigama only
-- **Mercenary** — defense/health tank
-- **Shinobi** — stealth focused
+- **Samurai** (🗡️) — attack/defense focused; no slot restrictions
+- **Archer** (🏹) — ranged focused; slot restrictions:
+  - Melee I = katana only, Melee II = yari only, Melee III = kusarigama only
+  - Range I = yumi only (Yumi, Skipping Stone Bow, True Aim Yumi)
+  - Range II = hankyu, tanegashima, bomb only
+  - Charm = Basic Charm, Spirit Brew, Harmonious Bell, Risky Parry, Archer's Supplies only
+  - Ghost Tool = no restriction (open to all classes)
+- **Mercenary** (⚔️) — defense/health tank; no slot restrictions
+- **Shinobi** (🥷) — stealth focused; no slot restrictions
+
+## Slot Restriction System (src/data/classes.ts + src/data/gear.ts)
+Three layers of filtering in `getGearsByCategory(category, meleeWeaponType?, rangedWeaponTypes?, allowedItemIds?)`:
+1. `meleeSlotTypes: Record<string, MeleeWeaponType>` — restricts a melee slot to a specific weapon type
+2. `rangeSlotTypes: Record<string, RangedWeaponType[]>` — restricts a range slot to specific ranged weapon type(s)
+3. `slotAllowedItems: Record<string, string[]>` — restricts any slot to specific gear IDs (checked first, takes priority)
+
+## Legendary Cap
+- Max **2 legendaries** per build
+- GearCard receives `disabled` prop when legendary cap is reached for that slot
+- Disabled cards are greyed out, non-clickable, and show a 🔒 badge
 
 ## Weapons
 
@@ -77,6 +94,27 @@ All non-legendaries are **Epic** (purple). Legendaries marked with *.
 - **Tanegashima:** Tanegashima, Lightning Tanegashima*
 - **Yumi:** Yumi, Skipping Stone Bow*, True Aim Yumi*
 - **Bombs:** Concussion Bomb, Vengeful Onibi Bomb*, Blind Bomb, Healing Blind Bomb*
+
+### Charms (src/data/gear.ts)
+- Basic Charm (Epic), Spirit Brew*, Harmonious Bell*, Risky Parry*, Archer's Supplies*, Samurai's Bracers*, Mercenary's Best Friend*, Shinobi's Shadow*
+
+### Ghost Tools (src/data/gear.ts)
+All non-legendaries are **Epic** (purple). Legendaries marked with *. **No class restrictions on this slot.**
+- Kunai, Spirit Kunai*, Metsubushi, Hallucinating Metsubushi*, Tanzutsu, Storm Tanzutsu*, Smoke Bomb, Weakening Smoke Bomb*, Caltrops, Affliction Caltrops*, Healing Incense, Purified Healing Incense*
+
+## Weapon Attributes
+Each weapon has 3 independent attribute dropdowns. Attribute pools are **per weapon** (defined on `attributes1`, `attributes2`, `attributes3` fields). Notable custom pools:
+
+| Weapon Type | Attribute 1 | Attribute 2 | Attribute 3 |
+|---|---|---|---|
+| Katana | Katana Damage, etc. | shared ATTR2_OPTIONS | Expert Combo, Resolve Of Lightning, Burning Blade, Poison Blade |
+| Yari | Yari Damage, Yari Stagger Damage, etc. | Enemy Staggered Damage, Ultimate Gain, etc. (no Execution Damage) | Expert Combo, Quickening Tides, Strength Of Typhoons, Burning Blade, Poison Blade |
+| Kusarigama | Kusarigama Damage, Assassination Spirit Gain, etc. | Assassination Damage, Enemy Staggered Damage, etc. | Expert Combo, Shattering Strike, Burning Blade, Poison Blade |
+| Hankyu | Hankyu Damage, Hankyu Speed, Hankyu Stability, etc. | All Ranged Damage, Ultimate Gain, etc. | Silent Arrow, Critical Release, Iron Grip, Fire Arrows, Poison Arrows (Storm/Hurricane: Fire Arrows, Poison Arrows only) |
+| Tanegashima | Tanegashima Damage, Tanegashima Reload Speed, etc. | All Ranged Damage, Ultimate Gain, etc. | Extra Ammo, Shrapnel Bullets, Auto Reload |
+| Yumi | Yumi Damage, Yumi Speed, Yumi Stability, etc. | All Ranged Damage, Ultimate Gain, etc. | Silent Arrow, Critical Release, Iron Grip, Disarm Arrows |
+| Concussion/Onibi Bombs | All Melee Damage, Concussion Bomb Radius, etc. | All Ranged Damage, Ultimate Gain, etc. | Spirited, Scorch Bombs |
+| Blind/Healing Blind Bombs | Ranged Spirit Gain, Assassination Damage, Blind Bomb Radius, etc. | All Ranged Damage, Ultimate Gain, etc. | Spirited, Increased Impact |
 
 ## Rarity Colours
 | Rarity | Hex | Tailwind |
@@ -98,9 +136,12 @@ All non-legendaries are **Epic** (purple). Legendaries marked with *.
 
 ## Builder Page Behaviour
 - 3 steps: Class selection → Gear selection → Review & Save
-- Selecting a weapon does **not** auto-advance to the next slot — it stays on the current slot and shows the attribute panel
-- Each equipped weapon can have up to **3 attributes** selected (capped, with a counter display)
+- Selecting a weapon does **not** auto-advance to the next slot — it stays on the current slot and shows the attribute panel inline inside the selected card
+- Unselected gear cards collapse to compact view; only the selected card expands
+- Each equipped weapon has **3 attribute dropdowns** (Attribute 1, 2, 3); empty string `''` means unselected
 - Attributes reset when a different weapon is selected for the same slot
+- Mobile: horizontal slot bar (`flex md:hidden`) for slot navigation; sidebar is `hidden md:flex`
+- Gear list uses `flex flex-col gap-3` (not a grid) to avoid height-stretching unselected compact cards
 
 ## Common Commands
 ```bash
