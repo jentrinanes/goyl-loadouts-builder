@@ -37,6 +37,7 @@ export interface Gear {
   stats: StatSet;
   perk: string;
   attributes1: string[];
+  attributes2: string[];
   attributes3: string[];
   weaponType?: MeleeWeaponType;
 }

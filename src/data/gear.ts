@@ -40,6 +40,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 60, defense: 10, health: 5, resolve: 15, stealth: 10, ranged: 0 },
     perk: 'First strike of each encounter deals bonus damage',
     attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Expert Combo', 'Resolve Of Lightning', 'Burning Blade', 'Poison Blade'],
     weaponType: 'katana',
   },
@@ -53,6 +54,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 75, defense: 15, health: 10, resolve: 10, stealth: 0, ranged: 0 },
     perk: 'Breaks enemy guard on heavy attacks',
     attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Expert Combo', 'Resolve Of Lightning', 'Burning Blade', 'Poison Blade'],
     weaponType: 'katana',
   },
@@ -66,6 +68,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 90, defense: 15, health: 10, resolve: 20, stealth: 0, ranged: 0 },
     perk: 'Strikes chain lightning to nearby enemies',
     attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Expert Combo', 'Resolve Of Lightning', 'Burning Blade', 'Poison Blade'],
     weaponType: 'katana',
   },
@@ -81,6 +84,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 80, defense: 5, health: 5, resolve: 10, stealth: 10, ranged: 0 },
     perk: 'Each consecutive hit increases attack speed',
     attributes1: ['Dual Katana Damage', 'Dual Katana Speed', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Flurry Strike Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Endless Assault', 'Rapid Flurry', 'Twin Fang'],
     weaponType: 'dual_katana',
   },
@@ -94,6 +98,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 65, defense: 25, health: 10, resolve: 15, stealth: 5, ranged: 0 },
     perk: 'Parrying with dual katana restores resolve',
     attributes1: ['Dual Katana Damage', 'Dual Katana Speed', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Flurry Strike Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Counter Stance', 'Parry Master', 'Dual Guard'],
     weaponType: 'dual_katana',
   },
@@ -107,6 +112,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 85, defense: 10, health: 5, resolve: 25, stealth: 5, ranged: 0 },
     perk: 'Dual strikes have a chance to stun enemies',
     attributes1: ['Dual Katana Damage', 'Dual Katana Speed', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Flurry Strike Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Lightning Chain', 'Arc Strike', 'Volt Rush'],
     weaponType: 'dual_katana',
   },
@@ -121,8 +127,9 @@ export const GEARS: Gear[] = [
     description: 'A spear built for aggressive, relentless pressure.',
     stats: { attack: 70, defense: 10, health: 10, resolve: 5, stealth: 0, ranged: 0 },
     perk: 'Spear thrusts have extended reach',
-    attributes1: ['Yari Damage', 'Yari Thrust Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Reach Bonus Damage'],
-    attributes3: ['Polearm Mastery', 'Thrust Combo', 'Spear Wall'],
+    attributes1: ['Yari Damage', 'Yari Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
+    attributes2: ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributes3: ['Expert Combo', 'Quickening Tides', 'Strength Of Typhoons', 'Burning Blade', 'Poison Blade'],
     weaponType: 'yari',
   },
   {
@@ -134,8 +141,9 @@ export const GEARS: Gear[] = [
     description: 'A lightweight spear made for speed over power.',
     stats: { attack: 60, defense: 5, health: 5, resolve: 10, stealth: 15, ranged: 0 },
     perk: 'Faster recovery after each thrust',
-    attributes1: ['Yari Damage', 'Yari Thrust Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Reach Bonus Damage'],
-    attributes3: ['Quick Thrust', 'Spear Dance', 'Fleeting Strike'],
+    attributes1: ['Yari Damage', 'Yari Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
+    attributes2: ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributes3: ['Expert Combo', 'Quickening Tides', 'Strength Of Typhoons', 'Burning Blade', 'Poison Blade'],
     weaponType: 'yari',
   },
   {
@@ -147,8 +155,9 @@ export const GEARS: Gear[] = [
     description: 'A disciplined spear trained for counter-attacks and stance holding.',
     stats: { attack: 65, defense: 30, health: 15, resolve: 10, stealth: 0, ranged: 0 },
     perk: 'Counter-attacks deal significantly more damage',
-    attributes1: ['Yari Damage', 'Yari Thrust Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Reach Bonus Damage'],
-    attributes3: ['Defensive Stance', 'Guard Thrust', 'Hold The Line'],
+    attributes1: ['Yari Damage', 'Yari Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
+    attributes2: ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributes3: ['Expert Combo', 'Quickening Tides', 'Strength Of Typhoons', 'Burning Blade', 'Poison Blade'],
     weaponType: 'yari',
   },
   {
@@ -160,8 +169,9 @@ export const GEARS: Gear[] = [
     description: 'A storm-blessed spear that crackles with thunder on every thrust.',
     stats: { attack: 88, defense: 20, health: 10, resolve: 20, stealth: 0, ranged: 0 },
     perk: 'Charged thrusts release a lightning shockwave',
-    attributes1: ['Yari Damage', 'Yari Thrust Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Reach Bonus Damage'],
-    attributes3: ['Storm Pierce', 'Thunder Lance', 'Bolt Thrust'],
+    attributes1: ['Yari Damage', 'Yari Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
+    attributes2: ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributes3: ['Expert Combo', 'Quickening Tides', 'Strength Of Typhoons', 'Burning Blade', 'Poison Blade'],
     weaponType: 'yari',
   },
 
@@ -176,6 +186,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 60, defense: 10, health: 5, resolve: 15, stealth: 20, ranged: 0 },
     perk: 'Dodge distance increased while equipped',
     attributes1: ['Kusarigama Damage', 'Chain Pull Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Sweep Attack Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Chain Whip', 'Entangle', 'Quick Chain'],
     weaponType: 'kusarigama',
   },
@@ -189,6 +200,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 78, defense: 5, health: 5, resolve: 10, stealth: 10, ranged: 0 },
     perk: 'Chain hits reduce enemy block effectiveness',
     attributes1: ['Kusarigama Damage', 'Chain Pull Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Sweep Attack Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Chain Frenzy', 'Whirlwind Chain', 'Pull And Strike'],
     weaponType: 'kusarigama',
   },
@@ -202,6 +214,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 75, defense: 10, health: 5, resolve: 20, stealth: 40, ranged: 0 },
     perk: 'Kills with this weapon briefly turn you invisible',
     attributes1: ['Kusarigama Damage', 'Chain Pull Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Sweep Attack Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Shadow Chain', 'Phantom Strike', 'Disappear'],
     weaponType: 'kusarigama',
   },
@@ -217,6 +230,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 85, defense: 20, health: 15, resolve: 0, stealth: 0, ranged: 0 },
     perk: 'Heavy attacks stagger all nearby enemies',
     attributes1: ['Odachi Damage', 'Heavy Strike Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Overhead Slam Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Heavy Impact', 'Wide Sweep', 'Brute Force'],
     weaponType: 'odachi',
   },
@@ -230,6 +244,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 75, defense: 20, health: 35, resolve: 15, stealth: 0, ranged: 0 },
     perk: 'Kills restore a portion of health',
     attributes1: ['Odachi Damage', 'Heavy Strike Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Overhead Slam Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Life Drain', 'Healing Strike', 'Vampiric Blade'],
     weaponType: 'odachi',
   },
@@ -243,6 +258,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 95, defense: 35, health: 20, resolve: 10, stealth: 0, ranged: 0 },
     perk: 'Cannot be staggered while attacking',
     attributes1: ['Odachi Damage', 'Heavy Strike Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Overhead Slam Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Earthshaker', 'Mountain Crush', 'Avalanche Strike'],
     weaponType: 'odachi',
   },
@@ -258,6 +274,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 45, defense: 5, health: 5, resolve: 10, stealth: 10, ranged: 60 },
     perk: 'Faster draw speed on consecutive shots',
     attributes1: ['Hankyu Damage', 'Rapid Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Point Blank Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Quick Draw', 'Volley', 'Barrage'],
   },
   {
@@ -270,6 +287,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 55, defense: 5, health: 0, resolve: 10, stealth: 5, ranged: 70 },
     perk: 'Rapid shots build up a static charge',
     attributes1: ['Hankyu Damage', 'Rapid Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Point Blank Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Storm Barrage', 'Electric Arrow', 'Chain Shot'],
   },
   {
@@ -282,6 +300,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 65, defense: 5, health: 5, resolve: 20, stealth: 10, ranged: 85 },
     perk: 'Volleys of arrows knock back groups of enemies',
     attributes1: ['Hankyu Damage', 'Rapid Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Point Blank Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Gale Force', 'Whirlwind Volley', 'Eye Of The Storm'],
   },
 
@@ -296,6 +315,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 80, defense: 5, health: 0, resolve: 5, stealth: 0, ranged: 80 },
     perk: 'Fully-charged shot penetrates armor',
     attributes1: ['Tanegashima Damage', 'Charged Shot Damage', 'All Ranged Damage', 'Armor Pierce Damage', 'Spirit Gain On Ranged', 'Long Range Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Iron Shot', 'Penetrating Round', 'Deadeye'],
   },
   {
@@ -308,6 +328,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 95, defense: 5, health: 0, resolve: 15, stealth: 0, ranged: 95 },
     perk: 'Shots release a lightning burst on impact',
     attributes1: ['Tanegashima Damage', 'Charged Shot Damage', 'All Ranged Damage', 'Armor Pierce Damage', 'Spirit Gain On Ranged', 'Long Range Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Thunder Shot', 'Blinding Flash', 'Overcharge'],
   },
 
@@ -322,6 +343,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 60, defense: 5, health: 10, resolve: 10, stealth: 5, ranged: 70 },
     perk: 'Drawn shots deal bonus damage beyond close range',
     attributes1: ['Yumi Damage', 'Drawn Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Headshot Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Precise Draw', 'Long Shot', 'Arching Arrow'],
   },
   {
@@ -334,6 +356,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 70, defense: 0, health: 5, resolve: 20, stealth: 15, ranged: 85 },
     perk: 'Arrows ricochet to hit up to 2 additional enemies',
     attributes1: ['Yumi Damage', 'Drawn Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Headshot Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Stone Skip', 'Bouncing Arrow', 'Ricochet Shot'],
   },
   {
@@ -346,6 +369,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 65, defense: 5, health: 5, resolve: 10, stealth: 5, ranged: 90 },
     perk: 'Aim sway is eliminated at full draw',
     attributes1: ['Yumi Damage', 'Drawn Shot Damage', 'All Ranged Damage', 'All Ranged Stagger Damage', 'Spirit Gain On Ranged', 'Headshot Damage'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['True Flight', 'Perfect Draw', 'Unwavering Aim'],
   },
 
@@ -360,6 +384,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 55, defense: 0, health: 0, resolve: 5, stealth: 0, ranged: 40 },
     perk: 'Staggered enemies take increased damage',
     attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Shockwave', 'Stun Blast', 'Ripple Force'],
   },
   {
@@ -372,6 +397,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 75, defense: 0, health: 0, resolve: 15, stealth: 0, ranged: 50 },
     perk: 'Spirit fire lingers and spreads between enemies',
     attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Spirit Flame', 'Cursed Burn', 'Onibi Surge'],
   },
   {
@@ -384,6 +410,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 20, defense: 15, health: 0, resolve: 10, stealth: 30, ranged: 30 },
     perk: 'Blinded enemies lose track of your position',
     attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Smoke Veil', 'Blinding Cloud', 'Shadow Veil'],
   },
   {
@@ -396,6 +423,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 20, defense: 10, health: 30, resolve: 20, stealth: 20, ranged: 30 },
     perk: 'Restores health to self and allies caught in the blast',
     attributes1: ['Bomb Damage', 'Blast Radius', 'All Ghost Tool Damage', 'Explosion Stagger Damage', 'Spirit Gain On Kill', 'Status Effect Duration'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Healing Mist', 'Restorative Smoke', 'Ward Of Life'],
   },
 
@@ -410,6 +438,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 0, defense: 0, health: 20, resolve: 40, stealth: 10, ranged: 10 },
     perk: '+2 resolve on kill',
     attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Fox Blessing', 'Spirit Link', 'Divine Favor'],
   },
   {
@@ -422,6 +451,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 0, defense: 40, health: 35, resolve: 10, stealth: 0, ranged: 0 },
     perk: 'Reduce damage taken by 10%',
     attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Unbreakable', 'Stone Barrier', 'Last Stand'],
   },
   {
@@ -434,6 +464,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 0, defense: 5, health: 10, resolve: 10, stealth: 45, ranged: 0 },
     perk: 'Detection meter fills 20% slower',
     attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Ghost Walk', 'Shadow Meld', 'Unseen Blade'],
   },
   {
@@ -446,6 +477,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 35, defense: 0, health: 0, resolve: 25, stealth: 0, ranged: 15 },
     perk: '+5% attack for each fallen ally (max 30%)',
     attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Blood Oath', 'Wrath Ignited', "Martyr's Fury"],
   },
   {
@@ -458,6 +490,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 20, defense: 0, health: 10, resolve: 15, stealth: 5, ranged: 25 },
     perk: '+10% attack and ranged damage',
     attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Gust Step', 'Tailwind', 'Storm Rider'],
   },
   {
@@ -470,6 +503,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 0, defense: 50, health: 40, resolve: 0, stealth: 0, ranged: 0 },
     perk: '+20% defense while not moving',
     attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Rooted Power', 'Tremor', 'Immovable'],
   },
 
@@ -484,6 +518,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 50, defense: 0, health: 0, resolve: 0, stealth: 15, ranged: 40 },
     perk: 'Hits 3 enemies simultaneously',
     attributes1: ['Ghost Tool Damage', 'Tool Cooldown Reduction', 'All Ghost Tool Damage', 'Status Effect Duration', 'Spirit Gain On Kill', 'Tool Range Bonus'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Phantom Volley', 'Spirit Pierce', 'Kunai Rain'],
   },
   {
@@ -496,6 +531,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 20, defense: 15, health: 0, resolve: 10, stealth: 50, ranged: 0 },
     perk: 'Enemies in smoke take +30% damage from stealth',
     attributes1: ['Ghost Tool Damage', 'Tool Cooldown Reduction', 'All Ghost Tool Damage', 'Status Effect Duration', 'Spirit Gain On Kill', 'Tool Range Bonus'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Deep Concealment', 'Smoke Dash', 'Ghost Veil'],
   },
   {
@@ -508,6 +544,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 70, defense: 0, health: 0, resolve: 5, stealth: 0, ranged: 30 },
     perk: 'Explosion stuns all enemies in range for 2s',
     attributes1: ['Ghost Tool Damage', 'Tool Cooldown Reduction', 'All Ghost Tool Damage', 'Status Effect Duration', 'Spirit Gain On Kill', 'Tool Range Bonus'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Soul Explosion', 'Spirit Nova', 'Cascade Blast'],
   },
   {
@@ -520,6 +557,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 10, defense: 20, health: 30, resolve: 40, stealth: 0, ranged: 0 },
     perk: '+15% resolve generation for the team',
     attributes1: ['Ghost Tool Damage', 'Tool Cooldown Reduction', 'All Ghost Tool Damage', 'Status Effect Duration', 'Spirit Gain On Kill', 'Tool Range Bonus'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Battle Hymn', 'Rallying Cry', 'Sacred Echo'],
   },
   {
@@ -532,6 +570,7 @@ export const GEARS: Gear[] = [
     stats: { attack: 40, defense: 0, health: 0, resolve: 15, stealth: 20, ranged: 45 },
     perk: 'Ignores cover and shields',
     attributes1: ['Ghost Tool Damage', 'Tool Cooldown Reduction', 'All Ghost Tool Damage', 'Status Effect Duration', 'Spirit Gain On Kill', 'Tool Range Bonus'],
+    attributes2: ATTR2_OPTIONS,
     attributes3: ['Phase Throw', 'Spectral Return', 'Ghost Step'],
   },
 ];

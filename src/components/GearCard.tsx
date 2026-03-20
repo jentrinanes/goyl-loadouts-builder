@@ -1,4 +1,4 @@
-import { RARITY_COLOR, ATTR2_OPTIONS } from '../data/gear';
+import { RARITY_COLOR } from '../data/gear';
 import GearIcon from './WeaponIcon';
 import type { Gear } from '../types';
 
@@ -24,7 +24,7 @@ export default function GearCard({
   const rarityColor    = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
   const showAttributes = selected && !compact && !!onAttributeChange;
 
-  const attrOptions: string[][] = [gear.attributes1, ATTR2_OPTIONS, gear.attributes3];
+  const attrOptions: string[][] = [gear.attributes1, gear.attributes2, gear.attributes3];
   const attrLabels = ['Attribute 1', 'Attribute 2', 'Attribute 3'];
 
   return (
