@@ -63,12 +63,16 @@ export default function BuilderPage() {
     : [];
   const activeGear         = gears[activeSlot] ? getGearById(gears[activeSlot]) : undefined;
 
+  const MAX_ATTRIBUTES = 3;
+
   const toggleAttribute = (slotId: string, attr: string) => {
     setGearAttributes((prev) => {
       const current = prev[slotId] ?? [];
+      const isActive = current.includes(attr);
+      if (!isActive && current.length >= MAX_ATTRIBUTES) return prev; // cap reached
       return {
         ...prev,
-        [slotId]: current.includes(attr) ? current.filter((a) => a !== attr) : [...current, attr],
+        [slotId]: isActive ? current.filter((a) => a !== attr) : [...current, attr],
       };
     });
   };
@@ -229,9 +233,6 @@ export default function BuilderPage() {
                         const wasNew = gears[activeSlot] !== gear.id;
                         setGears((prev) => ({ ...prev, [activeSlot]: gear.id }));
                         if (wasNew) setGearAttributes((prev) => ({ ...prev, [activeSlot]: [] }));
-                        const currentIdx = GEAR_SLOTS.findIndex((s) => s.id === activeSlot);
-                        const nextEmpty  = GEAR_SLOTS.find((s, i) => i > currentIdx && !gears[s.id] && s.id !== activeSlot);
-                        if (nextEmpty) setActiveSlot(nextEmpty.id);
                       }}
                     />
                   ))}
@@ -239,21 +240,37 @@ export default function BuilderPage() {
 
                 {activeGear && (
                   <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: 12, padding: 16 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-                      <span style={{ fontSize: 18 }}>{activeGear.icon}</span>
-                      <div>
-                        <div style={{ fontWeight: 700, fontSize: 14, color: RARITY_COLOR[activeGear.rarity] }}>{activeGear.name}</div>
-                        <div style={{ fontSize: 11, color: '#4b5563' }}>Select attributes to activate</div>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <div>
+                          <div style={{ fontWeight: 700, fontSize: 14, color: RARITY_COLOR[activeGear.rarity] }}>{activeGear.name}</div>
+                          <div style={{ fontSize: 11, color: '#4b5563' }}>Select up to 3 attributes</div>
+                        </div>
+                      </div>
+                      <div style={{ fontSize: 12, color: (gearAttributes[activeSlot] ?? []).length >= MAX_ATTRIBUTES ? '#f59e0b' : '#4b5563', fontWeight: 600 }}>
+                        {(gearAttributes[activeSlot] ?? []).length} / {MAX_ATTRIBUTES}
                       </div>
                     </div>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                       {activeGear.attributes.map((attr) => {
-                        const active = (gearAttributes[activeSlot] ?? []).includes(attr);
+                        const active   = (gearAttributes[activeSlot] ?? []).includes(attr);
+                        const capped   = !active && (gearAttributes[activeSlot] ?? []).length >= MAX_ATTRIBUTES;
                         return (
                           <button
                             key={attr}
                             onClick={() => toggleAttribute(activeSlot, attr)}
-                            style={{ padding: '6px 14px', borderRadius: 20, border: `1px solid ${active ? '#f59e0b' : '#374151'}`, background: active ? '#78350f' : '#1f2937', color: active ? '#fde68a' : '#6b7280', fontSize: 13, fontWeight: active ? 600 : 400, cursor: 'pointer', transition: 'all 0.15s' }}
+                            disabled={capped}
+                            style={{
+                              padding: '6px 14px',
+                              borderRadius: 20,
+                              border: `1px solid ${active ? '#f59e0b' : capped ? '#1f2937' : '#374151'}`,
+                              background: active ? '#78350f' : '#1f2937',
+                              color: active ? '#fde68a' : capped ? '#374151' : '#6b7280',
+                              fontSize: 13,
+                              fontWeight: active ? 600 : 400,
+                              cursor: capped ? 'not-allowed' : 'pointer',
+                              transition: 'all 0.15s',
+                            }}
                           >
                             {active ? '✦ ' : ''}{attr}
                           </button>
