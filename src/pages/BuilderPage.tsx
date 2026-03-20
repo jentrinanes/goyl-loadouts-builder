@@ -290,6 +290,7 @@ export default function BuilderPage() {
                       <GearCard
                         key={gear.id}
                         gear={gear}
+                        compact={!isSelected}
                         selected={isSelected}
                         disabled={isLegendaryCapped}
                         onClick={() => {
