@@ -4,7 +4,7 @@ export const CLASSES: ClassDef[] = [
   {
     id: 'samurai',
     name: 'Samurai',
-    icon: '⚔️',
+    icon: '🗡️',
     description:
       'The honorable warrior. Masters of close-quarters combat and unbreakable defense. Their resolve fuels devastating stances.',
     bonuses: { attack: 20, defense: 15, health: 10, resolve: 10, stealth: 0, ranged: 0 },
@@ -27,7 +27,7 @@ export const CLASSES: ClassDef[] = [
   {
     id: 'mercenary',
     name: 'Mercenary',
-    icon: '🛡️',
+    icon: '⚔️',
     description:
       'A battle-hardened fighter for hire. Tough as iron, they absorb punishment and outlast any enemy.',
     bonuses: { attack: 15, defense: 25, health: 25, resolve: 5, stealth: 0, ranged: 0 },
