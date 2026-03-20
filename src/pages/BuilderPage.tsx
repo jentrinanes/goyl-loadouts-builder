@@ -65,8 +65,9 @@ export default function BuilderPage() {
   const activeSlotMeta      = GEAR_SLOTS.find((s) => s.id === activeSlot);
   const slotWeaponType      = cls?.meleeSlotTypes?.[activeSlot];
   const slotRangedTypes     = cls?.rangeSlotTypes?.[activeSlot];
+  const slotAllowedItems    = cls?.slotAllowedItems?.[activeSlot];
   const gearsForActiveSlot  = activeSlotMeta
-    ? getGearsByCategory(activeSlotMeta.category, slotWeaponType, slotRangedTypes)
+    ? getGearsByCategory(activeSlotMeta.category, slotWeaponType, slotRangedTypes, slotAllowedItems)
     : [];
   const selectAttribute = (slotId: string, index: 0 | 1 | 2, value: string) => {
     setGearAttributes((prev) => {
