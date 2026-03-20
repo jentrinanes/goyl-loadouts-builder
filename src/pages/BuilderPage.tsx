@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import { CLASSES, getClassById } from '../data/classes';
 import { GEAR_SLOTS, getGearsByCategory, getGearById, RARITY_COLOR } from '../data/gear';
 import { saveBuild, getBuildById } from '../store/buildStore';
@@ -30,6 +31,7 @@ export default function BuilderPage() {
   const { id }   = useParams<{ id: string }>();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   const [step, setStep]                     = useState(STEP_CLASS);
   const [buildName, setBuildName]           = useState('My Build');
@@ -84,14 +86,14 @@ export default function BuilderPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 flex flex-col">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 flex flex-col">
 
       {/* ── Navbar ── */}
-      <header className="bg-slate-900 border-b border-gray-800 px-4 sm:px-6 flex items-center justify-between h-14 shrink-0">
+      <header className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 flex items-center justify-between h-14 shrink-0">
         <div className="flex items-center gap-2">
           <button
             onClick={() => navigate('/dashboard')}
-            className="bg-transparent border-none text-gray-500 cursor-pointer text-lg pr-1.5 leading-none hover:text-gray-300 transition-colors"
+            className="bg-transparent border-none text-gray-500 cursor-pointer text-lg pr-1.5 leading-none hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
           >
             ←
           </button>
@@ -104,16 +106,24 @@ export default function BuilderPage() {
           {['Class', 'Gear', 'Review'].map((label, i) => (
             <div key={label} className={`flex items-center gap-1 transition-opacity ${step === i ? 'opacity-100' : 'opacity-40'}`}>
               <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold
-                ${step > i ? 'bg-green-500 text-gray-950' : step === i ? 'bg-amber-400 text-gray-950' : 'bg-gray-700 text-gray-100'}`}>
+                ${step > i ? 'bg-green-500 text-gray-950' : step === i ? 'bg-amber-400 text-gray-950' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-100'}`}>
                 {step > i ? '✓' : i + 1}
               </div>
-              <span className={`text-xs hidden sm:inline ${step === i ? 'text-gray-300' : 'text-gray-600'}`}>{label}</span>
-              {i < 2 && <span className="text-gray-700 text-xs mx-0.5">—</span>}
+              <span className={`text-xs hidden sm:inline ${step === i ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 dark:text-gray-600'}`}>{label}</span>
+              {i < 2 && <span className="text-gray-300 dark:text-gray-700 text-xs mx-0.5">—</span>}
             </div>
           ))}
         </div>
 
-        <div className="w-8 sm:w-[80px]" />
+        <div className="w-8 sm:w-[80px] flex justify-end">
+          <button
+            onClick={toggleTheme}
+            className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg px-3 py-1.5 cursor-pointer text-sm hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? '☀️' : '🌙'}
+          </button>
+        </div>
       </header>
 
       <div className="flex-1 flex overflow-hidden">
@@ -132,7 +142,7 @@ export default function BuilderPage() {
                   key={c.id}
                   onClick={() => setSelectedClass(c.id)}
                   className={`rounded-2xl p-4 sm:p-5 cursor-pointer transition-all duration-200
-                    ${selectedClass === c.id ? 'bg-[#1e3a2f]' : 'bg-gray-900'}`}
+                    ${selectedClass === c.id ? 'bg-green-50 dark:bg-[#1e3a2f]' : 'bg-white dark:bg-gray-900'}`}
                   style={{
                     border: `2px solid ${selectedClass === c.id ? c.color : '#1f2937'}`,
                     boxShadow: selectedClass === c.id ? `0 0 20px ${c.color}44` : 'none',
@@ -142,8 +152,8 @@ export default function BuilderPage() {
                     <span className="text-3xl sm:text-4xl">{c.icon}</span>
                     <div>
                       <div
-                        className="font-extrabold text-base sm:text-lg"
-                        style={{ color: selectedClass === c.id ? c.accentColor : '#f3f4f6' }}
+                        className="font-extrabold text-base sm:text-lg text-gray-900 dark:text-gray-100"
+                        style={{ color: selectedClass === c.id ? c.accentColor : undefined }}
                       >
                         {c.name}
                       </div>
@@ -154,7 +164,7 @@ export default function BuilderPage() {
                       )}
                     </div>
                   </div>
-                  <p className="text-[13px] text-gray-400 leading-relaxed">{c.description}</p>
+                  <p className="text-[13px] text-gray-600 dark:text-gray-400 leading-relaxed">{c.description}</p>
                 </div>
               ))}
             </div>
@@ -166,7 +176,7 @@ export default function BuilderPage() {
                 className={`border-none rounded-xl px-8 sm:px-12 py-3 sm:py-3.5 font-bold text-sm sm:text-[15px] tracking-widest transition-colors
                   ${selectedClass
                     ? 'bg-amber-400 text-gray-950 cursor-pointer hover:bg-amber-300'
-                    : 'bg-gray-700 text-gray-500 cursor-not-allowed'}`}
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'}`}
               >
                 Choose Gear →
               </button>
@@ -179,7 +189,7 @@ export default function BuilderPage() {
           <div className="flex-1 flex flex-col overflow-hidden">
 
             {/* Sub-header */}
-            <div className="bg-slate-900 border-b border-gray-800 px-4 py-2.5 flex flex-wrap items-center gap-2 sm:gap-4">
+            <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800 px-4 py-2.5 flex flex-wrap items-center gap-2 sm:gap-4">
               <div className="flex items-center gap-2 shrink-0">
                 <span className="text-lg">{cls?.icon}</span>
                 <span className="font-bold text-sm" style={{ color: cls?.accentColor ?? '#f59e0b' }}>
@@ -190,7 +200,7 @@ export default function BuilderPage() {
                 <input
                   value={buildName}
                   onChange={(e) => setBuildName(e.target.value)}
-                  className="bg-gray-800 border border-gray-700 rounded-md px-3 py-1.5 text-gray-100 text-sm w-full max-w-[280px] outline-none"
+                  className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1.5 text-gray-900 dark:text-gray-100 text-sm w-full max-w-[280px] outline-none"
                   placeholder="Build name..."
                 />
               </div>
@@ -198,7 +208,7 @@ export default function BuilderPage() {
             </div>
 
             {/* Mobile slot bar — horizontal scrollable slot picker */}
-            <div className="flex md:hidden overflow-x-auto shrink-0 bg-[#0a0f1a] border-b border-gray-800 px-3 py-2 gap-2">
+            <div className="flex md:hidden overflow-x-auto shrink-0 bg-gray-50 dark:bg-[#0a0f1a] border-b border-gray-200 dark:border-gray-800 px-3 py-2 gap-2">
               {GEAR_SLOTS.map((slot) => {
                 const equipped = gears[slot.id] ? getGearById(gears[slot.id]) : undefined;
                 const isActive = activeSlot === slot.id;
@@ -208,10 +218,10 @@ export default function BuilderPage() {
                     onClick={() => setActiveSlot(slot.id)}
                     className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all whitespace-nowrap
                       ${isActive
-                        ? 'bg-[#1e3a5f] border-blue-500 text-blue-300'
+                        ? 'bg-blue-50 dark:bg-[#1e3a5f] border-blue-500 text-blue-600 dark:text-blue-300'
                         : equipped
-                          ? 'bg-gray-800 border-gray-700 text-gray-300'
-                          : 'bg-gray-900 border-gray-800 text-gray-600'}`}
+                          ? 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300'
+                          : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-600'}`}
                   >
                     {equipped ? '✓ ' : ''}{slot.label}
                   </button>
@@ -222,9 +232,9 @@ export default function BuilderPage() {
             <div className="flex-1 flex overflow-hidden">
 
               {/* ── Left sidebar: slot list + total stats (desktop only) ── */}
-              <div className="hidden md:flex w-[230px] bg-[#0a0f1a] border-r border-gray-800 flex-col shrink-0">
+              <div className="hidden md:flex w-[230px] bg-gray-50 dark:bg-[#0a0f1a] border-r border-gray-200 dark:border-gray-800 flex-col shrink-0">
                 <div className="p-3.5 flex-1 overflow-y-auto">
-                  <div className="text-[11px] text-gray-600 uppercase tracking-widest mb-2">Gear Slots</div>
+                  <div className="text-[11px] text-gray-500 dark:text-gray-600 uppercase tracking-widest mb-2">Gear Slots</div>
                   {GEAR_SLOTS.map((slot) => {
                     const equipped = gears[slot.id] ? getGearById(gears[slot.id]) : undefined;
                     const isActive = activeSlot === slot.id;
@@ -233,7 +243,7 @@ export default function BuilderPage() {
                         key={slot.id}
                         onClick={() => setActiveSlot(slot.id)}
                         className={`px-3 py-2.5 rounded-lg mb-1 cursor-pointer transition-all duration-150
-                          ${isActive ? 'bg-[#1e3a5f] border border-blue-500' : 'border border-transparent hover:bg-gray-800'}`}
+                          ${isActive ? 'bg-blue-50 dark:bg-[#1e3a5f] border border-blue-500' : 'border border-transparent hover:bg-gray-100 dark:hover:bg-gray-800'}`}
                       >
                         <div className="text-[11px] text-gray-500 uppercase tracking-wide">{slot.label}</div>
                         {equipped ? (
@@ -247,7 +257,7 @@ export default function BuilderPage() {
                             </span>
                           </div>
                         ) : (
-                          <div className="text-xs text-gray-700 mt-0.5">— empty —</div>
+                          <div className="text-xs text-gray-400 dark:text-gray-700 mt-0.5">— empty —</div>
                         )}
                       </div>
                     );
@@ -263,11 +273,11 @@ export default function BuilderPage() {
                     {activeSlotMeta?.label}{' '}
                     <span className="text-gray-500 text-xs sm:text-sm font-normal">— {activeSlotMeta?.category}</span>
                   </h3>
-                  <p className="mt-1 text-gray-600 text-xs sm:text-[13px]">Select a weapon, then configure its attributes below.</p>
+                  <p className="mt-1 text-gray-500 dark:text-gray-600 text-xs sm:text-[13px]">Select a weapon, then configure its attributes below.</p>
                 </div>
 
                 {legendaryCount >= MAX_LEGENDARIES && !activeSlotIsLegendary && (
-                  <div className="flex items-center gap-2 mb-3 px-3 py-2 bg-amber-950 border border-amber-800 rounded-lg text-amber-300 text-xs">
+                  <div className="flex items-center gap-2 mb-3 px-3 py-2 bg-amber-50 dark:bg-amber-950 border border-amber-300 dark:border-amber-800 rounded-lg text-amber-700 dark:text-amber-300 text-xs">
                     🔒 Legendary cap reached ({MAX_LEGENDARIES}/{MAX_LEGENDARIES}) — unequip a legendary to swap
                   </div>
                 )}
@@ -302,10 +312,10 @@ export default function BuilderPage() {
             </div>
 
             {/* Footer */}
-            <div className="bg-slate-900 border-t border-gray-800 px-4 sm:px-5 py-3 flex justify-between items-center gap-2">
+            <div className="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-gray-800 px-4 sm:px-5 py-3 flex justify-between items-center gap-2">
               <button
                 onClick={() => setStep(STEP_CLASS)}
-                className="bg-gray-800 border border-gray-700 text-gray-400 rounded-lg px-3 sm:px-5 py-2 sm:py-2.5 cursor-pointer text-xs sm:text-sm font-semibold hover:text-gray-200 transition-colors whitespace-nowrap"
+                className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg px-3 sm:px-5 py-2 sm:py-2.5 cursor-pointer text-xs sm:text-sm font-semibold hover:text-gray-900 dark:hover:text-gray-200 transition-colors whitespace-nowrap"
               >
                 ← Change Class
               </button>
@@ -315,7 +325,7 @@ export default function BuilderPage() {
                 className={`border-none rounded-xl px-4 sm:px-7 py-2 sm:py-2.5 font-bold text-xs sm:text-sm transition-colors whitespace-nowrap
                   ${allGearSelected
                     ? 'bg-amber-400 text-gray-950 cursor-pointer hover:bg-amber-300'
-                    : 'bg-gray-700 text-gray-500 cursor-not-allowed'}`}
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'}`}
               >
                 Review Build →
               </button>
@@ -335,18 +345,18 @@ export default function BuilderPage() {
                 {/* Left column */}
                 <div>
                   {/* Build name */}
-                  <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5 mb-4">
+                  <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5 mb-4">
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Build Name</div>
                     <input
                       value={buildName}
                       onChange={(e) => setBuildName(e.target.value)}
-                      className="bg-gray-800 border border-gray-700 rounded-lg px-3.5 py-2.5 text-gray-100 text-base sm:text-lg font-bold w-full outline-none"
+                      className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-gray-900 dark:text-gray-100 text-base sm:text-lg font-bold w-full outline-none"
                     />
                   </div>
 
                   {/* Class */}
                   <div
-                    className="bg-gray-900 rounded-xl p-4 sm:p-5 mb-4"
+                    className="bg-white dark:bg-gray-900 rounded-xl p-4 sm:p-5 mb-4"
                     style={{ border: `1px solid ${cls?.color ?? '#1f2937'}66` }}
                   >
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-2.5">Class</div>
@@ -359,13 +369,13 @@ export default function BuilderPage() {
                         <div className="text-xs text-gray-500">{cls?.description}</div>
                       </div>
                     </div>
-                    <div className="bg-slate-900 rounded-md px-2.5 py-1.5 text-xs text-amber-300">
+                    <div className="bg-gray-100 dark:bg-slate-900 rounded-md px-2.5 py-1.5 text-xs text-amber-700 dark:text-amber-300">
                       ✦ {cls?.perk}
                     </div>
                   </div>
 
                   {/* Total stats */}
-                  <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5">
+                  <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Total Stats</div>
                     {STAT_KEYS.map((k) => (
                       <StatBar key={k} stat={k} value={Math.min(totalStats[k], 100)} />
@@ -375,7 +385,7 @@ export default function BuilderPage() {
 
                 {/* Right column — equipped gear */}
                 <div>
-                  <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5">
+                  <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Equipped Gear</div>
                     <div className="flex flex-col gap-2.5">
                       {GEAR_SLOTS.map((slot) => {
@@ -389,7 +399,7 @@ export default function BuilderPage() {
                                 {activeAttrs.map((attr) => (
                                   <span
                                     key={attr}
-                                    className="px-2.5 py-0.5 rounded-full bg-amber-900 border border-amber-400 text-amber-200 text-[11px] font-semibold"
+                                    className="px-2.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-900 border border-amber-400 text-amber-700 dark:text-amber-200 text-[11px] font-semibold"
                                   >
                                     ✦ {attr}
                                   </span>
@@ -398,7 +408,7 @@ export default function BuilderPage() {
                             )}
                           </div>
                         ) : (
-                          <div key={slot.id} className="px-3 py-2.5 bg-gray-800 rounded-lg text-gray-600 text-sm">
+                          <div key={slot.id} className="px-3 py-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-400 dark:text-gray-600 text-sm">
                             {slot.label}: Not selected
                           </div>
                         );
@@ -411,7 +421,7 @@ export default function BuilderPage() {
               <div className="flex justify-between mt-5 sm:mt-7 gap-3">
                 <button
                   onClick={() => setStep(STEP_GEAR)}
-                  className="bg-gray-800 border border-gray-700 text-gray-400 rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 cursor-pointer text-xs sm:text-sm font-semibold hover:text-gray-200 transition-colors whitespace-nowrap"
+                  className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 cursor-pointer text-xs sm:text-sm font-semibold hover:text-gray-900 dark:hover:text-gray-200 transition-colors whitespace-nowrap"
                 >
                   ← Back to Gear
                 </button>
@@ -420,7 +430,7 @@ export default function BuilderPage() {
                   disabled={saving || !buildName.trim()}
                   className={`border-none rounded-xl px-6 sm:px-10 py-2.5 sm:py-3 font-extrabold text-sm sm:text-[15px] tracking-widest transition-colors whitespace-nowrap
                     ${saving || !buildName.trim()
-                      ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                      ? 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
                       : 'bg-amber-400 text-gray-950 cursor-pointer hover:bg-amber-300'}`}
                 >
                   {saving ? 'Saving...' : '💾 Save Build'}

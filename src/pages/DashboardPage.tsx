@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import { getBuildsForUser, deleteBuild } from '../store/buildStore';
 import { getClassById } from '../data/classes';
 import { getGearById, GEAR_SLOTS } from '../data/gear';
@@ -19,9 +20,10 @@ function computeTotalStats(build: Build): StatSet {
 }
 
 export default function DashboardPage() {
-  const { user, logout } = useAuth();
-  const navigate         = useNavigate();
-  const [builds, setBuilds] = useState<Build[]>([]);
+  const { user, logout }       = useAuth();
+  const navigate               = useNavigate();
+  const { theme, toggleTheme } = useTheme();
+  const [builds, setBuilds]    = useState<Build[]>([]);
 
   const loadBuilds = () => setBuilds(getBuildsForUser(user!.id));
   useEffect(loadBuilds, [user]);
@@ -34,20 +36,27 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
       {/* Navbar */}
-      <header className="bg-slate-900 border-b border-gray-800 px-4 sm:px-6 flex items-center justify-between h-14">
+      <header className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 flex items-center justify-between h-14">
         <div className="flex items-center gap-2.5">
           <span className="text-2xl">⛩️</span>
           <span className="text-amber-400 font-black text-base sm:text-lg tracking-widest">YOTEI LEGENDS</span>
         </div>
         <div className="flex items-center gap-2 sm:gap-4">
           <span className="text-gray-500 text-sm hidden sm:block">
-            ⚔️ <strong className="text-gray-200">{user?.username}</strong>
+            ⚔️ <strong className="text-gray-700 dark:text-gray-200">{user?.username}</strong>
           </span>
           <button
+            onClick={toggleTheme}
+            className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg px-3 sm:px-3.5 py-1.5 cursor-pointer text-sm hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? '☀️' : '🌙'}
+          </button>
+          <button
             onClick={() => { logout(); navigate('/'); }}
-            className="bg-gray-800 border border-gray-700 text-gray-400 rounded-lg px-3 sm:px-3.5 py-1.5 cursor-pointer text-sm hover:text-gray-200 transition-colors"
+            className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg px-3 sm:px-3.5 py-1.5 cursor-pointer text-sm hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
           >
             Sign Out
           </button>
@@ -71,7 +80,7 @@ export default function DashboardPage() {
         </div>
 
         {builds.length === 0 ? (
-          <div className="text-center py-20 px-5 text-gray-600">
+          <div className="text-center py-20 px-5 text-gray-400 dark:text-gray-600">
             <div className="text-6xl mb-4">🥷</div>
             <h3 className="text-xl text-gray-500 mb-2">No builds yet</h3>
             <p className="text-sm">Create your first character build to begin your legend.</p>
@@ -90,7 +99,7 @@ export default function DashboardPage() {
               return (
                 <div
                   key={build.id}
-                  className="bg-gray-900 rounded-2xl overflow-hidden transition-transform duration-150 cursor-pointer hover:-translate-y-0.5"
+                  className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden transition-transform duration-150 cursor-pointer hover:-translate-y-0.5"
                   style={{ border: `1px solid ${(cls?.color ?? '#374151')}44` }}
                   onClick={() => navigate(`/builder/${build.id}`)}
                 >
@@ -114,20 +123,20 @@ export default function DashboardPage() {
                       <StatBar key={stat} stat={stat} value={Math.min(val, 100)} compact />
                     ))}
 
-                    <div className="mt-3.5 pt-3.5 border-t border-gray-800 flex justify-between items-center">
-                      <span className="text-[11px] text-gray-600">
+                    <div className="mt-3.5 pt-3.5 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center">
+                      <span className="text-[11px] text-gray-400 dark:text-gray-600">
                         {new Date(build.createdAt).toLocaleDateString()}
                       </span>
                       <div className="flex gap-2">
                         <button
                           onClick={(e) => { e.stopPropagation(); navigate(`/builder/${build.id}`); }}
-                          className="bg-gray-800 border border-gray-700 text-gray-400 rounded-md px-3 py-1 cursor-pointer text-xs hover:text-gray-200 transition-colors"
+                          className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-md px-3 py-1 cursor-pointer text-xs hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
                         >
                           Edit
                         </button>
                         <button
                           onClick={(e) => { e.stopPropagation(); handleDelete(build.id); }}
-                          className="bg-red-950 border border-red-900 text-red-300 rounded-md px-3 py-1 cursor-pointer text-xs hover:bg-red-900 transition-colors"
+                          className="bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-300 rounded-md px-3 py-1 cursor-pointer text-xs hover:bg-red-100 dark:hover:bg-red-900 transition-colors"
                         >
                           Delete
                         </button>
