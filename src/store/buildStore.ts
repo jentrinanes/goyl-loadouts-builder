@@ -27,5 +27,21 @@ export const isBuildNameTaken = (userId: string, name: string, excludeId?: strin
 export const deleteBuild = (buildId: string): void =>
   saveAll(getAll().filter((b) => b.id !== buildId));
 
+export const duplicateBuild = (buildId: string): void => {
+  const all      = getAll();
+  const original = all.find((b) => b.id === buildId);
+  if (!original) return;
+
+  // Generate a unique name: "Name (Copy)", "Name (Copy 2)", …
+  let candidate = `${original.name} (Copy)`;
+  let counter   = 2;
+  while (all.some((b) => b.userId === original.userId && b.name.trim().toLowerCase() === candidate.trim().toLowerCase())) {
+    candidate = `${original.name} (Copy ${counter++})`;
+  }
+
+  all.push({ ...original, id: crypto.randomUUID(), name: candidate, createdAt: Date.now() });
+  saveAll(all);
+};
+
 export const getBuildById = (buildId: string): Build | undefined =>
   getAll().find((b) => b.id === buildId);

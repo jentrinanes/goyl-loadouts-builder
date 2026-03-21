@@ -3,20 +3,33 @@ import { useNavigate } from 'react-router-dom';
 import { toPng } from 'html-to-image';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { getBuildsForUser, deleteBuild } from '../store/buildStore';
+import { getBuildsForUser, deleteBuild, duplicateBuild } from '../store/buildStore';
 import { getClassById } from '../data/classes';
 import { getGearById, GEAR_SLOTS, RARITY_COLOR } from '../data/gear';
 import type { Build } from '../types';
 
 // ─── Share card (rendered off-screen, captured as PNG) ───────────────────────
 
-function ShareCard({ build }: { build: Build }) {
-  const cls = getClassById(build.classId);
+function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) {
+  const cls  = getClassById(build.classId);
+  const dark = theme === 'dark';
+
+  const bg         = dark ? '#0f172a' : '#ffffff';
+  const bodyBg     = dark ? '#0f172a' : '#ffffff';
+  const divider    = dark ? '#1e293b' : '#e5e7eb';
+  const labelColor = dark ? '#64748b' : '#9ca3af';
+  const slotLabel  = dark ? '#475569' : '#9ca3af';
+  const techFixed  = dark ? '#64748b' : '#9ca3af';
+  const techSelect = dark ? '#fbbf24' : '#b45309';
+  const attrBg     = dark ? '#451a03' : '#fef3c7';
+  const attrBorder = dark ? '#92400e' : '#fcd34d';
+  const attrText   = dark ? '#fcd34d' : '#92400e';
+
   return (
     <div
       style={{
         width: 420,
-        background: '#0f172a',
+        background: bg,
         borderRadius: 20,
         overflow: 'hidden',
         fontFamily: 'system-ui, sans-serif',
@@ -34,9 +47,9 @@ function ShareCard({ build }: { build: Build }) {
         </div>
       </div>
 
-      <div style={{ padding: '18px 20px' }}>
+      <div style={{ padding: '18px 20px', background: bodyBg }}>
         {/* Gear */}
-        <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Gear</div>
+        <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Gear</div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px 16px', marginBottom: 4 }}>
           {GEAR_SLOTS.map((slot) => {
             const gear  = getGearById(build.gears?.[slot.id]);
@@ -53,8 +66,8 @@ function ShareCard({ build }: { build: Build }) {
                     {attrs.map((attr) => (
                       <span key={attr} style={{
                         fontSize: 10, fontWeight: 600, padding: '1px 6px',
-                        borderRadius: 999, background: '#451a03',
-                        border: '1px solid #92400e', color: '#fcd34d',
+                        borderRadius: 999, background: attrBg,
+                        border: `1px solid ${attrBorder}`, color: attrText,
                       }}>
                         {attr}
                       </span>
@@ -68,28 +81,22 @@ function ShareCard({ build }: { build: Build }) {
 
         {/* Techniques */}
         {cls?.techniques && (
-          <div style={{ marginTop: 14, paddingTop: 14, borderTop: '1px solid #1e293b' }}>
-            <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Techniques</div>
+          <div style={{ marginTop: 14, paddingTop: 14, borderTop: `1px solid ${divider}` }}>
+            <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Techniques</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
               {cls.techniques.map(({ slot, default: def }) => {
                 const selected = def ?? build.techniques?.[slot];
                 if (!selected) return null;
                 return (
                   <div key={slot} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ fontSize: 10, color: '#475569', fontWeight: 700, width: 16 }}>T{slot}</span>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: def ? '#64748b' : '#fbbf24' }}>{selected}</span>
+                    <span style={{ fontSize: 10, color: slotLabel, fontWeight: 700, width: 16 }}>T{slot}</span>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: def ? techFixed : techSelect }}>{selected}</span>
                   </div>
                 );
               })}
             </div>
           </div>
         )}
-
-        {/* Footer */}
-        <div style={{ marginTop: 16, paddingTop: 12, borderTop: '1px solid #1e293b', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: 10, color: '#334155', fontWeight: 700, letterSpacing: 2 }}>YOTEI LEGENDS</span>
-          <span style={{ fontSize: 10, color: '#334155' }}>noirsupernova</span>
-        </div>
       </div>
     </div>
   );
@@ -101,19 +108,25 @@ export default function DashboardPage() {
   const { user, logout }            = useAuth();
   const navigate                    = useNavigate();
   const { theme, toggleTheme }      = useTheme();
-  const [builds, setBuilds]         = useState<Build[]>([]);
-  const [shareBuild, setShareBuild] = useState<Build | null>(null);
-  const [capturing, setCapturing]   = useState(false);
-  const shareCardRef                = useRef<HTMLDivElement>(null);
+  const [builds, setBuilds]           = useState<Build[]>([]);
+  const [shareBuild, setShareBuild]   = useState<Build | null>(null);
+  const [deleteBuildId, setDeleteBuildId] = useState<string | null>(null);
+  const [capturing, setCapturing]     = useState(false);
+  const shareCardRef                  = useRef<HTMLDivElement>(null);
 
   const loadBuilds = () => setBuilds(getBuildsForUser(user!.id));
   useEffect(loadBuilds, [user]);
 
-  const handleDelete = (id: string) => {
-    if (window.confirm('Delete this build?')) {
-      deleteBuild(id);
-      loadBuilds();
-    }
+  const handleDelete = () => {
+    if (!deleteBuildId) return;
+    deleteBuild(deleteBuildId);
+    setDeleteBuildId(null);
+    loadBuilds();
+  };
+
+  const handleDuplicate = (id: string) => {
+    duplicateBuild(id);
+    loadBuilds();
   };
 
   const handleDownload = async () => {
@@ -251,10 +264,7 @@ export default function DashboardPage() {
                       </div>
                     )}
 
-                    <div className="mt-3.5 pt-3.5 border-t border-gray-200 dark:border-gray-800 flex flex-wrap justify-between items-center gap-y-2">
-                      <span className="text-[11px] text-gray-400 dark:text-gray-600">
-                        {build.createdAt ? new Date(build.createdAt).toLocaleDateString() : ''}
-                      </span>
+                    <div className="mt-3.5 pt-3.5 border-t border-gray-200 dark:border-gray-800 flex flex-wrap justify-end items-center gap-y-2">
                       <div className="flex gap-1.5 flex-wrap justify-end">
                         <button
                           onClick={(e) => { e.stopPropagation(); setShareBuild(build); }}
@@ -269,7 +279,13 @@ export default function DashboardPage() {
                           Edit
                         </button>
                         <button
-                          onClick={(e) => { e.stopPropagation(); handleDelete(build.id); }}
+                          onClick={(e) => { e.stopPropagation(); handleDuplicate(build.id); }}
+                          className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-md px-2.5 py-1 cursor-pointer text-xs hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+                        >
+                          Copy
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); setDeleteBuildId(build.id); }}
                           className="bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-300 rounded-md px-2.5 py-1 cursor-pointer text-xs hover:bg-red-100 dark:hover:bg-red-900 transition-colors"
                         >
                           Delete
@@ -311,7 +327,7 @@ export default function DashboardPage() {
             {/* Share card preview — scrollable so 420px card is always reachable */}
             <div className="flex-1 overflow-auto py-5 px-5 flex justify-center bg-gray-100 dark:bg-gray-950">
               <div ref={shareCardRef} className="shrink-0">
-                <ShareCard build={shareBuild} />
+                <ShareCard build={shareBuild} theme={theme} />
               </div>
             </div>
 
@@ -326,6 +342,44 @@ export default function DashboardPage() {
                     : 'bg-amber-400 text-gray-950 hover:bg-amber-300'}`}
               >
                 {capturing ? 'Capturing...' : '📥 Download Image'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete confirmation modal */}
+      {deleteBuildId && (
+        <div
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/60"
+          onClick={() => setDeleteBuildId(null)}
+        >
+          <div
+            className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-t-2xl sm:rounded-2xl w-full sm:max-w-sm shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="px-6 py-5">
+              <h3 className="font-extrabold text-base mb-1">Delete Build</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Are you sure you want to delete{' '}
+                <span className="font-semibold text-gray-800 dark:text-gray-200">
+                  {builds.find((b) => b.id === deleteBuildId)?.name ?? 'this build'}
+                </span>
+                ? This cannot be undone.
+              </p>
+            </div>
+            <div className="px-6 pb-5 flex gap-2 justify-end">
+              <button
+                onClick={() => setDeleteBuildId(null)}
+                className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-xl px-4 py-2 text-sm font-semibold cursor-pointer hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="bg-red-600 hover:bg-red-500 text-white border-none rounded-xl px-4 py-2 text-sm font-bold cursor-pointer transition-colors"
+              >
+                Delete
               </button>
             </div>
           </div>
