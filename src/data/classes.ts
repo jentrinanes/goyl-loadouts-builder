@@ -1,5 +1,14 @@
 import type { ClassDef } from '../types';
 
+const GHOST_TOOL_ITEMS = [
+  'smoke_bomb',
+  'weakening_smoke_bomb',
+  'caltrops',
+  'affliction_caltrops',
+  'healing_incense',
+  'purified_healing_incense',
+];
+
 export const CLASSES: ClassDef[] = [
   {
     id: 'samurai',
@@ -11,6 +20,7 @@ export const CLASSES: ClassDef[] = [
     perk: 'Legendary Stance: Enter Ghost Stance with 20% less resolve',
     color: '#dc2626',
     accentColor: '#fca5a5',
+    slotAllowedItems: { ghostWeapon: GHOST_TOOL_ITEMS },
   },
   {
     id: 'archer',
@@ -25,7 +35,8 @@ export const CLASSES: ClassDef[] = [
     meleeSlotTypes: { melee1: 'katana', melee2: 'yari', melee3: 'kusarigama' },
     rangeSlotTypes: { range1: ['yumi'], range2: ['hankyu', 'tanegashima', 'bomb'] },
     slotAllowedItems: {
-      charm: ['basic_charm', 'spirit_brew', 'harmonious_bell', 'risky_parry', 'archers_supplies'],
+      charm: ['basic_charm', 'archers_supplies'],
+      ghostWeapon: GHOST_TOOL_ITEMS,
     },
   },
   {
@@ -38,6 +49,7 @@ export const CLASSES: ClassDef[] = [
     perk: 'Iron Will: Survive one lethal hit per encounter with 1 HP',
     color: '#d97706',
     accentColor: '#fcd34d',
+    slotAllowedItems: { ghostWeapon: GHOST_TOOL_ITEMS },
   },
   {
     id: 'shinobi',
@@ -49,6 +61,7 @@ export const CLASSES: ClassDef[] = [
     perk: 'Ghost Step: Perform 2 consecutive stealth kills without breaking cover',
     color: '#7c3aed',
     accentColor: '#c4b5fd',
+    slotAllowedItems: { ghostWeapon: GHOST_TOOL_ITEMS },
   },
 ];
 
