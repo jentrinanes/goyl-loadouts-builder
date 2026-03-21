@@ -1,5 +1,4 @@
 import { RARITY_COLOR } from '../data/gear';
-import GearIcon from './WeaponIcon';
 import type { Gear } from '../types';
 
 interface GearCardProps {
@@ -48,12 +47,7 @@ export default function GearCard({
       <div className="pl-2">
         {/* Header row */}
         <div className={`flex items-center gap-2 ${compact ? '' : 'mb-1'}`}>
-          <GearIcon
-            weaponType={gear.weaponType}
-            fallback={gear.icon}
-            size={compact ? 18 : 24}
-            color={rarityColor}
-          />
+          <span style={{ fontSize: compact ? 18 : 24 }}>{gear.icon}</span>
           <div className="flex-1">
             <div className={`font-bold text-gray-900 dark:text-gray-100 ${compact ? 'text-[13px]' : 'text-[15px]'}`}>
               {gear.name}
