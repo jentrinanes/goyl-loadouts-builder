@@ -19,6 +19,11 @@ export const saveBuild = (build: NewBuild): void => {
   saveAll(all);
 };
 
+export const isBuildNameTaken = (userId: string, name: string, excludeId?: string): boolean =>
+  getAll().some(
+    (b) => b.userId === userId && b.name.trim().toLowerCase() === name.trim().toLowerCase() && b.id !== excludeId
+  );
+
 export const deleteBuild = (buildId: string): void =>
   saveAll(getAll().filter((b) => b.id !== buildId));
 

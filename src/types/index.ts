@@ -11,6 +11,12 @@ export interface StatSet {
 
 export type StatKey = keyof StatSet;
 
+export interface TechniqueSlot {
+  slot: number;
+  default?: string;
+  options?: string[];
+}
+
 export interface ClassDef {
   id: string;
   name: string;
@@ -23,6 +29,7 @@ export interface ClassDef {
   meleeSlotTypes?: Record<string, MeleeWeaponType>;
   rangeSlotTypes?: Record<string, RangedWeaponType[]>;
   slotAllowedItems?: Record<string, string[]>;
+  techniques?: TechniqueSlot[];
 }
 
 export type GearCategory = 'Melee' | 'Range' | 'Charm' | 'Ghost Tool';
@@ -72,6 +79,7 @@ export interface Build {
   classId: string;
   gears: Record<string, string>;
   gearAttributes: Record<string, [string, string, string]>;
+  techniques?: Record<number, string>;
   createdAt: number;
 }
 

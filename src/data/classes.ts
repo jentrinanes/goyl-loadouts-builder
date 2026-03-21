@@ -38,6 +38,13 @@ export const CLASSES: ClassDef[] = [
       charm: ['basic_charm', 'archers_supplies'],
       ghostWeapon: GHOST_TOOL_ITEMS,
     },
+    techniques: [
+      { slot: 1, default: 'Eye of Uchitsune' },
+      { slot: 2, options: ['Empowered Hunt', 'Shadow Flame Arrow'] },
+      { slot: 3, options: ['Lethal Proximity', 'Spirited', 'Ability Cooldown'] },
+      { slot: 4, options: ['Resupply', 'Point Blank', 'Serrated Shots'] },
+      { slot: 5, options: ['Consuming Flames', 'All-Seeing Eye', 'Bountiful Ammo'] },
+    ],
   },
   {
     id: 'mercenary',

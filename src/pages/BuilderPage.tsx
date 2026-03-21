@@ -4,9 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { CLASSES, getClassById } from '../data/classes';
 import { GEAR_SLOTS, getGearsByCategory, getGearById, RARITY_COLOR } from '../data/gear';
-import { saveBuild, getBuildById } from '../store/buildStore';
+import { saveBuild, getBuildById, isBuildNameTaken } from '../store/buildStore';
 import GearCard from '../components/GearCard';
-import StatBar from '../components/StatBar';
 import type { StatSet, StatKey } from '../types';
 
 const STEP_CLASS      = 0;
@@ -38,8 +37,10 @@ export default function BuilderPage() {
   const [selectedClass, setSelectedClass]   = useState<string | null>(null);
   const [gears, setGears]                   = useState<Record<string, string>>({});
   const [gearAttributes, setGearAttributes] = useState<Record<string, [string, string, string]>>({});
+  const [techniques, setTechniques]         = useState<Record<number, string>>({});
   const [activeSlot, setActiveSlot]         = useState(GEAR_SLOTS[0].id);
   const [saving, setSaving]                 = useState(false);
+  const [saveError, setSaveError]           = useState('');
 
   useEffect(() => {
     if (id) {
@@ -49,15 +50,18 @@ export default function BuilderPage() {
         setSelectedClass(existing.classId);
         setGears(existing.gears ?? {});
         setGearAttributes(existing.gearAttributes ?? {});
+        setTechniques(existing.techniques ?? {});
         setStep(STEP_GEAR);
       }
     }
   }, [id, user]);
 
-  const cls             = getClassById(selectedClass);
-  const totalStats      = selectedClass ? computeTotalStats(selectedClass, gears) : null;
-  const gearsSelected   = Object.keys(gears).length;
-  const allGearSelected = gearsSelected === GEAR_SLOTS.length;
+  const cls                 = getClassById(selectedClass);
+  const totalStats          = selectedClass ? computeTotalStats(selectedClass, gears) : null;
+  const gearsSelected       = Object.keys(gears).length;
+  const allGearSelected     = gearsSelected === GEAR_SLOTS.length;
+  const techniquesComplete  = !cls?.techniques ||
+    cls.techniques.filter((t) => !!t.options).every((t) => !!techniques[t.slot]);
 
   const legendaryCount = Object.values(gears).filter(
     (gearId) => getGearById(gearId)?.rarity === 'Legendary'
@@ -80,8 +84,13 @@ export default function BuilderPage() {
   };
 
   const handleSave = () => {
+    setSaveError('');
+    if (isBuildNameTaken(user!.id, buildName, id)) {
+      setSaveError('A build with this name already exists.');
+      return;
+    }
     setSaving(true);
-    saveBuild({ id, userId: user!.id, name: buildName, classId: selectedClass!, gears, gearAttributes });
+    saveBuild({ id, userId: user!.id, name: buildName, classId: selectedClass!, gears, gearAttributes, techniques });
     setTimeout(() => navigate('/dashboard'), 400);
   };
 
@@ -140,7 +149,7 @@ export default function BuilderPage() {
               {CLASSES.map((c) => (
                 <div
                   key={c.id}
-                  onClick={() => setSelectedClass(c.id)}
+                  onClick={() => { setSelectedClass(c.id); setTechniques({}); }}
                   className={`rounded-2xl p-4 sm:p-5 cursor-pointer transition-all duration-200
                     ${selectedClass === c.id ? 'bg-green-50 dark:bg-[#1e3a2f]' : 'bg-white dark:bg-gray-900'}`}
                   style={{
@@ -199,7 +208,7 @@ export default function BuilderPage() {
               <div className="flex-1 min-w-[120px]">
                 <input
                   value={buildName}
-                  onChange={(e) => setBuildName(e.target.value)}
+                  onChange={(e) => { setBuildName(e.target.value); setSaveError(''); }}
                   className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1.5 text-gray-900 dark:text-gray-100 text-sm w-full max-w-[280px] outline-none"
                   placeholder="Build name..."
                 />
@@ -262,6 +271,43 @@ export default function BuilderPage() {
                       </div>
                     );
                   })}
+
+                  {/* Techniques (desktop sidebar) */}
+                  {cls?.techniques && (
+                    <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-800">
+                      <div className="text-[11px] text-gray-500 dark:text-gray-600 uppercase tracking-widest mb-2">Techniques</div>
+                      {cls.techniques.map(({ slot, default: def, options }) => (
+                        <div key={slot} className="mb-2.5">
+                          <div className="text-[10px] text-gray-400 dark:text-gray-600 font-semibold uppercase tracking-wide mb-1">
+                            Technique {slot}
+                          </div>
+                          {def ? (
+                            <div className="px-2.5 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-500 text-xs font-semibold">
+                              {def}
+                            </div>
+                          ) : (
+                            <div className="flex flex-col gap-1">
+                              {options?.map((opt) => {
+                                const isSelected = techniques[slot] === opt;
+                                return (
+                                  <button
+                                    key={opt}
+                                    onClick={() => setTechniques((prev) => ({ ...prev, [slot]: opt }))}
+                                    className={`text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer
+                                      ${isSelected
+                                        ? 'bg-amber-400 text-gray-950 border-amber-400'
+                                        : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400'}`}
+                                  >
+                                    {opt}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
               </div>
@@ -282,7 +328,7 @@ export default function BuilderPage() {
                   </div>
                 )}
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3" id="gear-list">
                   {gearsForActiveSlot.map((gear) => {
                     const isSelected      = gears[activeSlot] === gear.id;
                     const isLegendaryCapped =
@@ -308,6 +354,43 @@ export default function BuilderPage() {
                     );
                   })}
                 </div>
+
+                {/* Techniques (mobile — hidden on md+) */}
+                {cls?.techniques && (
+                  <div className="md:hidden mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
+                    <h3 className="text-sm font-bold mb-3">Techniques</h3>
+                    {cls.techniques.map(({ slot, default: def, options }) => (
+                      <div key={slot} className="mb-3">
+                        <div className="text-[11px] text-gray-500 dark:text-gray-600 font-semibold uppercase tracking-wide mb-1.5">
+                          Technique {slot}
+                        </div>
+                        {def ? (
+                          <div className="px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-500 text-sm font-semibold">
+                            {def}
+                          </div>
+                        ) : (
+                          <div className="flex flex-wrap gap-2">
+                            {options?.map((opt) => {
+                              const isSelected = techniques[slot] === opt;
+                              return (
+                                <button
+                                  key={opt}
+                                  onClick={() => setTechniques((prev) => ({ ...prev, [slot]: opt }))}
+                                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer
+                                    ${isSelected
+                                      ? 'bg-amber-400 text-gray-950 border-amber-400'
+                                      : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-amber-400'}`}
+                                >
+                                  {opt}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -319,16 +402,21 @@ export default function BuilderPage() {
               >
                 ← Change Class
               </button>
-              <button
-                disabled={!allGearSelected}
-                onClick={() => setStep(STEP_REVIEW)}
-                className={`border-none rounded-xl px-4 sm:px-7 py-2 sm:py-2.5 font-bold text-xs sm:text-sm transition-colors whitespace-nowrap
-                  ${allGearSelected
-                    ? 'bg-amber-400 text-gray-950 cursor-pointer hover:bg-amber-300'
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'}`}
-              >
-                Review Build →
-              </button>
+              <div className="flex flex-col items-end gap-1">
+                {allGearSelected && !techniquesComplete && (
+                  <span className="text-[11px] text-gray-400 dark:text-gray-600">Select all techniques to continue</span>
+                )}
+                <button
+                  disabled={!allGearSelected || !techniquesComplete}
+                  onClick={() => setStep(STEP_REVIEW)}
+                  className={`border-none rounded-xl px-4 sm:px-7 py-2 sm:py-2.5 font-bold text-xs sm:text-sm transition-colors whitespace-nowrap
+                    ${allGearSelected && techniquesComplete
+                      ? 'bg-amber-400 text-gray-950 cursor-pointer hover:bg-amber-300'
+                      : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'}`}
+                >
+                  Review Build →
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -349,7 +437,7 @@ export default function BuilderPage() {
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Build Name</div>
                     <input
                       value={buildName}
-                      onChange={(e) => setBuildName(e.target.value)}
+                      onChange={(e) => { setBuildName(e.target.value); setSaveError(''); }}
                       className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-gray-900 dark:text-gray-100 text-base sm:text-lg font-bold w-full outline-none"
                     />
                   </div>
@@ -374,16 +462,33 @@ export default function BuilderPage() {
                     </div>
                   </div>
 
-                  {/* Total stats */}
-                  <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
-                    <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Total Stats</div>
-                    {STAT_KEYS.map((k) => (
-                      <StatBar key={k} stat={k} value={Math.min(totalStats[k], 100)} />
-                    ))}
-                  </div>
+                  {/* Techniques */}
+                  {cls?.techniques && (
+                    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
+                      <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Techniques</div>
+                      <div className="flex flex-col gap-2">
+                        {cls.techniques.map(({ slot, default: def }) => (
+                          <div key={slot} className="flex items-center gap-2">
+                            <span className="text-[10px] text-gray-400 dark:text-gray-600 font-bold uppercase w-16 shrink-0">
+                              Technique {slot}
+                            </span>
+                            <span className={`text-xs font-semibold ${
+                              def
+                                ? 'text-gray-500 dark:text-gray-500'
+                                : techniques[slot]
+                                  ? 'text-amber-600 dark:text-amber-300'
+                                  : 'text-gray-400 dark:text-gray-600 italic'
+                            }`}>
+                              {def ?? techniques[slot] ?? '— not selected —'}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                {/* Right column — equipped gear */}
+                {/* Right column — equipped gear + techniques */}
                 <div>
                   <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Equipped Gear</div>
@@ -415,10 +520,17 @@ export default function BuilderPage() {
                       })}
                     </div>
                   </div>
+
                 </div>
               </div>
 
-              <div className="flex justify-between mt-5 sm:mt-7 gap-3">
+              {saveError && (
+                <div className="mt-4 sm:mt-5 px-4 py-2.5 bg-red-50 dark:bg-red-950 border border-red-300 dark:border-red-700 rounded-lg text-red-600 dark:text-red-300 text-sm text-center">
+                  {saveError}
+                </div>
+              )}
+
+              <div className="flex justify-between mt-4 sm:mt-5 gap-3">
                 <button
                   onClick={() => setStep(STEP_GEAR)}
                   className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 cursor-pointer text-xs sm:text-sm font-semibold hover:text-gray-900 dark:hover:text-gray-200 transition-colors whitespace-nowrap"
