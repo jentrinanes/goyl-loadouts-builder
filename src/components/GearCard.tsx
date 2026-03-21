@@ -9,6 +9,7 @@ interface GearCardProps {
   disabled?: boolean;
   selectedAttributes?: [string, string, string];
   onAttributeChange?: (index: 0 | 1 | 2, value: string) => void;
+  displayAttributes?: string[];
 }
 
 export default function GearCard({
@@ -19,6 +20,7 @@ export default function GearCard({
   disabled = false,
   selectedAttributes,
   onAttributeChange,
+  displayAttributes,
 }: GearCardProps) {
   const rarityColor    = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
   const showAttributes = selected && !compact && !!onAttributeChange;
@@ -64,11 +66,19 @@ export default function GearCard({
           )}
         </div>
 
-        {/* Description */}
-        {!compact && (
-          <p className="text-xs text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">
-            {gear.description}
-          </p>
+        {/* Read-only attribute pills — for Review step */}
+        {displayAttributes && displayAttributes.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2">
+            {displayAttributes.map((attr) => (
+              <span
+                key={attr}
+                className="px-2 py-0.5 rounded-full text-[10px] font-semibold border"
+                style={{ background: rarityColor + '18', borderColor: rarityColor + '66', color: rarityColor }}
+              >
+                ✦ {attr}
+              </span>
+            ))}
+          </div>
         )}
 
         {/* Inline attribute selector — only when selected */}

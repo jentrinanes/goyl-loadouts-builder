@@ -136,7 +136,7 @@ export default function DashboardPage() {
       <header className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 flex items-center justify-between h-14">
         <div className="flex items-center gap-2.5">
           <span className="text-2xl">⛩️</span>
-          <span className="text-amber-400 font-black text-base sm:text-lg tracking-widest">YOTEI LEGENDS</span>
+          <span className="text-amber-400 font-black text-base sm:text-lg tracking-widest">GOYL BUILD CREATOR</span>
         </div>
         <div className="flex items-center gap-2 sm:gap-4">
           <span className="text-gray-500 text-sm hidden sm:block">
@@ -253,7 +253,7 @@ export default function DashboardPage() {
 
                     <div className="mt-3.5 pt-3.5 border-t border-gray-200 dark:border-gray-800 flex flex-wrap justify-between items-center gap-y-2">
                       <span className="text-[11px] text-gray-400 dark:text-gray-600">
-                        {new Date(build.createdAt).toLocaleDateString()}
+                        {build.createdAt ? new Date(build.createdAt).toLocaleDateString() : ''}
                       </span>
                       <div className="flex gap-1.5 flex-wrap justify-end">
                         <button

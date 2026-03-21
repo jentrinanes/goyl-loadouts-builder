@@ -10,7 +10,10 @@ import type { StatSet, StatKey } from '../types';
 
 const STEP_CLASS      = 0;
 const STEP_GEAR       = 1;
-const STEP_REVIEW     = 2;
+const STEP_TECHNIQUES = 2;
+const STEP_REVIEW     = 3;
+
+const STEP_LABELS = ['Class', 'Gear', 'Techniques', 'Review'];
 
 const STAT_KEYS: StatKey[]  = ['attack', 'defense', 'health', 'resolve', 'stealth', 'ranged'];
 const MAX_LEGENDARIES       = 2;
@@ -56,11 +59,11 @@ export default function BuilderPage() {
     }
   }, [id, user]);
 
-  const cls                 = getClassById(selectedClass);
-  const totalStats          = selectedClass ? computeTotalStats(selectedClass, gears) : null;
-  const gearsSelected       = Object.keys(gears).length;
-  const allGearSelected     = gearsSelected === GEAR_SLOTS.length;
-  const techniquesComplete  = !cls?.techniques ||
+  const cls                = getClassById(selectedClass);
+  const totalStats         = selectedClass ? computeTotalStats(selectedClass, gears) : null;
+  const gearsSelected      = Object.keys(gears).length;
+  const allGearSelected    = gearsSelected === GEAR_SLOTS.length;
+  const techniquesComplete = !cls?.techniques ||
     cls.techniques.filter((t) => !!t.options).every((t) => !!techniques[t.slot]);
 
   const legendaryCount = Object.values(gears).filter(
@@ -68,13 +71,14 @@ export default function BuilderPage() {
   ).length;
   const activeSlotIsLegendary = getGearById(gears[activeSlot])?.rarity === 'Legendary';
 
-  const activeSlotMeta      = GEAR_SLOTS.find((s) => s.id === activeSlot);
-  const slotWeaponType      = cls?.meleeSlotTypes?.[activeSlot];
-  const slotRangedTypes     = cls?.rangeSlotTypes?.[activeSlot];
-  const slotAllowedItems    = cls?.slotAllowedItems?.[activeSlot];
-  const gearsForActiveSlot  = activeSlotMeta
+  const activeSlotMeta     = GEAR_SLOTS.find((s) => s.id === activeSlot);
+  const slotWeaponType     = cls?.meleeSlotTypes?.[activeSlot];
+  const slotRangedTypes    = cls?.rangeSlotTypes?.[activeSlot];
+  const slotAllowedItems   = cls?.slotAllowedItems?.[activeSlot];
+  const gearsForActiveSlot = activeSlotMeta
     ? getGearsByCategory(activeSlotMeta.category, slotWeaponType, slotRangedTypes, slotAllowedItems)
     : [];
+
   const selectAttribute = (slotId: string, index: 0 | 1 | 2, value: string) => {
     setGearAttributes((prev) => {
       const current: [string, string, string] = [...(prev[slotId] ?? ['', '', ''])] as [string, string, string];
@@ -107,19 +111,19 @@ export default function BuilderPage() {
             ←
           </button>
           <span className="text-xl">⛩️</span>
-          <span className="text-amber-400 font-black text-sm sm:text-base tracking-widest">BUILD CREATOR</span>
+          <span className="text-amber-400 font-black text-sm sm:text-base tracking-widest">GOYL BUILD CREATOR</span>
         </div>
 
         {/* Step indicators */}
         <div className="flex items-center gap-1 sm:gap-1.5">
-          {['Class', 'Gear', 'Review'].map((label, i) => (
+          {STEP_LABELS.map((label, i) => (
             <div key={label} className={`flex items-center gap-1 transition-opacity ${step === i ? 'opacity-100' : 'opacity-40'}`}>
               <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold
                 ${step > i ? 'bg-green-500 text-gray-950' : step === i ? 'bg-amber-400 text-gray-950' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-100'}`}>
                 {step > i ? '✓' : i + 1}
               </div>
               <span className={`text-xs hidden sm:inline ${step === i ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 dark:text-gray-600'}`}>{label}</span>
-              {i < 2 && <span className="text-gray-300 dark:text-gray-700 text-xs mx-0.5">—</span>}
+              {i < 3 && <span className="text-gray-300 dark:text-gray-700 text-xs mx-0.5">—</span>}
             </div>
           ))}
         </div>
@@ -216,7 +220,7 @@ export default function BuilderPage() {
               <span className="text-gray-500 text-xs sm:text-sm shrink-0">{gearsSelected}/7 slots</span>
             </div>
 
-            {/* Mobile slot bar — horizontal scrollable slot picker */}
+            {/* Mobile slot bar */}
             <div className="flex md:hidden overflow-x-auto shrink-0 bg-gray-50 dark:bg-[#0a0f1a] border-b border-gray-200 dark:border-gray-800 px-3 py-2 gap-2">
               {GEAR_SLOTS.map((slot) => {
                 const equipped = gears[slot.id] ? getGearById(gears[slot.id]) : undefined;
@@ -240,7 +244,7 @@ export default function BuilderPage() {
 
             <div className="flex-1 flex overflow-hidden">
 
-              {/* ── Left sidebar: slot list + total stats (desktop only) ── */}
+              {/* ── Left sidebar: slot list (desktop only) ── */}
               <div className="hidden md:flex w-[230px] bg-gray-50 dark:bg-[#0a0f1a] border-r border-gray-200 dark:border-gray-800 flex-col shrink-0">
                 <div className="p-3.5 flex-1 overflow-y-auto">
                   <div className="text-[11px] text-gray-500 dark:text-gray-600 uppercase tracking-widest mb-2">Gear Slots</div>
@@ -271,48 +275,10 @@ export default function BuilderPage() {
                       </div>
                     );
                   })}
-
-                  {/* Techniques (desktop sidebar) */}
-                  {cls?.techniques && (
-                    <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-800">
-                      <div className="text-[11px] text-gray-500 dark:text-gray-600 uppercase tracking-widest mb-2">Techniques</div>
-                      {cls.techniques.map(({ slot, default: def, options }) => (
-                        <div key={slot} className="mb-2.5">
-                          <div className="text-[10px] text-gray-400 dark:text-gray-600 font-semibold uppercase tracking-wide mb-1">
-                            Technique {slot}
-                          </div>
-                          {def ? (
-                            <div className="px-2.5 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-500 text-xs font-semibold">
-                              {def}
-                            </div>
-                          ) : (
-                            <div className="flex flex-col gap-1">
-                              {options?.map((opt) => {
-                                const isSelected = techniques[slot] === opt;
-                                return (
-                                  <button
-                                    key={opt}
-                                    onClick={() => setTechniques((prev) => ({ ...prev, [slot]: opt }))}
-                                    className={`text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer
-                                      ${isSelected
-                                        ? 'bg-amber-400 text-gray-950 border-amber-400'
-                                        : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400'}`}
-                                  >
-                                    {opt}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
-
               </div>
 
-              {/* ── Right: gear grid + attribute panel ── */}
+              {/* ── Right: gear list ── */}
               <div className="flex-1 overflow-y-auto p-3 sm:p-4">
                 <div className="mb-3">
                   <h3 className="m-0 text-sm sm:text-base font-bold">
@@ -328,9 +294,9 @@ export default function BuilderPage() {
                   </div>
                 )}
 
-                <div className="flex flex-col gap-3" id="gear-list">
+                <div className="flex flex-col gap-3">
                   {gearsForActiveSlot.map((gear) => {
-                    const isSelected      = gears[activeSlot] === gear.id;
+                    const isSelected        = gears[activeSlot] === gear.id;
                     const isLegendaryCapped =
                       gear.rarity === 'Legendary' &&
                       !activeSlotIsLegendary &&
@@ -354,43 +320,6 @@ export default function BuilderPage() {
                     );
                   })}
                 </div>
-
-                {/* Techniques (mobile — hidden on md+) */}
-                {cls?.techniques && (
-                  <div className="md:hidden mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
-                    <h3 className="text-sm font-bold mb-3">Techniques</h3>
-                    {cls.techniques.map(({ slot, default: def, options }) => (
-                      <div key={slot} className="mb-3">
-                        <div className="text-[11px] text-gray-500 dark:text-gray-600 font-semibold uppercase tracking-wide mb-1.5">
-                          Technique {slot}
-                        </div>
-                        {def ? (
-                          <div className="px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-500 text-sm font-semibold">
-                            {def}
-                          </div>
-                        ) : (
-                          <div className="flex flex-wrap gap-2">
-                            {options?.map((opt) => {
-                              const isSelected = techniques[slot] === opt;
-                              return (
-                                <button
-                                  key={opt}
-                                  onClick={() => setTechniques((prev) => ({ ...prev, [slot]: opt }))}
-                                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer
-                                    ${isSelected
-                                      ? 'bg-amber-400 text-gray-950 border-amber-400'
-                                      : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-amber-400'}`}
-                                >
-                                  {opt}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
             </div>
 
@@ -402,26 +331,110 @@ export default function BuilderPage() {
               >
                 ← Change Class
               </button>
-              <div className="flex flex-col items-end gap-1">
-                {allGearSelected && !techniquesComplete && (
-                  <span className="text-[11px] text-gray-400 dark:text-gray-600">Select all techniques to continue</span>
-                )}
-                <button
-                  disabled={!allGearSelected || !techniquesComplete}
-                  onClick={() => setStep(STEP_REVIEW)}
-                  className={`border-none rounded-xl px-4 sm:px-7 py-2 sm:py-2.5 font-bold text-xs sm:text-sm transition-colors whitespace-nowrap
-                    ${allGearSelected && techniquesComplete
-                      ? 'bg-amber-400 text-gray-950 cursor-pointer hover:bg-amber-300'
-                      : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'}`}
-                >
-                  Review Build →
-                </button>
-              </div>
+              <button
+                disabled={!allGearSelected}
+                onClick={() => setStep(STEP_TECHNIQUES)}
+                className={`border-none rounded-xl px-4 sm:px-7 py-2 sm:py-2.5 font-bold text-xs sm:text-sm transition-colors whitespace-nowrap
+                  ${allGearSelected
+                    ? 'bg-amber-400 text-gray-950 cursor-pointer hover:bg-amber-300'
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'}`}
+              >
+                Choose Techniques →
+              </button>
             </div>
           </div>
         )}
 
-        {/* ══════ STEP 2 — REVIEW ══════ */}
+        {/* ══════ STEP 2 — TECHNIQUES ══════ */}
+        {step === STEP_TECHNIQUES && (
+          <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 sm:py-8">
+            <h2 className="text-xl sm:text-[22px] font-extrabold mb-1.5 text-center">Choose Techniques</h2>
+            <p className="text-gray-500 text-sm text-center mb-5 sm:mb-7">
+              Select your class techniques to complete your build.
+            </p>
+
+            {/* Class badge */}
+            <div className="flex justify-center mb-6">
+              <div className="flex items-center gap-2.5 px-4 py-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl">
+                <span className="text-2xl">{cls?.icon}</span>
+                <span className="font-bold text-sm" style={{ color: cls?.accentColor }}>{cls?.name}</span>
+              </div>
+            </div>
+
+            {cls?.techniques ? (
+              <div className="max-w-[580px] mx-auto flex flex-col gap-4">
+                {cls.techniques.map(({ slot, default: def, options }) => (
+                  <div
+                    key={slot}
+                    className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5"
+                  >
+                    <div className="text-[11px] text-gray-500 dark:text-gray-500 uppercase tracking-widest mb-3 font-semibold">
+                      Technique {slot}
+                    </div>
+
+                    {def ? (
+                      /* Fixed / default technique */
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-amber-400 text-base">✦</span>
+                          <span className="font-semibold text-gray-700 dark:text-gray-300 text-sm">{def}</span>
+                        </div>
+                        <span className="text-[10px] text-gray-400 dark:text-gray-600 uppercase tracking-widest shrink-0">
+                          Default
+                        </span>
+                      </div>
+                    ) : (
+                      /* Choice technique */
+                      <div className="flex flex-col gap-2">
+                        {options?.map((opt) => {
+                          const isSelected = techniques[slot] === opt;
+                          return (
+                            <button
+                              key={opt}
+                              onClick={() => setTechniques((prev) => ({ ...prev, [slot]: opt }))}
+                              className={`text-left px-4 py-3 rounded-xl text-sm font-semibold border-2 transition-all cursor-pointer
+                                ${isSelected
+                                  ? 'bg-amber-400 text-gray-950 border-amber-400'
+                                  : 'bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400'}`}
+                            >
+                              {isSelected && <span className="mr-1.5">✓</span>}{opt}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="max-w-[580px] mx-auto text-center py-10 text-gray-400 dark:text-gray-600 text-sm">
+                No techniques available for this class yet.
+              </div>
+            )}
+
+            {/* Footer */}
+            <div className="max-w-[580px] mx-auto flex justify-between mt-6 sm:mt-8 gap-3">
+              <button
+                onClick={() => setStep(STEP_GEAR)}
+                className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 cursor-pointer text-xs sm:text-sm font-semibold hover:text-gray-900 dark:hover:text-gray-200 transition-colors whitespace-nowrap"
+              >
+                ← Back to Gear
+              </button>
+              <button
+                disabled={!techniquesComplete}
+                onClick={() => setStep(STEP_REVIEW)}
+                className={`border-none rounded-xl px-6 sm:px-10 py-2.5 sm:py-3 font-bold text-xs sm:text-sm tracking-widest transition-colors whitespace-nowrap
+                  ${techniquesComplete
+                    ? 'bg-amber-400 text-gray-950 cursor-pointer hover:bg-amber-300'
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'}`}
+              >
+                Review Build →
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ══════ STEP 3 — REVIEW ══════ */}
         {step === STEP_REVIEW && totalStats && (
           <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 sm:py-8">
             <div className="max-w-[860px] mx-auto">
@@ -457,9 +470,6 @@ export default function BuilderPage() {
                         <div className="text-xs text-gray-500">{cls?.description}</div>
                       </div>
                     </div>
-                    <div className="bg-gray-100 dark:bg-slate-900 rounded-md px-2.5 py-1.5 text-xs text-amber-700 dark:text-amber-300">
-                      ✦ {cls?.perk}
-                    </div>
                   </div>
 
                   {/* Techniques */}
@@ -469,7 +479,7 @@ export default function BuilderPage() {
                       <div className="flex flex-col gap-2">
                         {cls.techniques.map(({ slot, default: def }) => (
                           <div key={slot} className="flex items-center gap-2">
-                            <span className="text-[10px] text-gray-400 dark:text-gray-600 font-bold uppercase w-16 shrink-0">
+                            <span className="text-[10px] text-gray-400 dark:text-gray-600 font-bold uppercase w-20 shrink-0 whitespace-nowrap">
                               Technique {slot}
                             </span>
                             <span className={`text-xs font-semibold ${
@@ -488,7 +498,7 @@ export default function BuilderPage() {
                   )}
                 </div>
 
-                {/* Right column — equipped gear + techniques */}
+                {/* Right column — equipped gear */}
                 <div>
                   <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Equipped Gear</div>
@@ -497,21 +507,12 @@ export default function BuilderPage() {
                         const gear        = getGearById(gears[slot.id]);
                         const activeAttrs = (gearAttributes[slot.id] ?? []).filter(Boolean);
                         return gear ? (
-                          <div key={slot.id}>
-                            <GearCard gear={gear} compact />
-                            {activeAttrs.length > 0 && (
-                              <div className="flex flex-wrap gap-1.5 mt-1.5 pl-1">
-                                {activeAttrs.map((attr) => (
-                                  <span
-                                    key={attr}
-                                    className="px-2.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-900 border border-amber-400 text-amber-700 dark:text-amber-200 text-[11px] font-semibold"
-                                  >
-                                    ✦ {attr}
-                                  </span>
-                                ))}
-                              </div>
-                            )}
-                          </div>
+                          <GearCard
+                            key={slot.id}
+                            gear={gear}
+                            compact
+                            displayAttributes={activeAttrs}
+                          />
                         ) : (
                           <div key={slot.id} className="px-3 py-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-400 dark:text-gray-600 text-sm">
                             {slot.label}: Not selected
@@ -520,7 +521,6 @@ export default function BuilderPage() {
                       })}
                     </div>
                   </div>
-
                 </div>
               </div>
 
@@ -532,10 +532,10 @@ export default function BuilderPage() {
 
               <div className="flex justify-between mt-4 sm:mt-5 gap-3">
                 <button
-                  onClick={() => setStep(STEP_GEAR)}
+                  onClick={() => setStep(STEP_TECHNIQUES)}
                   className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-xl px-4 sm:px-6 py-2.5 sm:py-3 cursor-pointer text-xs sm:text-sm font-semibold hover:text-gray-900 dark:hover:text-gray-200 transition-colors whitespace-nowrap"
                 >
-                  ← Back to Gear
+                  ← Back to Techniques
                 </button>
                 <button
                   onClick={handleSave}

@@ -49,9 +49,8 @@ export default function AuthPage() {
           className="text-amber-400 text-3xl font-black tracking-widest m-0"
           style={{ textShadow: '0 0 30px #f59e0b88' }}
         >
-          YOTEI LEGENDS
+          GOYL Build Creator
         </h1>
-        <p className="text-gray-500 text-sm mt-1.5 tracking-widest uppercase">Build Creator</p>
       </div>
 
       {/* Card */}
@@ -111,7 +110,7 @@ export default function AuthPage() {
             type="submit"
             className="w-full py-3 bg-amber-400 text-gray-950 border-none rounded-lg text-base font-bold cursor-pointer tracking-widest uppercase transition-opacity hover:opacity-85"
           >
-            {mode === 'login' ? 'Enter the Legend' : 'Create Account'}
+            {mode === 'login' ? 'Enter' : 'Create Account'}
           </button>
         </form>
       </div>
