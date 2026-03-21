@@ -449,9 +449,9 @@ export const GEARS: Gear[] = [
     description: 'A simple charm with modest protective qualities. A reliable foundation for any warrior.',
     stats: { attack: 5, defense: 15, health: 15, resolve: 10, stealth: 5, ranged: 5 },
     perk: 'Minor boost to all defensive stats',
-    attributes1: ['Resolve Regeneration', 'Health On Kill', 'Ghost Stance Gain', 'Perfect Dodge Window', 'Stance Recovery', 'Damage Reduction'],
-    attributes2: ATTR2_OPTIONS,
-    attributes3: ['Iron Will', 'Steady Hand', 'Clear Mind'],
+    attributes1: ['Spirit Gain', 'Spirit Heal Effect', 'Weapon Aligned Stagger Self-Heal', 'Incoming Damage Reduction'],
+    attributes2: ['Assassination Damage', 'Status Effect Duration', 'Status Effect Damage', 'Enemy Staggered Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
+    attributes3: ['Bullet Defense', 'Spirited', 'Parry Heal', 'Fire Master', 'Healthy', 'Scavenger', 'Foul Arrows'],
   },
   {
     id: 'spirit_brew',
