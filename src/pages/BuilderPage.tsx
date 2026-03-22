@@ -18,6 +18,27 @@ const STEP_LABELS = ['Class', 'Gear', 'Techniques', 'Review'];
 const STAT_KEYS: StatKey[]  = ['attack', 'defense', 'health', 'resolve', 'stealth', 'ranged'];
 const MAX_LEGENDARIES       = 2;
 
+function computeAttributeTotals(
+  classId: string | null,
+  gears: Record<string, string>,
+  gearAttributes: Record<string, [string, string, string]>,
+): Record<string, number> {
+  const totals: Record<string, number> = {};
+  getSlotsForClass(classId).forEach((slot) => {
+    const gear  = getGearById(gears[slot.id]);
+    const attrs = gearAttributes[slot.id] ?? ['', '', ''];
+    if (!gear) return;
+    attrs.forEach((attrName) => {
+      if (!attrName) return;
+      const max = gear.attributeMaxValues?.[attrName];
+      if (max !== undefined) {
+        totals[attrName] = (totals[attrName] ?? 0) + max;
+      }
+    });
+  });
+  return totals;
+}
+
 function computeTotalStats(classId: string | null, gears: Record<string, string>): StatSet {
   const base: StatSet = { attack: 0, defense: 0, health: 0, resolve: 0, stealth: 0, ranged: 0 };
   const cls = getClassById(classId);
@@ -66,6 +87,8 @@ export default function BuilderPage() {
   const allGearSelected    = gearsSelected === slots.length;
   const techniquesComplete = !cls?.techniques ||
     cls.techniques.filter((t) => !!t.options).every((t) => !!techniques[t.slot]);
+
+  const attributeTotals = selectedClass ? computeAttributeTotals(selectedClass, gears, gearAttributes) : {};
 
   const legendaryCount = Object.values(gears).filter(
     (gearId) => getGearById(gearId)?.rarity === 'Legendary'
@@ -499,8 +522,8 @@ export default function BuilderPage() {
                   )}
                 </div>
 
-                {/* Right column — equipped gear */}
-                <div>
+                {/* Right column — equipped gear + attribute stats */}
+                <div className="flex flex-col gap-4">
                   <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Equipped Gear</div>
                     <div className="flex flex-col gap-2.5">
@@ -522,6 +545,23 @@ export default function BuilderPage() {
                       })}
                     </div>
                   </div>
+
+                  {/* Attribute Totals */}
+                  {Object.keys(attributeTotals).length > 0 && (
+                    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
+                      <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Attribute Totals</div>
+                      <div className="flex flex-col gap-2">
+                        {Object.entries(attributeTotals)
+                          .sort(([, a], [, b]) => b - a)
+                          .map(([attr, total]) => (
+                            <div key={attr} className="flex items-center justify-between gap-3">
+                              <span className="text-xs text-gray-700 dark:text-gray-300">{attr}</span>
+                              <span className="text-xs font-bold text-amber-500 shrink-0">+{total}%</span>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
