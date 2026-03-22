@@ -27,6 +27,13 @@ export const CLASSES: ClassDef[] = [
       ghostWeapon: ['tanzutsu', 'storm_tanzutsu', 'kunai', 'spirit_kunai', 'metsubushi', 'hallucinating_metsubushi'],
       ghostWeapon2: GHOST_TOOL_ITEMS,
     },
+    techniques: [
+      { slot: 1, default: "Hachiman's Fury" },
+      { slot: 2, options: ['Spirit Pull', 'Raging Flame'] },
+      { slot: 3, options: ['Increase Melee Damage', 'Increase Melee Stagger Damage', 'Ability Cooldown'] },
+      { slot: 4, options: ['Weapon Insight', 'Parry Damage', 'Spirited'] },
+      { slot: 5, options: ["Hachiman's Rage", "Hachiman's Gift", "Hachiman's Zeal"] },
+    ],
   },
   {
     id: 'archer',
@@ -69,6 +76,13 @@ export const CLASSES: ClassDef[] = [
       ghostWeapon: ['tanzutsu', 'storm_tanzutsu', 'kunai', 'spirit_kunai', 'metsubushi', 'hallucinating_metsubushi'],
       ghostWeapon2: GHOST_TOOL_ITEMS,
     },
+    techniques: [
+      { slot: 1, default: "Takemikazuchi's Smite" },
+      { slot: 2, options: ['Spirit Throw', 'Spirit Animal'] },
+      { slot: 3, options: ['Enhanced Ghost Tools', 'Enhanced Impalement', 'Ability Cooldown'] },
+      { slot: 4, options: ['Spirit Shatter', 'Spirited', 'Status Effect Duration'] },
+      { slot: 5, options: ['Energizing Smite', 'Raging Storm', 'Weakening Blast'] },
+    ],
   },
   {
     id: 'shinobi',
@@ -87,6 +101,13 @@ export const CLASSES: ClassDef[] = [
       ghostWeapon: ['kunai', 'spirit_kunai', 'metsubushi', 'hallucinating_metsubushi', 'tanzutsu', 'storm_tanzutsu'],
       ghostWeapon2: GHOST_TOOL_ITEMS,
     },
+    techniques: [
+      { slot: 1, default: 'Shadow Strike' },
+      { slot: 2, options: ['Toxic Vanish', 'Group Vanish'] },
+      { slot: 3, options: ['Assassination Damage', 'Status Effect Duration', 'Ability Cooldown'] },
+      { slot: 4, options: ['Shinobi Decoy', 'Spirited', 'Hallucination Assassination'] },
+      { slot: 5, options: ['Shadow Strike Vanish', 'Shadow Strike Upgrade', 'Shadow Strike Decoy'] },
+    ],
   },
 ];
 
