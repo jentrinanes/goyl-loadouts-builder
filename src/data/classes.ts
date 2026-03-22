@@ -84,7 +84,7 @@ export const CLASSES: ClassDef[] = [
     rangeSlotTypes: { range1: ['hankyu', 'tanegashima', 'bomb'] },
     slotAllowedItems: {
       charm: ['basic_charm', 'spirit_brew', 'harmonious_bell', 'risky_parry', 'shinobis_shadow'],
-      ghostWeapon: GHOST_TOOL_ITEMS,
+      ghostWeapon: ['kunai', 'spirit_kunai', 'metsubushi', 'hallucinating_metsubushi', 'tanzutsu', 'storm_tanzutsu'],
       ghostWeapon2: GHOST_TOOL_ITEMS,
     },
   },
