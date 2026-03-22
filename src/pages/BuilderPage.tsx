@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { CLASSES, getClassById } from '../data/classes';
-import { GEAR_SLOTS, getGearsByCategory, getGearById, RARITY_COLOR } from '../data/gear';
+import { getSlotsForClass, getGearsByCategory, getGearById, RARITY_COLOR } from '../data/gear';
 import { saveBuild, getBuildById, isBuildNameTaken } from '../store/buildStore';
 import GearCard from '../components/GearCard';
 import type { StatSet, StatKey } from '../types';
@@ -22,7 +22,7 @@ function computeTotalStats(classId: string | null, gears: Record<string, string>
   const base: StatSet = { attack: 0, defense: 0, health: 0, resolve: 0, stealth: 0, ranged: 0 };
   const cls = getClassById(classId);
   if (cls) STAT_KEYS.forEach((k) => (base[k] += cls.bonuses[k] ?? 0));
-  GEAR_SLOTS.forEach((slot) => {
+  getSlotsForClass(classId).forEach((slot) => {
     const gear = getGearById(gears[slot.id]);
     if (gear) STAT_KEYS.forEach((k) => (base[k] += gear.stats[k] ?? 0));
   });
@@ -41,7 +41,7 @@ export default function BuilderPage() {
   const [gears, setGears]                   = useState<Record<string, string>>({});
   const [gearAttributes, setGearAttributes] = useState<Record<string, [string, string, string]>>({});
   const [techniques, setTechniques]         = useState<Record<number, string>>({});
-  const [activeSlot, setActiveSlot]         = useState(GEAR_SLOTS[0].id);
+  const [activeSlot, setActiveSlot]         = useState('melee1');
   const [saving, setSaving]                 = useState(false);
   const [saveError, setSaveError]           = useState('');
 
@@ -60,9 +60,10 @@ export default function BuilderPage() {
   }, [id, user]);
 
   const cls                = getClassById(selectedClass);
+  const slots              = getSlotsForClass(selectedClass);
   const totalStats         = selectedClass ? computeTotalStats(selectedClass, gears) : null;
   const gearsSelected      = Object.keys(gears).length;
-  const allGearSelected    = gearsSelected === GEAR_SLOTS.length;
+  const allGearSelected    = gearsSelected === slots.length;
   const techniquesComplete = !cls?.techniques ||
     cls.techniques.filter((t) => !!t.options).every((t) => !!techniques[t.slot]);
 
@@ -71,7 +72,7 @@ export default function BuilderPage() {
   ).length;
   const activeSlotIsLegendary = getGearById(gears[activeSlot])?.rarity === 'Legendary';
 
-  const activeSlotMeta     = GEAR_SLOTS.find((s) => s.id === activeSlot);
+  const activeSlotMeta     = slots.find((s) => s.id === activeSlot);
   const slotWeaponType     = cls?.meleeSlotTypes?.[activeSlot];
   const slotRangedTypes    = cls?.rangeSlotTypes?.[activeSlot];
   const slotAllowedItems   = cls?.slotAllowedItems?.[activeSlot];
@@ -222,7 +223,7 @@ export default function BuilderPage() {
 
             {/* Mobile slot bar */}
             <div className="flex md:hidden overflow-x-auto shrink-0 bg-gray-50 dark:bg-[#0a0f1a] border-b border-gray-200 dark:border-gray-800 px-3 py-2 gap-2">
-              {GEAR_SLOTS.map((slot) => {
+              {slots.map((slot) => {
                 const equipped = gears[slot.id] ? getGearById(gears[slot.id]) : undefined;
                 const isActive = activeSlot === slot.id;
                 return (
@@ -248,7 +249,7 @@ export default function BuilderPage() {
               <div className="hidden md:flex w-[230px] bg-gray-50 dark:bg-[#0a0f1a] border-r border-gray-200 dark:border-gray-800 flex-col shrink-0">
                 <div className="p-3.5 flex-1 overflow-y-auto">
                   <div className="text-[11px] text-gray-500 dark:text-gray-600 uppercase tracking-widest mb-2">Gear Slots</div>
-                  {GEAR_SLOTS.map((slot) => {
+                  {slots.map((slot) => {
                     const equipped = gears[slot.id] ? getGearById(gears[slot.id]) : undefined;
                     const isActive = activeSlot === slot.id;
                     return (
@@ -503,7 +504,7 @@ export default function BuilderPage() {
                   <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Equipped Gear</div>
                     <div className="flex flex-col gap-2.5">
-                      {GEAR_SLOTS.map((slot) => {
+                      {slots.map((slot) => {
                         const gear        = getGearById(gears[slot.id]);
                         const activeAttrs = (gearAttributes[slot.id] ?? []).filter(Boolean);
                         return gear ? (

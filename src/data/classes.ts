@@ -20,7 +20,7 @@ export const CLASSES: ClassDef[] = [
     perk: 'Legendary Stance: Enter Ghost Stance with 20% less resolve',
     color: '#dc2626',
     accentColor: '#fca5a5',
-    slotAllowedItems: { ghostWeapon: GHOST_TOOL_ITEMS },
+    slotAllowedItems: { ghostWeapon: GHOST_TOOL_ITEMS, ghostWeapon2: GHOST_TOOL_ITEMS },
   },
   {
     id: 'archer',
@@ -35,7 +35,7 @@ export const CLASSES: ClassDef[] = [
     meleeSlotTypes: { melee1: 'katana', melee2: 'yari', melee3: 'kusarigama' },
     rangeSlotTypes: { range1: ['yumi'], range2: ['hankyu', 'tanegashima', 'bomb'] },
     slotAllowedItems: {
-      charm: ['basic_charm', 'archers_supplies'],
+      charm: ['basic_charm', 'archers_supplies', 'harmonious_bell', 'spirit_brew', 'risky_parry'],
       ghostWeapon: GHOST_TOOL_ITEMS,
     },
     techniques: [
@@ -56,7 +56,13 @@ export const CLASSES: ClassDef[] = [
     perk: 'Iron Will: Survive one lethal hit per encounter with 1 HP',
     color: '#d97706',
     accentColor: '#fcd34d',
-    slotAllowedItems: { ghostWeapon: GHOST_TOOL_ITEMS },
+    meleeSlotTypes: { melee1: 'katana', melee2: 'dual_katana', melee3: 'odachi' },
+    rangeSlotTypes: { range1: ['tanegashima', 'bomb', 'hankyu'] },
+    slotAllowedItems: {
+      charm: ['basic_charm', 'harmonious_bell', 'spirit_brew', 'mercenarys_best_friend', 'risky_parry'],
+      ghostWeapon: ['tanzutsu', 'storm_tanzutsu', 'kunai', 'spirit_kunai', 'metsubushi', 'hallucinating_metsubushi'],
+      ghostWeapon2: GHOST_TOOL_ITEMS,
+    },
   },
   {
     id: 'shinobi',
@@ -68,7 +74,7 @@ export const CLASSES: ClassDef[] = [
     perk: 'Ghost Step: Perform 2 consecutive stealth kills without breaking cover',
     color: '#7c3aed',
     accentColor: '#c4b5fd',
-    slotAllowedItems: { ghostWeapon: GHOST_TOOL_ITEMS },
+    slotAllowedItems: { ghostWeapon: GHOST_TOOL_ITEMS, ghostWeapon2: GHOST_TOOL_ITEMS },
   },
 ];
 

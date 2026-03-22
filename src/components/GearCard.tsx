@@ -26,7 +26,7 @@ export default function GearCard({
   const showAttributes = selected && !compact && !!onAttributeChange;
 
   const attrOptions: string[][] = [gear.attributes1, gear.attributes2, gear.attributes3];
-  const attrLabels = ['Attribute 1', 'Attribute 2', 'Attribute 3'];
+  const attrLabels = ['Top Slot', 'Bottom Slot', 'Perk'];
 
   return (
     <div

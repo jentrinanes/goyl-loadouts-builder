@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { getBuildsForUser, deleteBuild, duplicateBuild } from '../store/buildStore';
 import { getClassById } from '../data/classes';
-import { getGearById, GEAR_SLOTS, RARITY_COLOR } from '../data/gear';
+import { getGearById, getSlotsForClass, RARITY_COLOR } from '../data/gear';
 import type { Build } from '../types';
 
 // ─── Share card (rendered off-screen, captured as PNG) ───────────────────────
@@ -51,7 +51,7 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
         {/* Gear */}
         <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Gear</div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px 16px', marginBottom: 4 }}>
-          {GEAR_SLOTS.map((slot) => {
+          {getSlotsForClass(build.classId).map((slot) => {
             const gear  = getGearById(build.gears?.[slot.id]);
             const attrs = (build.gearAttributes?.[slot.id] ?? []).filter(Boolean);
             if (!gear) return null;
@@ -228,7 +228,7 @@ export default function DashboardPage() {
                   <div className="px-4 py-3.5">
                     <div className="text-[10px] text-gray-400 dark:text-gray-600 uppercase tracking-widest mb-2">Gear</div>
                     <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 mb-1">
-                      {GEAR_SLOTS.map((slot) => {
+                      {getSlotsForClass(build.classId).map((slot) => {
                         const gear = getGearById(build.gears?.[slot.id]);
                         return gear ? (
                           <div key={slot.id} className="flex items-center gap-1.5 min-w-0">
