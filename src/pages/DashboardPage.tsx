@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toPng } from 'html-to-image';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { getBuildsForUser, deleteBuild, duplicateBuild } from '../store/buildStore';
+import { api } from '../lib/api';
 import { getClassById } from '../data/classes';
 import { getGearById, getSlotsForClass, RARITY_COLOR } from '../data/gear';
 import type { Build } from '../types';
@@ -111,24 +111,39 @@ export default function DashboardPage() {
   const navigate                    = useNavigate();
   const { theme, toggleTheme }      = useTheme();
   const [builds, setBuilds]           = useState<Build[]>([]);
+  const [loading, setLoading]         = useState(false);
+  const [error, setError]             = useState('');
   const [shareBuild, setShareBuild]   = useState<Build | null>(null);
   const [deleteBuildId, setDeleteBuildId] = useState<string | null>(null);
   const [capturing, setCapturing]     = useState(false);
   const shareCardRef                  = useRef<HTMLDivElement>(null);
 
-  const loadBuilds = () => setBuilds(getBuildsForUser(user!.id));
-  useEffect(loadBuilds, [user]);
+  const loadBuilds = async () => {
+    setLoading(true);
+    try {
+      const data = await api.builds.list();
+      setBuilds(data);
+    } catch {
+      setError('Failed to load builds');
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => { void loadBuilds(); }, [user]);
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (!deleteBuildId) return;
-    deleteBuild(deleteBuildId);
+    await api.builds.delete(deleteBuildId);
     setDeleteBuildId(null);
-    loadBuilds();
+    void loadBuilds();
   };
 
-  const handleDuplicate = (id: string) => {
-    duplicateBuild(id);
-    loadBuilds();
+  const handleDuplicate = async (id: string) => {
+    const original = builds.find((b) => b.id === id);
+    if (!original) return;
+    const { id: _id, createdAt: _createdAt, ...rest } = original;
+    await api.builds.create({ ...rest, name: `Copy of ${original.name}` });
+    void loadBuilds();
   };
 
   const handleDownload = async () => {
@@ -189,7 +204,16 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {builds.length === 0 ? (
+        {loading ? (
+          <div className="text-center py-20 px-5 text-gray-400 dark:text-gray-600">
+            <div className="text-4xl mb-4 animate-pulse">⏳</div>
+            <p className="text-sm">Loading builds...</p>
+          </div>
+        ) : error ? (
+          <div className="text-center py-20 px-5 text-red-500">
+            <p className="text-sm">{error}</p>
+          </div>
+        ) : builds.length === 0 ? (
           <div className="text-center py-20 px-5 text-gray-400 dark:text-gray-600">
             <div className="text-6xl mb-4">🥷</div>
             <h3 className="text-xl text-gray-500 mb-2">No builds yet</h3>

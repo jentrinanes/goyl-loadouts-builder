@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { CLASSES, getClassById } from '../data/classes';
 import { getSlotsForClass, getGearsByCategory, getGearById, RARITY_COLOR } from '../data/gear';
-import { saveBuild, getBuildById, isBuildNameTaken } from '../store/buildStore';
+import { api } from '../lib/api';
 import GearCard from '../components/GearCard';
 import type { StatSet, StatKey } from '../types';
 
@@ -65,18 +65,28 @@ export default function BuilderPage() {
   const [activeSlot, setActiveSlot]         = useState('melee1');
   const [saving, setSaving]                 = useState(false);
   const [saveError, setSaveError]           = useState('');
+  const [loadingBuild, setLoadingBuild]     = useState(false);
 
   useEffect(() => {
     if (id) {
-      const existing = getBuildById(id);
-      if (existing && existing.userId === user!.id) {
-        setBuildName(existing.name);
-        setSelectedClass(existing.classId);
-        setGears(existing.gears ?? {});
-        setGearAttributes(existing.gearAttributes ?? {});
-        setTechniques(existing.techniques ?? {});
-        setStep(STEP_GEAR);
-      }
+      setLoadingBuild(true);
+      api.builds.get(id)
+        .then((existing) => {
+          if (existing && existing.userId === user!.id) {
+            setBuildName(existing.name);
+            setSelectedClass(existing.classId);
+            setGears(existing.gears ?? {});
+            setGearAttributes(existing.gearAttributes ?? {});
+            setTechniques(existing.techniques ?? {});
+            setStep(STEP_GEAR);
+          }
+        })
+        .catch(() => {
+          // Build not found or unauthorized — stay on class selection
+        })
+        .finally(() => {
+          setLoadingBuild(false);
+        });
     }
   }, [id, user]);
 
@@ -111,16 +121,33 @@ export default function BuilderPage() {
     });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setSaveError('');
-    if (isBuildNameTaken(user!.id, buildName, id)) {
-      setSaveError('A build with this name already exists.');
-      return;
-    }
     setSaving(true);
-    saveBuild({ id, userId: user!.id, name: buildName, classId: selectedClass!, gears, gearAttributes, techniques });
-    setTimeout(() => navigate('/dashboard'), 400);
+    try {
+      if (id) {
+        await api.builds.update(id, { userId: user!.id, name: buildName, classId: selectedClass!, gears, gearAttributes, techniques });
+      } else {
+        await api.builds.create({ userId: user!.id, name: buildName, classId: selectedClass!, gears, gearAttributes, techniques });
+      }
+      navigate('/dashboard');
+    } catch (err) {
+      setSaveError(err instanceof Error ? err.message : 'Failed to save build');
+    } finally {
+      setSaving(false);
+    }
   };
+
+  if (loadingBuild) {
+    return (
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 flex items-center justify-center">
+        <div className="text-center text-gray-400 dark:text-gray-600">
+          <div className="text-4xl mb-4 animate-pulse">⏳</div>
+          <p className="text-sm">Loading build...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 flex flex-col">

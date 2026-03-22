@@ -35,8 +35,70 @@ resource "azurerm_static_web_app" "main" {
   sku_tier = "Free"
   sku_size = "Free"
 
+  app_settings = {
+    COSMOS_CONNECTION_STRING = azurerm_cosmosdb_account.main.primary_sql_connection_string
+    COSMOS_DB_NAME           = "yotei-legends"
+    HMAC_SECRET              = var.hmac_secret
+  }
+
   tags = {
     project     = var.project_name
     environment = var.environment
   }
+}
+
+# ── Cosmos DB ──────────────────────────────────────────────────────────────────
+
+resource "azurerm_cosmosdb_account" "main" {
+  name                = "cosmos-${var.project_name}-${var.environment}"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  offer_type          = "Standard"
+  kind                = "GlobalDocumentDB"
+
+  consistency_policy {
+    consistency_level = "Session"
+  }
+
+  geo_location {
+    location          = azurerm_resource_group.main.location
+    failover_priority = 0
+  }
+
+  capabilities {
+    name = "EnableServerless"
+  }
+
+  tags = {
+    project     = var.project_name
+    environment = var.environment
+  }
+}
+
+resource "azurerm_cosmosdb_sql_database" "main" {
+  name                = "yotei-legends"
+  resource_group_name = azurerm_resource_group.main.name
+  account_name        = azurerm_cosmosdb_account.main.name
+}
+
+resource "azurerm_cosmosdb_sql_container" "users" {
+  name                = "users"
+  resource_group_name = azurerm_resource_group.main.name
+  account_name        = azurerm_cosmosdb_account.main.name
+  database_name       = azurerm_cosmosdb_sql_database.main.name
+  partition_key_path  = "/id"
+
+  unique_key_policy {
+    unique_keys {
+      paths = ["/username"]
+    }
+  }
+}
+
+resource "azurerm_cosmosdb_sql_container" "builds" {
+  name                = "builds"
+  resource_group_name = azurerm_resource_group.main.name
+  account_name        = azurerm_cosmosdb_account.main.name
+  database_name       = azurerm_cosmosdb_sql_database.main.name
+  partition_key_path  = "/userId"
 }

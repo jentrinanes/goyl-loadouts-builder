@@ -15,3 +15,9 @@ variable "location" {
   type        = string
   default     = "eastasia"
 }
+
+variable "hmac_secret" {
+  description = "Secret key for signing HMAC auth tokens (keep this private)"
+  type        = string
+  sensitive   = true
+}

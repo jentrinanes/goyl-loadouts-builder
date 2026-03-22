@@ -1,26 +1,29 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
-import { getSession, login, logout, register } from '../store/authStore';
+import { api, getToken, setToken, clearToken, parseTokenUser } from '../lib/api';
 import type { User, AuthContextValue } from '../types';
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(() => getSession());
+  const [user, setUser] = useState<User | null>(() => {
+    const token = getToken();
+    return token ? parseTokenUser(token) : null;
+  });
 
-  const handleLogin = (username: string, password: string): User => {
-    const session = login(username, password);
-    setUser(session);
-    return session;
+  const handleLogin = async (username: string, password: string): Promise<void> => {
+    const { token, user: u } = await api.auth.login(username, password);
+    setToken(token);
+    setUser(u);
   };
 
-  const handleRegister = (username: string, password: string): User => {
-    const session = register(username, password);
-    setUser(session);
-    return session;
+  const handleRegister = async (username: string, password: string): Promise<void> => {
+    const { token, user: u } = await api.auth.register(username, password);
+    setToken(token);
+    setUser(u);
   };
 
   const handleLogout = (): void => {
-    logout();
+    clearToken();
     setUser(null);
   };
 

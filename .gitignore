@@ -32,3 +32,6 @@ infrastructure/.terraform/
 infrastructure/.terraform.lock.hcl
 infrastructure/terraform.tfstate
 infrastructure/terraform.tfstate.backup
+
+# Azure Functions local settings
+api/local.settings.json

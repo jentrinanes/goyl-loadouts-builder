@@ -14,16 +14,14 @@ export default function AuthPage() {
   const navigate                = useNavigate();
   const { theme, toggleTheme }  = useTheme();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     try {
       if (mode === 'login') {
-        login(username, password);
+        await login(username, password);
       } else {
-        if (username.length < 3) { setError('Username must be at least 3 characters'); return; }
-        if (password.length < 4) { setError('Password must be at least 4 characters'); return; }
-        register(username, password);
+        await register(username, password);
       }
       navigate('/dashboard');
     } catch (err) {

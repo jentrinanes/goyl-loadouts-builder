@@ -4,3 +4,4 @@
 project_name = "goyl-loadouts"
 environment  = "prod"
 location     = "eastasia"
+hmac_secret  = "replace-with-a-long-random-secret"

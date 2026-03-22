@@ -66,10 +66,6 @@ export interface User {
   username: string;
 }
 
-export interface StoredUser extends User {
-  password: string;
-}
-
 // ─── Build ───────────────────────────────────────────────────────────────────
 
 export interface Build {
@@ -89,7 +85,7 @@ export type NewBuild = Omit<Build, 'id' | 'createdAt'> & { id?: string };
 
 export interface AuthContextValue {
   user: User | null;
-  login: (username: string, password: string) => User;
-  register: (username: string, password: string) => User;
+  login: (username: string, password: string) => Promise<void>;
+  register: (username: string, password: string) => Promise<void>;
   logout: () => void;
 }
