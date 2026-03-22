@@ -63,6 +63,8 @@ resource "azurerm_cosmosdb_account" "main" {
   offer_type          = "Standard"
   kind                = "GlobalDocumentDB"
 
+  enable_free_tier = true
+
   consistency_policy {
     consistency_level = "Session"
   }
@@ -70,10 +72,6 @@ resource "azurerm_cosmosdb_account" "main" {
   geo_location {
     location          = azurerm_resource_group.main.location
     failover_priority = 0
-  }
-
-  capabilities {
-    name = "EnableServerless"
   }
 
   tags = {
@@ -86,6 +84,9 @@ resource "azurerm_cosmosdb_sql_database" "main" {
   name                = "yotei-legends"
   resource_group_name = azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.main.name
+
+  # Share 400 RU/s across all containers — stays within the free tier (1,000 RU/s max)
+  throughput = 400
 }
 
 resource "azurerm_cosmosdb_sql_container" "users" {
