@@ -34,66 +34,7 @@ Built with React 19 + Vite + TypeScript, styled with Tailwind CSS v4, and backed
 
 ---
 
-## Local Development
-
-### Prerequisites
-
-- Node.js **v20** (required by Azure Functions Core Tools v4)
-- [nvm-windows](https://github.com/coreybutler/nvm-windows) recommended for version switching
-- [Azure Cosmos DB Emulator](https://aka.ms/cosmosdb-emulator) or Docker
-- [SWA CLI](https://azure.github.io/static-web-apps-cli/)
-- [Azure Functions Core Tools v4](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local)
-
-```bash
-# Switch to Node 20
-nvm use 20
-
-# Install SWA CLI globally (once)
-npm install -g @azure/static-web-apps-cli
-
-# Install frontend dependencies
-npm install
-
-# Install API dependencies
-cd api && npm install && cd ..
-```
-
-### Cosmos DB Emulator Setup
-
-1. Start the emulator (Windows app or Docker)
-2. Open `https://localhost:8081/_explorer` and create:
-   - Database: `yotei-legends`
-   - Container: `users` — partition key `/id`
-   - Container: `builds` — partition key `/userId`
-3. Copy `api/local.settings.example.json` → `api/local.settings.json` and fill in:
-
-```json
-{
-  "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "",
-    "FUNCTIONS_WORKER_RUNTIME": "node",
-    "COSMOS_CONNECTION_STRING": "YOUR_COSMOS_DB_CONN_STRING",
-    "COSMOS_DB_NAME": "yotei-legends",
-    "HMAC_SECRET": "local-dev-secret"
-  }
-}
-```
-
-### Run
-
-```bash
-# From the project root (starts Vite + Functions + SWA proxy together)
-swa start http://localhost:5173 --run "npm run dev" --api-location api
-```
-
-Open **`http://localhost:4280`** in your browser.
-
-> **Note:** Use the SWA URL (`4280`), not the Vite URL (`5173`), so `/api/*` routes work correctly.
-
----
-
-## Other Commands
+## Commands
 
 ```bash
 npm run dev       # Vite dev server only (no API)
