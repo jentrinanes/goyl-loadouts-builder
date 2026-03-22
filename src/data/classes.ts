@@ -20,7 +20,13 @@ export const CLASSES: ClassDef[] = [
     perk: 'Legendary Stance: Enter Ghost Stance with 20% less resolve',
     color: '#dc2626',
     accentColor: '#fca5a5',
-    slotAllowedItems: { ghostWeapon: GHOST_TOOL_ITEMS, ghostWeapon2: GHOST_TOOL_ITEMS },
+    meleeSlotTypes: { melee1: 'katana', melee2: 'yari', melee3: 'odachi' },
+    rangeSlotTypes: { range1: ['hankyu', 'tanegashima', 'bomb'] },
+    slotAllowedItems: {
+      charm: ['basic_charm', 'spirit_brew', 'harmonious_bell', 'risky_parry', 'samurais_bracers'],
+      ghostWeapon: ['tanzutsu', 'storm_tanzutsu', 'kunai', 'spirit_kunai', 'metsubushi', 'hallucinating_metsubushi'],
+      ghostWeapon2: GHOST_TOOL_ITEMS,
+    },
   },
   {
     id: 'archer',
