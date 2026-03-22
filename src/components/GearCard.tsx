@@ -69,15 +69,18 @@ export default function GearCard({
         {/* Read-only attribute pills — for Review step */}
         {displayAttributes && displayAttributes.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-2">
-            {displayAttributes.map((attr) => (
-              <span
-                key={attr}
-                className="px-2 py-0.5 rounded-full text-[10px] font-semibold border"
-                style={{ background: rarityColor + '18', borderColor: rarityColor + '66', color: rarityColor }}
-              >
-                ✦ {attr}
-              </span>
-            ))}
+            {displayAttributes.map((attr) => {
+              const max = gear.attributeMaxValues?.[attr];
+              return (
+                <span
+                  key={attr}
+                  className="px-2 py-0.5 rounded-full text-[10px] font-semibold border"
+                  style={{ background: rarityColor + '18', borderColor: rarityColor + '66', color: rarityColor }}
+                >
+                  ✦ {attr}{max !== undefined ? ` (${max}%)` : ''}
+                </span>
+              );
+            })}
           </div>
         )}
 
@@ -98,9 +101,14 @@ export default function GearCard({
                     className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-700 dark:text-gray-200 text-xs px-2 py-1.5 w-full outline-none cursor-pointer"
                   >
                     <option value="">— Select —</option>
-                    {attrOptions[i].map((opt) => (
-                      <option key={opt} value={opt}>{opt}</option>
-                    ))}
+                    {attrOptions[i].map((opt) => {
+                      const max = gear.attributeMaxValues?.[opt];
+                      return (
+                        <option key={opt} value={opt}>
+                          {opt}{max !== undefined ? ` (${max}%)` : ''}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
               ))}

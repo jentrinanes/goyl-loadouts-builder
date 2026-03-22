@@ -64,6 +64,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Expert Combo', 'Resolve Of Lightning', 'Burning Blade', 'Poison Blade'],
+    attributeMaxValues: {
+      'Katana Damage': 12, 'Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered Damage': 28, 'Execution Damage': 30, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'katana',
   },
   {
@@ -77,6 +83,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Expert Combo', 'Resolve Of Lightning', 'Burning Blade', 'Poison Blade'],
+    attributeMaxValues: {
+      'Katana Damage': 12, 'Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered Damage': 28, 'Execution Damage': 30, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'katana',
   },
   {
@@ -90,6 +102,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Katana Damage', 'Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Expert Combo', 'Resolve Of Lightning', 'Burning Blade', 'Poison Blade'],
+    attributeMaxValues: {
+      'Katana Damage': 12, 'Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered Damage': 28, 'Execution Damage': 30, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'katana',
   },
 
@@ -105,6 +123,12 @@ export const GEARS: Gear[] = [
     attributes1: DUAL_KATANA_ATTR1,
     attributes2: DUAL_KATANA_ATTR2,
     attributes3: DUAL_KATANA_ATTR3,
+    attributeMaxValues: {
+      'Dual Katana Damage': 12, 'Dual Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'dual_katana',
   },
   {
@@ -118,6 +142,12 @@ export const GEARS: Gear[] = [
     attributes1: DUAL_KATANA_ATTR1,
     attributes2: DUAL_KATANA_ATTR2,
     attributes3: DUAL_KATANA_ATTR3,
+    attributeMaxValues: {
+      'Dual Katana Damage': 12, 'Dual Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'dual_katana',
   },
   {
@@ -131,6 +161,12 @@ export const GEARS: Gear[] = [
     attributes1: DUAL_KATANA_ATTR1,
     attributes2: DUAL_KATANA_ATTR2,
     attributes3: DUAL_KATANA_ATTR3,
+    attributeMaxValues: {
+      'Dual Katana Damage': 12, 'Dual Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'dual_katana',
   },
   {
@@ -144,6 +180,12 @@ export const GEARS: Gear[] = [
     attributes1: DUAL_KATANA_ATTR1,
     attributes2: DUAL_KATANA_ATTR2,
     attributes3: DUAL_KATANA_ATTR3,
+    attributeMaxValues: {
+      'Dual Katana Damage': 12, 'Dual Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'dual_katana',
   },
 
@@ -159,6 +201,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Yari Damage', 'Yari Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
     attributes2: ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributes3: ['Expert Combo', 'Quickening Tides', 'Strength Of Typhoons', 'Burning Blade', 'Poison Blade'],
+    attributeMaxValues: {
+      'Yari Damage': 12, 'Yari Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered Damage': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'yari',
   },
   {
@@ -172,6 +220,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Yari Damage', 'Yari Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
     attributes2: ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributes3: ['Expert Combo', 'Quickening Tides', 'Strength Of Typhoons', 'Burning Blade', 'Poison Blade'],
+    attributeMaxValues: {
+      'Yari Damage': 12, 'Yari Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered Damage': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'yari',
   },
   {
@@ -185,6 +239,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Yari Damage', 'Yari Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
     attributes2: ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributes3: ['Expert Combo', 'Quickening Tides', 'Strength Of Typhoons', 'Burning Blade', 'Poison Blade'],
+    attributeMaxValues: {
+      'Yari Damage': 12, 'Yari Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered Damage': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'yari',
   },
   {
@@ -198,6 +258,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Yari Damage', 'Yari Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'],
     attributes2: ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributes3: ['Expert Combo', 'Quickening Tides', 'Strength Of Typhoons', 'Burning Blade', 'Poison Blade'],
+    attributeMaxValues: {
+      'Yari Damage': 12, 'Yari Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered Damage': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'yari',
   },
 
@@ -213,6 +279,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Kusarigama Damage', 'Kusarigama Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage', 'Assassination Spirit Gain'],
     attributes2: ['Assassination Damage', 'Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributes3: ['Expert Combo', 'Shattering Strike', 'Burning Blade', 'Poison Blade'],
+    attributeMaxValues: {
+      'Kusarigama Damage': 12, 'Kusarigama Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35, 'Assassination Spirit Gain': 12,
+      'Assassination Damage': 23, 'Enemy Staggered Damage': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'kusarigama',
   },
   {
@@ -226,6 +298,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Kusarigama Damage', 'Kusarigama Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage', 'Assassination Spirit Gain'],
     attributes2: ['Assassination Damage', 'Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributes3: ['Expert Combo', 'Shattering Strike', 'Burning Blade', 'Poison Blade'],
+    attributeMaxValues: {
+      'Kusarigama Damage': 12, 'Kusarigama Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35, 'Assassination Spirit Gain': 12,
+      'Assassination Damage': 23, 'Enemy Staggered Damage': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'kusarigama',
   },
   {
@@ -239,6 +317,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Kusarigama Damage', 'Kusarigama Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage', 'Assassination Spirit Gain'],
     attributes2: ['Assassination Damage', 'Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributes3: ['Expert Combo', 'Shattering Strike', 'Burning Blade', 'Poison Blade'],
+    attributeMaxValues: {
+      'Kusarigama Damage': 12, 'Kusarigama Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35, 'Assassination Spirit Gain': 12,
+      'Assassination Damage': 23, 'Enemy Staggered Damage': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'kusarigama',
   },
 
@@ -254,6 +338,12 @@ export const GEARS: Gear[] = [
     attributes1: ODACHI_ATTR1,
     attributes2: ODACHI_ATTR2,
     attributes3: ODACHI_ATTR3,
+    attributeMaxValues: {
+      'Odachi Damage': 12, 'Odachi Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain on Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'odachi',
   },
   {
@@ -267,6 +357,12 @@ export const GEARS: Gear[] = [
     attributes1: ODACHI_ATTR1,
     attributes2: ODACHI_ATTR2,
     attributes3: ODACHI_ATTR3,
+    attributeMaxValues: {
+      'Odachi Damage': 12, 'Odachi Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain on Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'odachi',
   },
   {
@@ -280,6 +376,12 @@ export const GEARS: Gear[] = [
     attributes1: ODACHI_ATTR1,
     attributes2: ODACHI_ATTR2,
     attributes3: ODACHI_ATTR3,
+    attributeMaxValues: {
+      'Odachi Damage': 12, 'Odachi Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain on Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'odachi',
   },
   {
@@ -293,6 +395,12 @@ export const GEARS: Gear[] = [
     attributes1: ODACHI_ATTR1,
     attributes2: ODACHI_ATTR2,
     attributes3: ODACHI_ATTR3,
+    attributeMaxValues: {
+      'Odachi Damage': 12, 'Odachi Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain on Melee': 10, 'Perfect Counter Damage': 35,
+      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     weaponType: 'odachi',
   },
 
@@ -418,6 +526,12 @@ export const GEARS: Gear[] = [
     attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage', 'Ranged Spirit Gain', 'Concussion Bomb Radius'],
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Spirited', 'Scorch Bombs'],
+    attributeMaxValues: {
+      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Ranged Spirit Gain': 10, 'Concussion Bomb Radius': 300,
+      'All Ranged Damage': 25, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
     rangedWeaponType: 'bomb' as const,
   },
   {
@@ -431,6 +545,12 @@ export const GEARS: Gear[] = [
     attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage', 'Ranged Spirit Gain', 'Concussion Bomb Radius'],
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Spirited', 'Scorch Bombs'],
+    attributeMaxValues: {
+      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
+      'Ranged Spirit Gain': 10, 'Concussion Bomb Radius': 300,
+      'All Ranged Damage': 25, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
     rangedWeaponType: 'bomb' as const,
   },
   {
@@ -444,6 +564,11 @@ export const GEARS: Gear[] = [
     attributes1: ['Ranged Spirit Gain', 'Assassination Damage', 'Assassination Spirit Gain', 'Blind Bomb Radius', 'Blind Bomb Duration'],
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Spirited', 'Increased Impact'],
+    attributeMaxValues: {
+      'Ranged Spirit Gain': 10,
+      'All Ranged Damage': 25, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
     rangedWeaponType: 'bomb' as const,
   },
   {
@@ -457,6 +582,11 @@ export const GEARS: Gear[] = [
     attributes1: ['Ranged Spirit Gain', 'Assassination Damage', 'Assassination Spirit Gain', 'Blind Bomb Radius', 'Blind Bomb Duration'],
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Spirited', 'Increased Impact'],
+    attributeMaxValues: {
+      'Ranged Spirit Gain': 10,
+      'All Ranged Damage': 25, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
     rangedWeaponType: 'bomb' as const,
   },
 
@@ -472,6 +602,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Spirit Gain', 'Spirit Heal Effect', 'Weapon Aligned Stagger Self-Heal', 'Incoming Damage Reduction'],
     attributes2: ['Assassination Damage', 'Status Effect Duration', 'Status Effect Damage', 'Enemy Staggered Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Bullet Defense', 'Spirited', 'Parry Heal', 'Fire Master', 'Healthy', 'Scavenger', 'Foul Arrows'],
+    attributeMaxValues: {
+      'Spirit Gain': 25, 'Spirit Heal Effect': 50, 'Weapon Aligned Stagger Self-Heal': 12, 'Incoming Damage Reduction': 10,
+      'Assassination Damage': 23, 'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Enemy Staggered Damage': 28,
+      'Execution Damage': 30, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
   },
   {
     id: 'spirit_brew',
@@ -484,6 +620,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Spirit Gain', 'Spirit Heal Effect', 'Weapon Aligned Stagger Self-Heal', 'Incoming Damage Reduction'],
     attributes2: ['Assassination Damage', 'Status Effect Duration', 'Status Effect Damage', 'Enemy Staggered Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Bullet Defense', 'Spirited', 'Parry Heal', 'Fire Master', 'Healthy', 'Scavenger', 'Foul Arrows'],
+    attributeMaxValues: {
+      'Spirit Gain': 25, 'Spirit Heal Effect': 50, 'Weapon Aligned Stagger Self-Heal': 12, 'Incoming Damage Reduction': 10,
+      'Assassination Damage': 23, 'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Enemy Staggered Damage': 28,
+      'Execution Damage': 30, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
   },
   {
     id: 'harmonious_bell',
@@ -496,6 +638,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Spirit Gain', 'Spirit Heal Effect', 'Weapon Aligned Stagger Self-Heal', 'Incoming Damage Reduction'],
     attributes2: ['Assassination Damage', 'Status Effect Duration', 'Status Effect Damage', 'Enemy Staggered Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Bullet Defense', 'Spirited', 'Parry Heal', 'Fire Master', 'Healthy', 'Scavenger', 'Foul Arrows'],
+    attributeMaxValues: {
+      'Spirit Gain': 25, 'Spirit Heal Effect': 50, 'Weapon Aligned Stagger Self-Heal': 12, 'Incoming Damage Reduction': 10,
+      'Assassination Damage': 23, 'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Enemy Staggered Damage': 28,
+      'Execution Damage': 30, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
   },
   {
     id: 'risky_parry',
@@ -508,6 +656,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Spirit Gain', 'Spirit Heal Effect', 'Weapon Aligned Stagger Self-Heal', 'Incoming Damage Reduction'],
     attributes2: ['Assassination Damage', 'Status Effect Duration', 'Status Effect Damage', 'Enemy Staggered Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Bullet Defense', 'Spirited', 'Parry Heal', 'Fire Master', 'Healthy', 'Scavenger', 'Foul Arrows'],
+    attributeMaxValues: {
+      'Spirit Gain': 25, 'Spirit Heal Effect': 50, 'Weapon Aligned Stagger Self-Heal': 12, 'Incoming Damage Reduction': 10,
+      'Assassination Damage': 23, 'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Enemy Staggered Damage': 28,
+      'Execution Damage': 30, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
   },
   {
     id: 'archers_supplies',
@@ -520,6 +674,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Spirit Gain', 'Spirit Heal Effect', 'Weapon Aligned Stagger Self-Heal', 'Incoming Damage Reduction'],
     attributes2: ['Assassination Damage', 'Status Effect Duration', 'Status Effect Damage', 'Enemy Staggered Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Bullet Defense', 'Spirited', 'Parry Heal', 'Fire Master', 'Healthy', 'Scavenger', 'Foul Arrows'],
+    attributeMaxValues: {
+      'Spirit Gain': 25, 'Spirit Heal Effect': 50, 'Weapon Aligned Stagger Self-Heal': 12, 'Incoming Damage Reduction': 10,
+      'Assassination Damage': 23, 'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Enemy Staggered Damage': 28,
+      'Execution Damage': 30, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
   },
   {
     id: 'samurais_bracers',
@@ -532,6 +692,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Spirit Gain', 'Spirit Heal Effect', 'Weapon Aligned Stagger Self-Heal', 'Incoming Damage Reduction'],
     attributes2: ['Assassination Damage', 'Status Effect Duration', 'Status Effect Damage', 'Enemy Staggered Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Bullet Defense', 'Spirited', 'Parry Heal', 'Fire Master', 'Healthy', 'Scavenger', 'Foul Arrows'],
+    attributeMaxValues: {
+      'Spirit Gain': 25, 'Spirit Heal Effect': 50, 'Weapon Aligned Stagger Self-Heal': 12, 'Incoming Damage Reduction': 10,
+      'Assassination Damage': 23, 'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Enemy Staggered Damage': 28,
+      'Execution Damage': 30, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
   },
   {
     id: 'mercenarys_best_friend',
@@ -544,6 +710,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Spirit Gain', 'Spirit Heal Effect', 'Weapon Aligned Stagger Self-Heal', 'Incoming Damage Reduction'],
     attributes2: ['Assassination Damage', 'Status Effect Duration', 'Status Effect Damage', 'Enemy Staggered Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Bullet Defense', 'Spirited', 'Parry Heal', 'Fire Master', 'Healthy', 'Scavenger', 'Foul Arrows'],
+    attributeMaxValues: {
+      'Spirit Gain': 25, 'Spirit Heal Effect': 50, 'Weapon Aligned Stagger Self-Heal': 12, 'Incoming Damage Reduction': 10,
+      'Assassination Damage': 23, 'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Enemy Staggered Damage': 28,
+      'Execution Damage': 30, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
   },
   {
     id: 'shinobis_shadow',
@@ -556,6 +728,12 @@ export const GEARS: Gear[] = [
     attributes1: ['Spirit Gain', 'Spirit Heal Effect', 'Weapon Aligned Stagger Self-Heal', 'Incoming Damage Reduction'],
     attributes2: ['Assassination Damage', 'Status Effect Duration', 'Status Effect Damage', 'Enemy Staggered Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Bullet Defense', 'Spirited', 'Parry Heal', 'Fire Master', 'Healthy', 'Scavenger', 'Foul Arrows'],
+    attributeMaxValues: {
+      'Spirit Gain': 25, 'Spirit Heal Effect': 50, 'Weapon Aligned Stagger Self-Heal': 12, 'Incoming Damage Reduction': 10,
+      'Assassination Damage': 23, 'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Enemy Staggered Damage': 28,
+      'Execution Damage': 30, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
   },
 
   // --- GHOST TOOL ---
@@ -569,6 +747,11 @@ export const GEARS: Gear[] = [
     perk: 'Kunai stagger enemies briefly on hit',
     attributes1: ['Kunai Damage', 'Assassination Damage', 'Assassination Spirit Gain', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Fire Kunai', 'Hidden Blades'],
   },
   {
@@ -581,6 +764,11 @@ export const GEARS: Gear[] = [
     perk: 'Hits restore resolve and apply spirit burn',
     attributes1: ['Kunai Damage', 'Assassination Damage', 'Assassination Spirit Gain', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Fire Kunai', 'Hidden Blades'],
   },
   {
@@ -593,6 +781,11 @@ export const GEARS: Gear[] = [
     perk: 'Blinded enemies cannot raise the alarm',
     attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain on Melee', 'Perfect Counter Damage', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Poison', 'Pestilence'],
   },
   {
@@ -605,6 +798,11 @@ export const GEARS: Gear[] = [
     perk: 'Affected enemies attack their allies for 8 seconds',
     attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain on Melee', 'Perfect Counter Damage', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Poison', 'Pestilence'],
   },
   {
@@ -617,6 +815,11 @@ export const GEARS: Gear[] = [
     perk: 'Close-range shots knock enemies off their feet',
     attributes1: ['Tanzutsu Damage', 'All Ranged Damage', 'Ranged Spirit Gain', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Expanded Chamber', 'Ignite'],
   },
   {
@@ -629,6 +832,11 @@ export const GEARS: Gear[] = [
     perk: 'Each shot releases a lightning arc that hits nearby enemies',
     attributes1: ['Tanzutsu Damage', 'All Ranged Damage', 'Ranged Spirit Gain', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Expanded Chamber', 'Ignite'],
   },
   {
@@ -641,6 +849,11 @@ export const GEARS: Gear[] = [
     perk: 'Enemies in smoke cannot detect movement',
     attributes1: ['Assassination Damage', 'Assassination Spirit Gain', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Armory', 'Poison'],
   },
   {
@@ -653,6 +866,11 @@ export const GEARS: Gear[] = [
     perk: 'Enemies in smoke deal 30% less damage and move 25% slower',
     attributes1: ['Assassination Damage', 'Assassination Spirit Gain', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Armory', 'Poison'],
   },
   {
@@ -665,6 +883,11 @@ export const GEARS: Gear[] = [
     perk: 'Enemies slowed by caltrops take increased damage',
     attributes1: ['All Ranged Damage', 'All Ranged Headshot Damage', 'Ranged Spirit Gain', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Armory', 'Fire Caltrops', 'Deep Bags'],
   },
   {
@@ -677,6 +900,11 @@ export const GEARS: Gear[] = [
     perk: 'Caltrops apply a stacking poison that lingers for 10 seconds',
     attributes1: ['All Ranged Damage', 'All Ranged Headshot Damage', 'Ranged Spirit Gain', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Armory', 'Fire Caltrops', 'Deep Bags'],
   },
   {
@@ -689,6 +917,11 @@ export const GEARS: Gear[] = [
     perk: 'Releases a small healing cloud on use',
     attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Armory', 'Larger Heal Area'],
   },
   {
@@ -701,6 +934,11 @@ export const GEARS: Gear[] = [
     perk: 'Releases a healing aura that restores health and removes status effects',
     attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
+    attributeMaxValues: {
+      'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
+      'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
+      'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+    },
     attributes3: ['Armory', 'Larger Heal Area'],
   },
 ];

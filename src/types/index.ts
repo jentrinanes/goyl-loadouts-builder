@@ -48,6 +48,7 @@ export interface Gear {
   attributes1: string[];
   attributes2: string[];
   attributes3: string[];
+  attributeMaxValues?: Record<string, number>;
   weaponType?: MeleeWeaponType;
   rangedWeaponType?: RangedWeaponType;
 }
