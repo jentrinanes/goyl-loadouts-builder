@@ -80,7 +80,13 @@ export const CLASSES: ClassDef[] = [
     perk: 'Ghost Step: Perform 2 consecutive stealth kills without breaking cover',
     color: '#7c3aed',
     accentColor: '#c4b5fd',
-    slotAllowedItems: { ghostWeapon: GHOST_TOOL_ITEMS, ghostWeapon2: GHOST_TOOL_ITEMS },
+    meleeSlotTypes: { melee1: 'katana', melee2: 'yari', melee3: 'kusarigama' },
+    rangeSlotTypes: { range1: ['hankyu', 'tanegashima', 'bomb'] },
+    slotAllowedItems: {
+      charm: ['basic_charm', 'spirit_brew', 'harmonious_bell', 'risky_parry', 'shinobis_shadow'],
+      ghostWeapon: GHOST_TOOL_ITEMS,
+      ghostWeapon2: GHOST_TOOL_ITEMS,
+    },
   },
 ];
 
