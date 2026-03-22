@@ -73,7 +73,7 @@ cd api && npm install && cd ..
   "Values": {
     "AzureWebJobsStorage": "",
     "FUNCTIONS_WORKER_RUNTIME": "node",
-    "COSMOS_CONNECTION_STRING": "AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMcZcLU/GQzQQSgsw==",
+    "COSMOS_CONNECTION_STRING": "YOUR_COSMOS_DB_CONN_STRING",
     "COSMOS_DB_NAME": "yotei-legends",
     "HMAC_SECRET": "local-dev-secret"
   }
