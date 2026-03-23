@@ -2,7 +2,7 @@ import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } 
 import { buildsContainer } from '../lib/cosmos';
 import { requireAuth } from '../lib/middleware';
 
-async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpResponseInit> {
+async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
     const { sub: userId } = requireAuth(req);
     const { resources } = await buildsContainer.items
@@ -11,7 +11,9 @@ async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpR
     return { status: 200, jsonBody: resources };
   } catch (e: unknown) {
     if (typeof e === 'object' && e !== null && 'status' in e) return e as HttpResponseInit;
-    return { status: 500, jsonBody: { message: 'Internal server error' } };
+    const message = e instanceof Error ? e.message : String(e);
+    ctx.error('buildsGet error:', message);
+    return { status: 500, jsonBody: { message } };
   }
 }
 
