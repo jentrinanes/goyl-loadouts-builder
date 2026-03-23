@@ -44,6 +44,7 @@ jobs:
           app_location: '/'
           api_location: 'api'
           output_location: 'dist'
+          skip_api_build: true
         env:
           COSMOS_CONNECTION_STRING: ${{ secrets.COSMOS_CONNECTION_STRING }}
           COSMOS_DB_NAME: yotei-legends
