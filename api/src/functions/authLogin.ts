@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } from '@azure/functions';
 import { usersContainer } from '../lib/cosmos';
 import { comparePassword, signToken } from '../lib/auth';
@@ -18,7 +19,8 @@ async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpR
     }
 
     const token = signToken({ sub: user.id, username: user.username });
-    return { status: 200, jsonBody: { token, user: { id: user.id, username: user.username } } };
+    const secretFingerprint = crypto.createHash('sha256').update(process.env.HMAC_SECRET ?? '').digest('hex').substring(0, 8);
+    return { status: 200, jsonBody: { token, user: { id: user.id, username: user.username }, _debug: { secretFingerprint } } };
   } catch (e: unknown) {
     if (typeof e === 'object' && e !== null && 'status' in e) return e as HttpResponseInit;
     return { status: 500, jsonBody: { message: 'Internal server error' } };

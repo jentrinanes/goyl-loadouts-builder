@@ -20,6 +20,7 @@ async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpR
 
   const [header, body, sig] = parts;
   const secret = process.env.HMAC_SECRET ?? '';
+  const secretFingerprint = crypto.createHash('sha256').update(secret).digest('hex').substring(0, 8);
   const expectedSig = crypto.createHmac('sha256', secret).update(`${header}.${body}`).digest('base64url');
   const sigMatch = sig === expectedSig;
 
@@ -46,6 +47,7 @@ async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpR
       exp,
       now,
       selfSignVerifyWorks,
+      secretFingerprint,
     },
   };
 }
