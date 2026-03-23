@@ -26,9 +26,15 @@ export async function createSession(userId: string, username: string): Promise<s
 }
 
 export async function validateSession(token: string): Promise<SessionPayload | null> {
-  const { resource } = await sessionsContainer.item(token, token).read<{ userId: string; username: string; expiresAt: number }>();
-  if (!resource || Date.now() > resource.expiresAt) return null;
-  return { userId: resource.userId, username: resource.username };
+  const { resources } = await sessionsContainer.items
+    .query<{ id: string; userId: string; username: string; expiresAt: number }>(
+      { query: 'SELECT * FROM c WHERE c.id = @id', parameters: [{ name: '@id', value: token }] },
+      { partitionKey: token }
+    )
+    .fetchAll();
+  const session = resources[0];
+  if (!session || Date.now() > session.expiresAt) return null;
+  return { userId: session.userId, username: session.username };
 }
 
 export async function deleteSession(token: string): Promise<void> {
