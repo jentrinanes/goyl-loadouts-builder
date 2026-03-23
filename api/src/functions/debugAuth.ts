@@ -27,15 +27,25 @@ async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpR
   const now = Math.floor(Date.now() / 1000);
   const exp = typeof payload?.exp === 'number' ? payload.exp : null;
 
+  // Sign a fresh test token with the current secret and immediately verify it
+  const testHeader = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
+  const testBody   = Buffer.from(JSON.stringify({ sub: 'test', exp: now + 60 })).toString('base64url');
+  const testSig    = crypto.createHmac('sha256', secret).update(`${testHeader}.${testBody}`).digest('base64url');
+  const testToken  = `${testHeader}.${testBody}.${testSig}`;
+  const testParts  = testToken.split('.');
+  const testVerify = crypto.createHmac('sha256', secret).update(`${testParts[0]}.${testParts[1]}`).digest('base64url');
+  const selfSignVerifyWorks = testSig === testVerify;
+
   return {
     status: 200,
     jsonBody: {
-      tokenLength:   token.length,
+      tokenLength:        token.length,
       sigMatch,
-      secretLength:  secret.length,
-      expired:       exp !== null ? now > exp : 'exp not found',
+      secretLength:       secret.length,
+      expired:            exp !== null ? now > exp : 'exp not found',
       exp,
       now,
+      selfSignVerifyWorks,
     },
   };
 }
