@@ -19,8 +19,12 @@ async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpR
     }
 
     const token = signToken({ sub: user.id, username: user.username });
-    const secretFingerprint = crypto.createHash('sha256').update(process.env.HMAC_SECRET ?? '').digest('hex').substring(0, 8);
-    return { status: 200, jsonBody: { token, user: { id: user.id, username: user.username }, _debug: { secretFingerprint } } };
+    const secret = process.env.HMAC_SECRET ?? '';
+    const secretFingerprint = crypto.createHash('sha256').update(secret).digest('hex').substring(0, 8);
+    const parts = token.split('.');
+    const expectedSig = crypto.createHmac('sha256', secret).update(`${parts[0]}.${parts[1]}`).digest('base64url');
+    const selfVerifies = parts[2] === expectedSig;
+    return { status: 200, jsonBody: { token, user: { id: user.id, username: user.username }, _debug: { secretFingerprint, selfVerifies, tokenLength: token.length } } };
   } catch (e: unknown) {
     if (typeof e === 'object' && e !== null && 'status' in e) return e as HttpResponseInit;
     return { status: 500, jsonBody: { message: 'Internal server error' } };
