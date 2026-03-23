@@ -26,13 +26,9 @@ export async function createSession(userId: string, username: string): Promise<s
 }
 
 export async function validateSession(token: string): Promise<SessionPayload | null> {
-  try {
-    const { resource } = await sessionsContainer.item(token, token).read<{ userId: string; username: string; expiresAt: number }>();
-    if (!resource || Date.now() > resource.expiresAt) return null;
-    return { userId: resource.userId, username: resource.username };
-  } catch {
-    return null;
-  }
+  const { resource } = await sessionsContainer.item(token, token).read<{ userId: string; username: string; expiresAt: number }>();
+  if (!resource || Date.now() > resource.expiresAt) return null;
+  return { userId: resource.userId, username: resource.username };
 }
 
 export async function deleteSession(token: string): Promise<void> {
