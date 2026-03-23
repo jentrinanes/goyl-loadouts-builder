@@ -1,5 +1,6 @@
 import * as crypto from 'crypto';
 import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } from '@azure/functions';
+import { signToken } from '../lib/auth';
 
 function base64urlDecode(str: string): unknown {
   try {
@@ -48,6 +49,12 @@ async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpR
       now,
       selfSignVerifyWorks,
       secretFingerprint,
+      authLibToken: (() => {
+        const t = signToken({ sub: 'test', username: 'test' });
+        const parts = t.split('.');
+        const recomputedSig = crypto.createHmac('sha256', secret).update(`${parts[0]}.${parts[1]}`).digest('base64url');
+        return { sigMatch: parts[2] === recomputedSig, tokenLength: t.length };
+      })(),
     },
   };
 }
