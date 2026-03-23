@@ -1,6 +1,7 @@
 import type { Build, User } from '../types';
 
 const TOKEN_KEY = 'yotei_token';
+const USER_KEY = 'yotei_user';
 
 export function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY);
@@ -10,16 +11,18 @@ export function setToken(token: string): void {
 }
 export function clearToken(): void {
   localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
 }
-
-export function parseTokenUser(token: string): User | null {
+export function getStoredUser(): User | null {
   try {
-    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-    if (!payload.sub || !payload.username) return null;
-    return { id: payload.sub, username: payload.username };
+    const raw = localStorage.getItem(USER_KEY);
+    return raw ? JSON.parse(raw) as User : null;
   } catch {
     return null;
   }
+}
+export function setStoredUser(user: User): void {
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
 export class ApiError extends Error {
@@ -66,6 +69,7 @@ export const api = {
         method: 'POST',
         body: JSON.stringify({ username, password }),
       }),
+    logout: () => apiFetch<void>('/auth/logout', { method: 'POST' }),
   },
   builds: {
     list: () => apiFetch<Build[]>('/builds'),

@@ -180,7 +180,7 @@ export default function DashboardPage() {
             {theme === 'dark' ? '☀️' : '🌙'}
           </button>
           <button
-            onClick={() => { logout(); navigate('/'); }}
+            onClick={() => { void logout().then(() => navigate('/')); }}
             className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg px-3 sm:px-3.5 py-1.5 cursor-pointer text-sm hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
           >
             Sign Out

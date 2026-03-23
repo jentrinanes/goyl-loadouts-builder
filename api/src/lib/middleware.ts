@@ -1,12 +1,11 @@
 import type { HttpRequest } from '@azure/functions';
-import { verifyToken, type TokenPayload } from './auth';
+import { validateSession, type SessionPayload } from './auth';
 
-export function requireAuth(req: HttpRequest): TokenPayload {
+export async function requireAuth(req: HttpRequest): Promise<SessionPayload> {
   const authHeader = req.headers.get('authorization') ?? '';
   const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
-  const payload = verifyToken(token);
-  if (!payload) {
-    throw { status: 401, message: 'Unauthorized' };
-  }
+  if (!token) throw { status: 401, jsonBody: { message: 'Unauthorized' } };
+  const payload = await validateSession(token);
+  if (!payload) throw { status: 401, jsonBody: { message: 'Unauthorized' } };
   return payload;
 }

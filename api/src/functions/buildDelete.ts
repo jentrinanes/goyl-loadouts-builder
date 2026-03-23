@@ -4,7 +4,7 @@ import { requireAuth } from '../lib/middleware';
 
 async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
-    const { sub: userId } = requireAuth(req);
+    const { userId } = await requireAuth(req);
     const id = req.params.id;
 
     const { resources } = await buildsContainer.items

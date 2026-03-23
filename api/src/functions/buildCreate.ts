@@ -5,7 +5,7 @@ import * as crypto from 'crypto';
 
 async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
-    const { sub: userId } = requireAuth(req);
+    const { userId } = await requireAuth(req);
     const body = await req.json() as Record<string, unknown>;
     const build = {
       ...body,

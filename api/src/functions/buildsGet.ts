@@ -4,7 +4,7 @@ import { requireAuth } from '../lib/middleware';
 
 async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
-    const { sub: userId } = requireAuth(req);
+    const { userId } = await requireAuth(req);
     const { resources } = await buildsContainer.items
       .query({ query: 'SELECT * FROM c WHERE c.userId = @uid', parameters: [{ name: '@uid', value: userId }] }, { partitionKey: userId })
       .fetchAll();

@@ -1,6 +1,6 @@
 import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } from '@azure/functions';
 import { usersContainer } from '../lib/cosmos';
-import { hashPassword, signToken } from '../lib/auth';
+import { hashPassword, createSession } from '../lib/auth';
 import * as crypto from 'crypto';
 
 async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpResponseInit> {
@@ -13,7 +13,6 @@ async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpR
       return { status: 400, jsonBody: { message: 'Username must be at least 3 characters and password at least 4.' } };
     }
 
-    // Check uniqueness
     const { resources } = await usersContainer.items
       .query({ query: 'SELECT c.id FROM c WHERE c.username = @u', parameters: [{ name: '@u', value: username }] })
       .fetchAll();
@@ -25,7 +24,7 @@ async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpR
     const passwordHash = await hashPassword(password);
     await usersContainer.items.create({ id, username, passwordHash, createdAt: Date.now() });
 
-    const token = signToken({ sub: id, username });
+    const token = await createSession(id, username);
     return { status: 201, jsonBody: { token, user: { id, username } } };
   } catch (e: unknown) {
     if (typeof e === 'object' && e !== null && 'status' in e) return e as HttpResponseInit;
