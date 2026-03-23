@@ -28,8 +28,7 @@ export async function createSession(userId: string, username: string): Promise<s
 export async function validateSession(token: string): Promise<SessionPayload | null> {
   const { resources } = await sessionsContainer.items
     .query<{ id: string; userId: string; username: string; expiresAt: number }>(
-      { query: 'SELECT * FROM c WHERE c.id = @id', parameters: [{ name: '@id', value: token }] },
-      { partitionKey: token }
+      { query: 'SELECT * FROM c WHERE c.id = @id', parameters: [{ name: '@id', value: token }] }
     )
     .fetchAll();
   const session = resources[0];
