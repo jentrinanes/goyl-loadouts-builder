@@ -63,7 +63,7 @@ resource "azurerm_cosmosdb_account" "main" {
   offer_type          = "Standard"
   kind                = "GlobalDocumentDB"
 
-  enable_free_tier = true
+  free_tier_enabled = true
 
   consistency_policy {
     consistency_level = "Session"
@@ -96,10 +96,8 @@ resource "azurerm_cosmosdb_sql_container" "users" {
   database_name       = azurerm_cosmosdb_sql_database.main.name
   partition_key_path  = "/id"
 
-  unique_key_policy {
-    unique_keys {
-      paths = ["/username"]
-    }
+  unique_key {
+    paths = ["/username"]
   }
 }
 
