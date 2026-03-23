@@ -7,7 +7,7 @@ export const GEAR_CATEGORIES: Record<string, GearCategory> = {
   GHOST_WEAPON: 'Ghost Tool',
 };
 
-// Default layout (Samurai, Mercenary, Shinobi): 1 Range + 2 Ghost Tool slots
+// Default layout (Mercenary, Shinobi): 3 Melee + 1 Range + 1 Charm + 2 Ghost Tool slots
 export const GEAR_SLOTS: GearSlot[] = [
   { id: 'melee1',       label: 'Melee I',       category: 'Melee'      },
   { id: 'melee2',       label: 'Melee II',      category: 'Melee'      },
@@ -18,7 +18,19 @@ export const GEAR_SLOTS: GearSlot[] = [
   { id: 'ghostWeapon2', label: 'Ghost Tool II', category: 'Ghost Tool' },
 ];
 
-// Archer layout: 2 Range + 1 Ghost Tool slot
+// Samurai layout: 4 Melee + 1 Range + 1 Charm + 2 Ghost Tool slots
+export const SAMURAI_GEAR_SLOTS: GearSlot[] = [
+  { id: 'melee1',       label: 'Melee I',       category: 'Melee'      },
+  { id: 'melee2',       label: 'Melee II',      category: 'Melee'      },
+  { id: 'melee3',       label: 'Melee III',     category: 'Melee'      },
+  { id: 'melee4',       label: 'Melee IV',      category: 'Melee'      },
+  { id: 'range1',       label: 'Range I',       category: 'Range'      },
+  { id: 'charm',        label: 'Charm',         category: 'Charm'      },
+  { id: 'ghostWeapon',  label: 'Ghost Tool I',  category: 'Ghost Tool' },
+  { id: 'ghostWeapon2', label: 'Ghost Tool II', category: 'Ghost Tool' },
+];
+
+// Archer layout: 3 Melee + 2 Range + 1 Charm + 1 Ghost Tool slot
 export const ARCHER_GEAR_SLOTS: GearSlot[] = [
   { id: 'melee1',      label: 'Melee I',    category: 'Melee'      },
   { id: 'melee2',      label: 'Melee II',   category: 'Melee'      },
@@ -29,8 +41,11 @@ export const ARCHER_GEAR_SLOTS: GearSlot[] = [
   { id: 'ghostWeapon', label: 'Ghost Tool', category: 'Ghost Tool' },
 ];
 
-export const getSlotsForClass = (classId: string | null): GearSlot[] =>
-  classId === 'archer' ? ARCHER_GEAR_SLOTS : GEAR_SLOTS;
+export const getSlotsForClass = (classId: string | null): GearSlot[] => {
+  if (classId === 'archer') return ARCHER_GEAR_SLOTS;
+  if (classId === 'samurai') return SAMURAI_GEAR_SLOTS;
+  return GEAR_SLOTS;
+};
 
 export const ATTR2_OPTIONS: string[] = [
   'Enemy Staggered Damage',
