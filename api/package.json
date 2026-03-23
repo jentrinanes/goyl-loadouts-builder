@@ -2,7 +2,7 @@
   "name": "goyl-api",
   "version": "1.0.0",
   "description": "Azure Functions API for GOYL Build Creator",
-  "main": "dist/src/functions/*.js",
+  "main": "_api_dist/src/functions/*.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
