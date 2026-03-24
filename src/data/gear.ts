@@ -18,16 +18,15 @@ export const GEAR_SLOTS: GearSlot[] = [
   { id: 'ghostWeapon2', label: 'Ghost Tool II', category: 'Ghost Tool' },
 ];
 
-// Samurai layout: 4 Melee + 1 Range + 1 Charm + 2 Ghost Tool slots
+// Samurai layout: 4 Melee + 1 Range + 1 Charm + 1 Ghost Tool slot
 export const SAMURAI_GEAR_SLOTS: GearSlot[] = [
-  { id: 'melee1',       label: 'Melee I',       category: 'Melee'      },
-  { id: 'melee2',       label: 'Melee II',      category: 'Melee'      },
-  { id: 'melee3',       label: 'Melee III',     category: 'Melee'      },
-  { id: 'melee4',       label: 'Melee IV',      category: 'Melee'      },
-  { id: 'range1',       label: 'Range I',       category: 'Range'      },
-  { id: 'charm',        label: 'Charm',         category: 'Charm'      },
-  { id: 'ghostWeapon',  label: 'Ghost Tool I',  category: 'Ghost Tool' },
-  { id: 'ghostWeapon2', label: 'Ghost Tool II', category: 'Ghost Tool' },
+  { id: 'melee1',      label: 'Melee I',    category: 'Melee'      },
+  { id: 'melee2',      label: 'Melee II',   category: 'Melee'      },
+  { id: 'melee3',      label: 'Melee III',  category: 'Melee'      },
+  { id: 'melee4',      label: 'Melee IV',   category: 'Melee'      },
+  { id: 'range1',      label: 'Range I',    category: 'Range'      },
+  { id: 'charm',       label: 'Charm',      category: 'Charm'      },
+  { id: 'ghostWeapon', label: 'Ghost Tool', category: 'Ghost Tool' },
 ];
 
 // Archer layout: 3 Melee + 2 Range + 1 Charm + 1 Ghost Tool slot

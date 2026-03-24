@@ -25,7 +25,6 @@ export const CLASSES: ClassDef[] = [
     slotAllowedItems: {
       charm: ['basic_charm', 'spirit_brew', 'harmonious_bell', 'risky_parry', 'samurais_bracers'],
       ghostWeapon: ['tanzutsu', 'storm_tanzutsu', 'kunai', 'spirit_kunai', 'metsubushi', 'hallucinating_metsubushi'],
-      ghostWeapon2: GHOST_TOOL_ITEMS,
     },
     techniques: [
       { slot: 1, default: "Hachiman's Fury" },
