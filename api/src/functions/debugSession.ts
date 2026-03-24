@@ -2,8 +2,7 @@ import { app, type HttpRequest, type HttpResponseInit, type InvocationContext } 
 import { sessionsContainer } from '../lib/cosmos';
 
 async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpResponseInit> {
-  const authHeader = req.headers.get('authorization') ?? '(none)';
-  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
+  const token = req.headers.get('x-auth-token') ?? '';
 
   const connStr = process.env.COSMOS_CONNECTION_STRING ?? '';
   const endpointMatch = connStr.match(/AccountEndpoint=([^;]+)/);
