@@ -62,7 +62,7 @@ const DUAL_KATANA_ATTR2 = ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate 
 const DUAL_KATANA_ATTR3 = ['Dual Tempest Strikes', 'Unrelenting Flurry', 'Burning Blade', 'Poison Blade'];
 
 const ODACHI_ATTR1 = ['Odachi Damage', 'Odachi Stagger Damage', 'Odachi Counter Window', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain on Melee', 'Perfect Counter Damage'];
-const ODACHI_ATTR2 = ['Enemy Staggered', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'];
+const ODACHI_ATTR2 = ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'];
 const ODACHI_ATTR3 = ['Expert Combo', 'Unstoppable Force', 'Resolve of the Mountain', 'Burning Blade', 'Poison Blade'];
 
 export const GEARS: Gear[] = [
@@ -353,10 +353,10 @@ export const GEARS: Gear[] = [
     attributes2: ODACHI_ATTR2,
     attributes3: ODACHI_ATTR3,
     attributeMaxValues: {
-      'Odachi Damage': 12, 'Odachi Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
-      'Spirit Gain on Melee': 10, 'Perfect Counter Damage': 35,
-      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
-      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+      'Odachi Damage': 11, 'Odachi Stagger Damage': 11, 'Odachi Counter Window': 16.6, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain on Melee': 9, 'Perfect Counter Damage': 30,
+      'Enemy Staggered Damage': 24, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11,
     },
     weaponType: 'odachi',
   },
@@ -372,10 +372,10 @@ export const GEARS: Gear[] = [
     attributes2: ODACHI_ATTR2,
     attributes3: ODACHI_ATTR3,
     attributeMaxValues: {
-      'Odachi Damage': 12, 'Odachi Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
-      'Spirit Gain on Melee': 10, 'Perfect Counter Damage': 35,
-      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
-      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+      'Odachi Damage': 11, 'Odachi Stagger Damage': 11, 'Odachi Counter Window': 16.6, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain on Melee': 9, 'Perfect Counter Damage': 30,
+      'Enemy Staggered Damage': 24, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11,
     },
     weaponType: 'odachi',
   },
@@ -391,10 +391,10 @@ export const GEARS: Gear[] = [
     attributes2: ODACHI_ATTR2,
     attributes3: ODACHI_ATTR3,
     attributeMaxValues: {
-      'Odachi Damage': 12, 'Odachi Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
-      'Spirit Gain on Melee': 10, 'Perfect Counter Damage': 35,
-      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
-      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+      'Odachi Damage': 11, 'Odachi Stagger Damage': 11, 'Odachi Counter Window': 16.6, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain on Melee': 9, 'Perfect Counter Damage': 30,
+      'Enemy Staggered Damage': 24, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11,
     },
     weaponType: 'odachi',
   },
@@ -412,7 +412,7 @@ export const GEARS: Gear[] = [
     attributeMaxValues: {
       'Odachi Damage': 12, 'Odachi Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
       'Spirit Gain on Melee': 10, 'Perfect Counter Damage': 35,
-      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Enemy Staggered Damage': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
       'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
     },
     weaponType: 'odachi',
