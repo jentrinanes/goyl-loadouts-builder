@@ -79,7 +79,7 @@ export const GEARS: Gear[] = [
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Expert Combo', 'Resolve Of Lightning', 'Burning Blade', 'Poison Blade'],
     attributeMaxValues: {
-      'Katana Damage': 11, 'Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Katana Damage': 11, 'Katana Stagger Damage': 11, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
       'Spirit Gain On Melee': 9, 'Perfect Counter Damage': 30,
       'Enemy Staggered Damage': 24, 'Execution Damage': 27, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
       'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11,
@@ -98,7 +98,7 @@ export const GEARS: Gear[] = [
     attributes2: ATTR2_OPTIONS,
     attributes3: ['Expert Combo', 'Resolve Of Lightning', 'Burning Blade', 'Poison Blade'],
     attributeMaxValues: {
-      'Katana Damage': 11, 'Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Katana Damage': 11, 'Katana Stagger Damage': 11, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
       'Spirit Gain On Melee': 9, 'Perfect Counter Damage': 30,
       'Enemy Staggered Damage': 24, 'Execution Damage': 27, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
       'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11,
