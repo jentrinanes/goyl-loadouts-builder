@@ -58,7 +58,7 @@ export const ATTR2_OPTIONS: string[] = [
 ];
 
 const DUAL_KATANA_ATTR1 = ['Dual Katana Damage', 'Dual Katana Stagger Damage', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'];
-const DUAL_KATANA_ATTR2 = ['Enemy Staggered', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'];
+const DUAL_KATANA_ATTR2 = ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'];
 const DUAL_KATANA_ATTR3 = ['Dual Tempest Strikes', 'Unrelenting Flurry', 'Burning Blade', 'Poison Blade'];
 
 const ODACHI_ATTR1 = ['Odachi Damage', 'Odachi Stagger Damage', 'Odachi Counter Window', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain on Melee', 'Perfect Counter Damage'];
@@ -138,10 +138,10 @@ export const GEARS: Gear[] = [
     attributes2: DUAL_KATANA_ATTR2,
     attributes3: DUAL_KATANA_ATTR3,
     attributeMaxValues: {
-      'Dual Katana Damage': 12, 'Dual Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
-      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
-      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
-      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+      'Dual Katana Damage': 11, 'Dual Katana Stagger Damage': 11, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 9, 'Perfect Counter Damage': 30,
+      'Enemy Staggered Damage': 24, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11,
     },
     weaponType: 'dual_katana',
   },
@@ -157,10 +157,10 @@ export const GEARS: Gear[] = [
     attributes2: DUAL_KATANA_ATTR2,
     attributes3: DUAL_KATANA_ATTR3,
     attributeMaxValues: {
-      'Dual Katana Damage': 12, 'Dual Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
-      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
-      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
-      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+      'Dual Katana Damage': 11, 'Dual Katana Stagger Damage': 11, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 9, 'Perfect Counter Damage': 30,
+      'Enemy Staggered Damage': 24, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11,
     },
     weaponType: 'dual_katana',
   },
@@ -176,10 +176,10 @@ export const GEARS: Gear[] = [
     attributes2: DUAL_KATANA_ATTR2,
     attributes3: DUAL_KATANA_ATTR3,
     attributeMaxValues: {
-      'Dual Katana Damage': 12, 'Dual Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
-      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
-      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
-      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
+      'Dual Katana Damage': 11, 'Dual Katana Stagger Damage': 11, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
+      'Spirit Gain On Melee': 9, 'Perfect Counter Damage': 30,
+      'Enemy Staggered Damage': 24, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11,
     },
     weaponType: 'dual_katana',
   },
@@ -197,7 +197,7 @@ export const GEARS: Gear[] = [
     attributeMaxValues: {
       'Dual Katana Damage': 12, 'Dual Katana Stagger Damage': 12, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
       'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
-      'Enemy Staggered': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Enemy Staggered Damage': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
       'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
     },
     weaponType: 'dual_katana',
