@@ -430,6 +430,11 @@ export const GEARS: Gear[] = [
     attributes1: ['Hankyu Damage', 'Hankyu Speed', 'Hankyu Stability', 'All Ranged Speed', 'All Ranged Headshot Damage', 'Ranged Spirit Gain'],
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Silent Arrow', 'Critical Release', 'Iron Grip', 'Fire Arrows', 'Poison Arrows'],
+    attributeMaxValues: {
+      'Hankyu Damage': 11, 'Hankyu Speed': 11, 'Hankyu Stability': 35, 'All Ranged Speed': 11, 'All Ranged Headshot Damage': 11, 'Ranged Spirit Gain': 9,
+      'All Ranged Damage': 22, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36,
+    },
     rangedWeaponType: 'hankyu' as const,
   },
   {
@@ -443,6 +448,11 @@ export const GEARS: Gear[] = [
     attributes1: ['Hankyu Damage', 'Hankyu Speed', 'Hankyu Stability', 'All Ranged Speed', 'All Ranged Headshot Damage', 'Ranged Spirit Gain'],
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Fire Arrows', 'Poison Arrows'],
+    attributeMaxValues: {
+      'Hankyu Damage': 11, 'Hankyu Speed': 11, 'Hankyu Stability': 35, 'All Ranged Speed': 11, 'All Ranged Headshot Damage': 11, 'Ranged Spirit Gain': 9,
+      'All Ranged Damage': 22, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36,
+    },
     rangedWeaponType: 'hankyu' as const,
   },
   {
