@@ -5,41 +5,42 @@ async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpR
   const authHeader = req.headers.get('authorization') ?? '(none)';
   const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
 
+  const connStr = process.env.COSMOS_CONNECTION_STRING ?? '';
+  const endpointMatch = connStr.match(/AccountEndpoint=([^;]+)/);
+  const cosmosEndpoint = endpointMatch ? endpointMatch[1] : '(not found)';
+  const dbName = process.env.COSMOS_DB_NAME ?? '(not set — using default yotei-legends)';
+
+  let pointReadResult: unknown = null;
+  let pointReadError: string | null = null;
+  try {
+    const { resource } = await sessionsContainer.item(token, token).read();
+    pointReadResult = resource ?? '(not found)';
+  } catch (e: unknown) {
+    pointReadError = e instanceof Error ? `${e.name}: ${e.message}` : String(e);
+  }
+
   let queryResult: unknown = null;
   let queryError: string | null = null;
-
   try {
     const { resources } = await sessionsContainer.items
-      .query(
-        { query: 'SELECT c.id, c.userId, c.username, c.expiresAt FROM c WHERE c.id = @id', parameters: [{ name: '@id', value: token }] }
-      )
+      .query({ query: 'SELECT c.id, c.userId, c.expiresAt FROM c WHERE c.id = @id', parameters: [{ name: '@id', value: token }] })
       .fetchAll();
     queryResult = resources;
   } catch (e: unknown) {
-    queryError = e instanceof Error ? e.message : String(e);
-  }
-
-  let allSessions: unknown = null;
-  let allError: string | null = null;
-  try {
-    const { resources } = await sessionsContainer.items
-      .query({ query: 'SELECT c.id FROM c' })
-      .fetchAll();
-    allSessions = (resources as Array<{ id: string }>).map(r => r.id.substring(0, 8) + '...');
-  } catch (e: unknown) {
-    allError = e instanceof Error ? e.message : String(e);
+    queryError = e instanceof Error ? `${e.name}: ${e.message}` : String(e);
   }
 
   return {
     status: 200,
     jsonBody: {
+      cosmosEndpoint,
+      dbName,
       receivedToken: token ? token.substring(0, 8) + '...' : '(empty)',
       tokenLength: token.length,
-      authHeader: authHeader.substring(0, 20) + '...',
+      pointReadResult,
+      pointReadError,
       queryResult,
       queryError,
-      allSessionIdPrefixes: allSessions,
-      allError,
       now: Date.now(),
     },
   };
