@@ -486,6 +486,11 @@ export const GEARS: Gear[] = [
     attributes1: ['Tanegashima Damage', 'Tanegashima Reload Speed', 'All Ranged Headshot Damage', 'Ranged Spirit Gain'],
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Extra Ammo', 'Shrapnel Bullets', 'Auto Reload'],
+    attributeMaxValues: {
+      'Tanegashima Damage': 11, 'Tanegashima Reload Speed': 12, 'All Ranged Headshot Damage': 11, 'Ranged Spirit Gain': 9,
+      'All Ranged Damage': 22, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36,
+    },
     rangedWeaponType: 'tanegashima' as const,
   },
   {
