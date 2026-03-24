@@ -466,6 +466,11 @@ export const GEARS: Gear[] = [
     attributes1: ['Hankyu Damage', 'Hankyu Speed', 'Hankyu Stability', 'All Ranged Speed', 'All Ranged Headshot Damage', 'Ranged Spirit Gain'],
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Fire Arrows', 'Poison Arrows'],
+    attributeMaxValues: {
+      'Hankyu Damage': 12, 'Hankyu Speed': 12, 'Hankyu Stability': 35, 'All Ranged Speed': 12, 'All Ranged Headshot Damage': 12, 'Ranged Spirit Gain': 10,
+      'All Ranged Damage': 25, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
     rangedWeaponType: 'hankyu' as const,
   },
 
@@ -509,6 +514,11 @@ export const GEARS: Gear[] = [
     attributes1: ['Yumi Damage', 'Yumi Speed', 'Yumi Stability', 'All Ranged Speed', 'All Ranged Headshot Damage', 'Ranged Spirit Gain'],
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributes3: ['Silent Arrow', 'Critical Release', 'Iron Grip', 'Disarm Arrows'],
+    attributeMaxValues: {
+      'Yumi Damage': 11, 'Yumi Speed': 11, 'Yumi Stability': 35, 'All Ranged Speed': 11, 'All Ranged Headshot Damage': 11, 'Ranged Spirit Gain': 9,
+      'All Ranged Damage': 22, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11
+    },
     rangedWeaponType: 'yumi' as const,
   },
   {
@@ -522,6 +532,11 @@ export const GEARS: Gear[] = [
     attributes1: ['Yumi Damage', 'Yumi Speed', 'Yumi Stability', 'All Ranged Speed', 'All Ranged Headshot Damage', 'Ranged Spirit Gain'],
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributes3: ['Silent Arrow', 'Critical Release', 'Iron Grip', 'Disarm Arrows'],
+    attributeMaxValues: {
+      'Yumi Damage': 12, 'Yumi Speed': 12, 'Yumi Stability': 35, 'All Ranged Speed': 12, 'All Ranged Headshot Damage': 12, 'Ranged Spirit Gain': 10,
+      'All Ranged Damage': 25, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12
+    },
     rangedWeaponType: 'yumi' as const,
   },
   {
@@ -535,6 +550,11 @@ export const GEARS: Gear[] = [
     attributes1: ['Yumi Damage', 'Yumi Speed', 'Yumi Stability', 'All Ranged Speed', 'All Ranged Headshot Damage', 'Ranged Spirit Gain'],
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributes3: ['Silent Arrow', 'Critical Release', 'Iron Grip', 'Disarm Arrows'],
+    attributeMaxValues: {
+      'Yumi Damage': 12, 'Yumi Speed': 12, 'Yumi Stability': 35, 'All Ranged Speed': 12, 'All Ranged Headshot Damage': 12, 'Ranged Spirit Gain': 10,
+      'All Ranged Damage': 25, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12
+    },
     rangedWeaponType: 'yumi' as const,
   },
 
@@ -551,10 +571,10 @@ export const GEARS: Gear[] = [
     attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
     attributes3: ['Spirited', 'Scorch Bombs'],
     attributeMaxValues: {
-      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
-      'Ranged Spirit Gain': 10, 'Concussion Bomb Radius': 300,
-      'All Ranged Damage': 25, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
-      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain On Melee': 9, 'Perfect Counter Damage': 30,
+      'Ranged Spirit Gain': 9, 'Concussion Bomb Radius': 250,
+      'All Ranged Damage': 22, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36,
     },
     rangedWeaponType: 'bomb' as const,
   },
