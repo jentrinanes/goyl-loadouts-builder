@@ -81,10 +81,10 @@ export default function GearCard({
                 return (
                   <span
                     key={attr}
-                    className="px-2 py-0.5 rounded-full text-[10px] font-semibold border"
-                    style={{ background: rarityColor + '18', borderColor: rarityColor + '66', color: rarityColor }}
+                    className="text-[11px] font-semibold w-full"
+                    style={{ color: rarityColor }}
                   >
-                    ✦ {attr}{max !== undefined ? ` (${max}%)` : ''}
+                    + {attr}{max !== undefined ? ` (${max}%)` : ''}
                   </span>
                 );
               })}
