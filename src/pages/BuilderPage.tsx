@@ -13,7 +13,6 @@ const STEP_GEAR       = 1;
 const STEP_TECHNIQUES = 2;
 const STEP_REVIEW     = 3;
 
-const STEP_LABELS = ['Class', 'Gear', 'Techniques', 'Review'];
 
 const STAT_KEYS: StatKey[]  = ['attack', 'defense', 'health', 'resolve', 'stealth', 'ranged'];
 const MAX_LEGENDARIES       = 2;
@@ -165,19 +164,7 @@ export default function BuilderPage() {
           <span className="text-amber-400 font-black text-sm sm:text-base tracking-widest">GOYL BUILD CREATOR</span>
         </div>
 
-        {/* Step indicators */}
-        <div className="flex items-center gap-1 sm:gap-1.5">
-          {STEP_LABELS.map((label, i) => (
-            <div key={label} className={`flex items-center gap-1 transition-opacity ${step === i ? 'opacity-100' : 'opacity-40'}`}>
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold
-                ${step > i ? 'bg-green-500 text-gray-950' : step === i ? 'bg-amber-400 text-gray-950' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-100'}`}>
-                {step > i ? '✓' : i + 1}
-              </div>
-              <span className={`text-xs hidden sm:inline ${step === i ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 dark:text-gray-600'}`}>{label}</span>
-              {i < 3 && <span className="text-gray-300 dark:text-gray-700 text-xs mx-0.5">—</span>}
-            </div>
-          ))}
-        </div>
+        <div />
 
         <div className="w-8 sm:w-[80px] flex justify-end">
           <button
@@ -494,7 +481,7 @@ export default function BuilderPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
 
-                {/* Left column */}
+                {/* Left column — build name, class, equipped gear */}
                 <div>
                   {/* Build name */}
                   <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5 mb-4">
@@ -523,6 +510,32 @@ export default function BuilderPage() {
                     </div>
                   </div>
 
+                  {/* Equipped Gear */}
+                  <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
+                    <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Equipped Gear</div>
+                    <div className="flex flex-col gap-2.5">
+                      {slots.map((slot) => {
+                        const gear        = getGearById(gears[slot.id]);
+                        const activeAttrs = (gearAttributes[slot.id] ?? []).filter(Boolean);
+                        return gear ? (
+                          <GearCard
+                            key={slot.id}
+                            gear={gear}
+                            compact
+                            displayAttributes={activeAttrs}
+                          />
+                        ) : (
+                          <div key={slot.id} className="px-3 py-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-400 dark:text-gray-600 text-sm">
+                            {slot.label}: Not selected
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right column — techniques, attribute totals */}
+                <div className="flex flex-col gap-4">
                   {/* Techniques */}
                   {cls?.techniques && (
                     <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
@@ -547,31 +560,6 @@ export default function BuilderPage() {
                       </div>
                     </div>
                   )}
-                </div>
-
-                {/* Right column — equipped gear + attribute stats */}
-                <div className="flex flex-col gap-4">
-                  <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
-                    <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Equipped Gear</div>
-                    <div className="flex flex-col gap-2.5">
-                      {slots.map((slot) => {
-                        const gear        = getGearById(gears[slot.id]);
-                        const activeAttrs = (gearAttributes[slot.id] ?? []).filter(Boolean);
-                        return gear ? (
-                          <GearCard
-                            key={slot.id}
-                            gear={gear}
-                            compact
-                            displayAttributes={activeAttrs}
-                          />
-                        ) : (
-                          <div key={slot.id} className="px-3 py-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-400 dark:text-gray-600 text-sm">
-                            {slot.label}: Not selected
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
 
                   {/* Attribute Totals */}
                   {Object.keys(attributeTotals).length > 0 && (

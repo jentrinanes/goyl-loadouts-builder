@@ -113,9 +113,8 @@ export default function AuthPage() {
         </form>
       </div>
 
-      {/* Footer */}
-      <p className="mt-8 text-gray-400 dark:text-gray-600 text-xs tracking-wide">
-        Created by <span className="text-gray-500 dark:text-gray-500 font-semibold">noirsupernova</span>
+      <p className="mt-8 text-gray-500 dark:text-gray-600 text-xs tracking-wide text-center">
+        Fan-made tool. Not affiliated with Sucker Punch Productions.
       </p>
     </div>
   );
