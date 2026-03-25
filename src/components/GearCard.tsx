@@ -53,7 +53,7 @@ export default function GearCard({
 
       <div className="pl-2">
         {/* Header row */}
-        <div className={`flex items-center gap-2 ${compact ? '' : 'mb-1'}`}>
+        <div className="flex items-center gap-2">
           {imgSrc && !imgError ? (
             <img
               src={imgSrc}
@@ -64,7 +64,7 @@ export default function GearCard({
           ) : (
             <span style={{ fontSize: compact ? 18 : 24 }}>{gear.icon}</span>
           )}
-          <div className="flex-1">
+          <div className="shrink-0">
             <div className={`font-bold text-gray-900 dark:text-gray-100 ${compact ? 'text-[13px]' : 'text-[15px]'}`}>
               {gear.name}
             </div>
@@ -72,31 +72,34 @@ export default function GearCard({
               {gear.rarity} · {gear.category}
             </div>
           </div>
-          {selected && !disabled && (
-            <span className="text-blue-400 text-lg font-bold">✓</span>
-          )}
-          {disabled && (
-            <span className="text-gray-500 dark:text-gray-600 text-xs font-semibold whitespace-nowrap">🔒 Cap reached</span>
-          )}
-        </div>
 
-        {/* Read-only attribute pills — for Review step */}
-        {displayAttributes && displayAttributes.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-2">
-            {displayAttributes.map((attr) => {
-              const max = gear.attributeMaxValues?.[attr];
-              return (
-                <span
-                  key={attr}
-                  className="px-2 py-0.5 rounded-full text-[10px] font-semibold border"
-                  style={{ background: rarityColor + '18', borderColor: rarityColor + '66', color: rarityColor }}
-                >
-                  ✦ {attr}{max !== undefined ? ` (${max}%)` : ''}
-                </span>
-              );
-            })}
+          {/* Read-only attribute pills — aligned right of gear name */}
+          {displayAttributes && displayAttributes.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 flex-1">
+              {displayAttributes.map((attr) => {
+                const max = gear.attributeMaxValues?.[attr];
+                return (
+                  <span
+                    key={attr}
+                    className="px-2 py-0.5 rounded-full text-[10px] font-semibold border"
+                    style={{ background: rarityColor + '18', borderColor: rarityColor + '66', color: rarityColor }}
+                  >
+                    ✦ {attr}{max !== undefined ? ` (${max}%)` : ''}
+                  </span>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="ml-auto shrink-0">
+            {selected && !disabled && (
+              <span className="text-blue-400 text-lg font-bold">✓</span>
+            )}
+            {disabled && (
+              <span className="text-gray-500 dark:text-gray-600 text-xs font-semibold whitespace-nowrap">🔒 Cap reached</span>
+            )}
           </div>
-        )}
+        </div>
 
         {/* Inline attribute selector — only when selected */}
         {showAttributes && (
