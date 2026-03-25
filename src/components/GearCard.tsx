@@ -56,7 +56,7 @@ export default function GearCard({
               src={`/images/${gear.id}.png`}
               alt={gear.name}
               onError={() => setImgError(true)}
-              style={{ width: compact ? 22 : 30, height: compact ? 22 : 30, objectFit: 'contain', mixBlendMode: 'screen' }}
+              style={{ width: compact ? 22 : 30, height: compact ? 22 : 30, objectFit: 'contain' }}
             />
           ) : (
             <span style={{ fontSize: compact ? 18 : 24 }}>{gear.icon}</span>
