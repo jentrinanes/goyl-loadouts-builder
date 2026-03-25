@@ -53,7 +53,7 @@ export default function GearCard({
 
       <div className="pl-2">
         {/* Header row */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full">
           {imgSrc && !imgError ? (
             <img
               src={imgSrc}
@@ -64,8 +64,8 @@ export default function GearCard({
           ) : (
             <span style={{ fontSize: compact ? 18 : 24 }}>{gear.icon}</span>
           )}
-          <div className="shrink-0">
-            <div className={`font-bold text-gray-900 dark:text-gray-100 ${compact ? 'text-[13px]' : 'text-[15px]'}`}>
+          <div className="w-1/2 min-w-0">
+            <div className={`font-bold text-gray-900 dark:text-gray-100 truncate ${compact ? 'text-[13px]' : 'text-[15px]'}`}>
               {gear.name}
             </div>
             <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: rarityColor }}>
@@ -73,9 +73,9 @@ export default function GearCard({
             </div>
           </div>
 
-          {/* Read-only attribute pills — aligned right of gear name */}
+          {/* Read-only attribute pills — aligned at 50% */}
           {displayAttributes && displayAttributes.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 flex-1">
+            <div className="flex flex-wrap gap-1.5 w-1/2">
               {displayAttributes.map((attr) => {
                 const max = gear.attributeMaxValues?.[attr];
                 return (
