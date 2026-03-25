@@ -65,7 +65,7 @@ export default function GearCard({
             <span style={{ fontSize: compact ? 18 : 24 }}>{gear.icon}</span>
           )}
           <div className="w-1/2 min-w-0">
-            <div className={`font-bold text-gray-900 dark:text-gray-100 truncate ${compact ? 'text-[13px]' : 'text-[15px]'}`}>
+            <div className={`font-bold text-gray-900 dark:text-gray-100 ${compact ? 'text-[13px]' : 'text-[15px]'}`}>
               {gear.name}
             </div>
             <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: rarityColor }}>
