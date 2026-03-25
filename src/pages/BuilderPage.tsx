@@ -6,7 +6,16 @@ import { CLASSES, getClassById } from '../data/classes';
 import { getSlotsForClass, getGearsByCategory, getGearById, RARITY_COLOR } from '../data/gear';
 import { api } from '../lib/api';
 import GearCard from '../components/GearCard';
-import type { StatSet, StatKey } from '../types';
+import type { StatSet, StatKey, Gear } from '../types';
+
+function GearIcon({ gear, theme, size = 16 }: { gear: Gear; theme: 'light' | 'dark'; size?: number }) {
+  const [error, setError] = useState(false);
+  const imgSrc = theme === 'dark' ? `/images/${gear.id}_dark.png` : null;
+  if (imgSrc && !error) {
+    return <img src={imgSrc} alt="" onError={() => setError(true)} style={{ width: size, height: size, objectFit: 'contain', flexShrink: 0 }} />;
+  }
+  return <span style={{ fontSize: size - 2, flexShrink: 0 }}>{gear.icon}</span>;
+}
 
 const STEP_CLASS      = 0;
 const STEP_GEAR       = 1;
@@ -299,7 +308,7 @@ export default function BuilderPage() {
                         <div className="text-[11px] text-gray-500 uppercase tracking-wide">{slot.label}</div>
                         {equipped ? (
                           <div className="flex items-center gap-1.5 mt-0.5">
-                            <span className="text-sm">{equipped.icon}</span>
+                            <GearIcon gear={equipped} theme={theme} size={18} />
                             <span
                               className="text-xs font-semibold truncate"
                               style={{ color: RARITY_COLOR[equipped.rarity] }}
