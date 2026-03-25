@@ -61,7 +61,7 @@ const DUAL_KATANA_ATTR1 = ['Dual Katana Damage', 'Dual Katana Stagger Damage', '
 const DUAL_KATANA_ATTR2 = ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'];
 const DUAL_KATANA_ATTR3 = ['Dual Tempest Strikes', 'Unrelenting Flurry', 'Burning Blade', 'Poison Blade'];
 
-const ODACHI_ATTR1 = ['Odachi Damage', 'Odachi Stagger Damage', 'Odachi Counter Window', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain on Melee', 'Perfect Counter Damage'];
+const ODACHI_ATTR1 = ['Odachi Damage', 'Odachi Stagger Damage', 'Odachi Counter Window', 'All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage'];
 const ODACHI_ATTR2 = ['Enemy Staggered Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'];
 const ODACHI_ATTR3 = ['Expert Combo', 'Unstoppable Force', 'Resolve of the Mountain', 'Burning Blade', 'Poison Blade'];
 
@@ -354,7 +354,7 @@ export const GEARS: Gear[] = [
     attributes3: ODACHI_ATTR3,
     attributeMaxValues: {
       'Odachi Damage': 11, 'Odachi Stagger Damage': 11, 'Odachi Counter Window': 16.6, 'All Melee Damage': 5, 'All Melee Stagger Damage': 9,
-      'Spirit Gain on Melee': 9, 'Perfect Counter Damage': 30,
+      'Spirit Gain On Melee': 9, 'Perfect Counter Damage': 30,
       'Enemy Staggered Damage': 24, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
       'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11,
     },
@@ -373,7 +373,7 @@ export const GEARS: Gear[] = [
     attributes3: ODACHI_ATTR3,
     attributeMaxValues: {
       'Odachi Damage': 11, 'Odachi Stagger Damage': 11, 'Odachi Counter Window': 16.6, 'All Melee Damage': 5, 'All Melee Stagger Damage': 9,
-      'Spirit Gain on Melee': 9, 'Perfect Counter Damage': 30,
+      'Spirit Gain On Melee': 9, 'Perfect Counter Damage': 30,
       'Enemy Staggered Damage': 24, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
       'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11,
     },
@@ -392,7 +392,7 @@ export const GEARS: Gear[] = [
     attributes3: ODACHI_ATTR3,
     attributeMaxValues: {
       'Odachi Damage': 11, 'Odachi Stagger Damage': 11, 'Odachi Counter Window': 16.6, 'All Melee Damage': 5, 'All Melee Stagger Damage': 9,
-      'Spirit Gain on Melee': 9, 'Perfect Counter Damage': 30,
+      'Spirit Gain On Melee': 9, 'Perfect Counter Damage': 30,
       'Enemy Staggered Damage': 24, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
       'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 11,
     },
@@ -411,7 +411,7 @@ export const GEARS: Gear[] = [
     attributes3: ODACHI_ATTR3,
     attributeMaxValues: {
       'Odachi Damage': 12, 'Odachi Stagger Damage': 12, 'Odachi Counter Window': 20.7, 'All Melee Damage': 5, 'All Melee Stagger Damage': 5,
-      'Spirit Gain on Melee': 10, 'Perfect Counter Damage': 35,
+      'Spirit Gain On Melee': 10, 'Perfect Counter Damage': 35,
       'Enemy Staggered Damage': 28, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
       'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36, 'Class Ability Cooldown Reduction': 12,
     },
@@ -839,10 +839,10 @@ export const GEARS: Gear[] = [
     icon: '💨',
     stats: { attack: 10, defense: 10, health: 0, resolve: 10, stealth: 45, ranged: 20 },
     perk: 'Blinded enemies cannot raise the alarm',
-    attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain on Melee', 'Perfect Counter Damage', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
+    attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributeMaxValues: {
-      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain on Melee': 9,
+      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain On Melee': 9,
       'Perfect Counter Damage': 30, 'Ghost Tools Spirit Gain': 32, 'Ghost Tools Cooldown Reduction': 11,
       'Status Effect Duration': 22, 'Status Effect Damage': 22, 'Execution Damage': 27,
       'Ultimate Gain': 12, 'Ultimate Damage': 21, 'Spirit Move Damage': 20,
@@ -858,10 +858,10 @@ export const GEARS: Gear[] = [
     icon: '🌀',
     stats: { attack: 20, defense: 10, health: 0, resolve: 15, stealth: 40, ranged: 25 },
     perk: 'Affected enemies attack their allies for 8 seconds',
-    attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain on Melee', 'Perfect Counter Damage', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
+    attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributeMaxValues: {
-      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain on Melee': 10,
+      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain On Melee': 10,
       'Perfect Counter Damage': 35, 'Ghost Tools Spirit Gain': 35, 'Ghost Tools Cooldown Reduction': 12,
       'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
       'Ultimate Gain': 16, 'Ultimate Damage': 25, 'Spirit Move Damage': 20,
@@ -994,7 +994,7 @@ export const GEARS: Gear[] = [
     attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributeMaxValues: {
-      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain on Melee': 9,
+      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain On Melee': 9,
       'Perfect Counter Damage': 30, 'Ghost Tools Spirit Gain': 32, 
       'Ghost Tools Cooldown Reduction': 11,
       'Status Effect Duration': 22, 'Status Effect Damage': 22, 'Execution Damage': 27,
@@ -1014,7 +1014,7 @@ export const GEARS: Gear[] = [
     attributes1: ['All Melee Damage', 'All Melee Stagger Damage', 'Spirit Gain On Melee', 'Perfect Counter Damage', 'Ghost Tools Spirit Gain', 'Ghost Tools Cooldown Reduction'],
     attributes2: ['Status Effect Duration', 'Status Effect Damage', 'Execution Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window', 'Class Ability Cooldown Reduction'],
     attributeMaxValues: {
-      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain on Melee': 10,
+      'All Melee Damage': 5, 'All Melee Stagger Damage': 5, 'Spirit Gain On Melee': 10,
       'Perfect Counter Damage': 35, 'Ghost Tools Spirit Gain': 35, 
       'Ghost Tools Cooldown Reduction': 12,
       'Status Effect Duration': 25, 'Status Effect Damage': 25, 'Execution Damage': 30,
