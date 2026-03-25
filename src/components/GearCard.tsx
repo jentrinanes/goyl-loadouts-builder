@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { RARITY_COLOR } from '../data/gear';
+import { useTheme } from '../context/ThemeContext';
 import type { Gear } from '../types';
 
 interface GearCardProps {
@@ -24,6 +25,8 @@ export default function GearCard({
   displayAttributes,
 }: GearCardProps) {
   const [imgError, setImgError] = useState(false);
+  const { theme } = useTheme();
+  const imgSrc = theme === 'dark' ? `/images/${gear.id}_dark.png` : null;
   const rarityColor    = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
   const showAttributes = selected && !compact && !!onAttributeChange;
 
@@ -51,9 +54,9 @@ export default function GearCard({
       <div className="pl-2">
         {/* Header row */}
         <div className={`flex items-center gap-2 ${compact ? '' : 'mb-1'}`}>
-          {!imgError ? (
+          {imgSrc && !imgError ? (
             <img
-              src={`/images/${gear.id}.png`}
+              src={imgSrc}
               alt={gear.name}
               onError={() => setImgError(true)}
               style={{ width: compact ? 22 : 30, height: compact ? 22 : 30, objectFit: 'contain' }}
