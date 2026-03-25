@@ -6,7 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 import { api } from '../lib/api';
 import { getClassById } from '../data/classes';
 import { getGearById, getSlotsForClass, RARITY_COLOR } from '../data/gear';
-import type { Build } from '../types';
+import type { Build, Gear } from '../types';
 
 // ─── Share card (rendered off-screen, captured as PNG) ───────────────────────
 
@@ -58,7 +58,7 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
             return (
               <div key={slot.id}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ fontSize: 14 }}>{gear.icon}</span>
+                  <GearIcon gear={gear} theme={theme} size={16} />
                   <span style={{ fontSize: 12, fontWeight: 700, color: RARITY_COLOR[gear.rarity] }}>{gear.name}</span>
                 </div>
                 {attrs.length > 0 && (
@@ -102,6 +102,20 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
       </div>
     </div>
   );
+}
+
+// ─── Gear icon with image + emoji fallback ────────────────────────────────────
+
+function GearIcon({ gear, theme, size = 16 }: { gear: Gear; theme: 'light' | 'dark'; size?: number }) {
+  const [error, setError] = useState(false);
+  const imgSrc = theme === 'dark' ? `/images/${gear.id}_dark.png` : null;
+  if (imgSrc && !error) {
+    return (
+      <img src={imgSrc} alt="" onError={() => setError(true)}
+        style={{ width: size, height: size, objectFit: 'contain', flexShrink: 0 }} />
+    );
+  }
+  return <span style={{ fontSize: size - 2, flexShrink: 0 }}>{gear.icon}</span>;
 }
 
 // ─── Main page ────────────────────────────────────────────────────────────────
@@ -258,7 +272,7 @@ export default function DashboardPage() {
                         const gear = getGearById(build.gears?.[slot.id]);
                         return gear ? (
                           <div key={slot.id} className="flex items-center gap-1.5 min-w-0">
-                            <span className="text-sm shrink-0">{gear.icon}</span>
+                            <GearIcon gear={gear} theme={theme} size={16} />
                             <span className="text-[11px] font-semibold truncate" style={{ color: RARITY_COLOR[gear.rarity] }}>
                               {gear.name}
                             </span>
