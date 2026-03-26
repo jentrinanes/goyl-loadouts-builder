@@ -181,7 +181,7 @@ export default function BuilderPage() {
             className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg px-3 py-1.5 cursor-pointer text-sm hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
             aria-label="Toggle theme"
           >
-            {theme === 'dark' ? '☀️' : '🌙'}
+            {theme === 'dark' ? 'Light' : 'Dark'}
           </button>
         </div>
       </header>
@@ -251,6 +251,7 @@ export default function BuilderPage() {
             {/* Sub-header */}
             <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800 px-4 py-2.5 flex flex-wrap items-center gap-2 sm:gap-4">
               <div className="flex items-center gap-2 shrink-0">
+                <span className="text-lg">{cls?.icon}</span>
                 <span className="font-bold text-sm" style={{ color: cls?.accentColor ?? '#f59e0b' }}>
                   {cls?.name}
                 </span>
