@@ -21,9 +21,7 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
   const slotLabel  = dark ? '#475569' : '#9ca3af';
   const techFixed  = dark ? '#64748b' : '#9ca3af';
   const techSelect = dark ? '#fbbf24' : '#b45309';
-  const attrBg     = dark ? '#451a03' : '#fef3c7';
-  const attrBorder = dark ? '#92400e' : '#fcd34d';
-  const attrText   = dark ? '#fcd34d' : '#92400e';
+
 
   return (
     <div
