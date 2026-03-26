@@ -37,11 +37,11 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
       }}
     >
       {/* Header */}
-      <div style={{ background: cls?.color ?? '#374151', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
+      <div style={{ background: dark ? '#7f1d1d' : '#f59e0b', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
         {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={44} />}
         <div>
-          <div style={{ fontWeight: 900, fontSize: 20, color: '#0f172a' }}>{build.name}</div>
-          <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#0f172a', opacity: 0.75 }}>
+          <div style={{ fontWeight: 900, fontSize: 20, color: dark ? '#ffffff' : '#0f172a' }}>{build.name}</div>
+          <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: dark ? '#ffffff' : '#0f172a', opacity: 0.75 }}>
             {cls?.name ?? 'Unknown Class'}
           </div>
         </div>
