@@ -264,7 +264,7 @@ export default function DashboardPage() {
                   {/* Class header */}
                   <div
                     className="px-4 py-3.5 flex items-center gap-3"
-                    style={{ background: cls?.color ?? '#374151' }}
+                    style={{ background: '#7f1d1d' }}
                   >
                     {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={48} />}
                     <div>
