@@ -251,7 +251,6 @@ export default function BuilderPage() {
             {/* Sub-header */}
             <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800 px-4 py-2.5 flex flex-wrap items-center gap-2 sm:gap-4">
               <div className="flex items-center gap-2 shrink-0">
-                <span className="text-lg">{cls?.icon}</span>
                 <span className="font-bold text-sm" style={{ color: cls?.accentColor ?? '#f59e0b' }}>
                   {cls?.name}
                 </span>
