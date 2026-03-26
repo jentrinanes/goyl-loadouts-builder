@@ -50,30 +50,38 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
       <div style={{ padding: '18px 20px', background: bodyBg }}>
         {/* Gear */}
         <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Gear</div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px 16px', marginBottom: 4 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 4 }}>
           {getSlotsForClass(build.classId).map((slot) => {
             const gear  = getGearById(build.gears?.[slot.id]);
             const attrs = (build.gearAttributes?.[slot.id] ?? []).filter(Boolean);
             if (!gear) return null;
+            const rarityColor = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
             return (
-              <div key={slot.id}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <GearIcon gear={gear} theme={theme} size={22} />
-                  <span style={{ fontSize: 12, fontWeight: 700, color: RARITY_COLOR[gear.rarity] }}>{gear.name}</span>
-                </div>
-                {attrs.length > 0 && (
-                  <div style={{ paddingLeft: 20, marginTop: 3, display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                    {attrs.map((attr) => (
-                      <span key={attr} style={{
-                        fontSize: 10, fontWeight: 600, padding: '1px 6px',
-                        borderRadius: 999, background: attrBg,
-                        border: `1px solid ${attrBorder}`, color: attrText,
-                      }}>
-                        {attr}
-                      </span>
-                    ))}
+              <div key={slot.id} style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                background: dark ? '#111827' : '#f9fafb',
+                borderRadius: 12, padding: '8px 12px',
+                border: `2px solid ${rarityColor}55`,
+                position: 'relative', overflow: 'hidden',
+              }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: rarityColor, borderRadius: '12px 0 0 12px' }} />
+                <div style={{ paddingLeft: 6, display: 'flex', alignItems: 'center', gap: 8, width: '50%' }}>
+                  <GearIcon gear={gear} theme={theme} size={30} />
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: dark ? '#f1f5f9' : '#111827' }}>{gear.name}</div>
+                    <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: rarityColor }}>{gear.rarity} · {gear.category}</div>
                   </div>
-                )}
+                </div>
+                <div style={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  {attrs.map((attr) => {
+                    const max = gear.attributeMaxValues?.[attr];
+                    return (
+                      <span key={attr} style={{ fontSize: 11, fontWeight: 600, color: rarityColor }}>
+                        + {attr}{max !== undefined ? ` (${max}%)` : ''}
+                      </span>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}
