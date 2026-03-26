@@ -17,6 +17,15 @@ function GearIcon({ gear, theme, size = 16 }: { gear: Gear; theme: 'light' | 'da
   return <span style={{ fontSize: size - 2, flexShrink: 0 }}>{gear.icon}</span>;
 }
 
+function ClassIcon({ classId, icon, theme, size = 32 }: { classId: string; icon: string; theme: 'light' | 'dark'; size?: number }) {
+  const [error, setError] = useState(false);
+  const imgSrc = theme === 'dark' ? `/images/${classId}_dark.png` : null;
+  if (imgSrc && !error) {
+    return <img src={imgSrc} alt="" onError={() => setError(true)} style={{ width: size, height: size, objectFit: 'contain', flexShrink: 0 }} />;
+  }
+  return <span style={{ fontSize: size * 0.8, flexShrink: 0 }}>{icon}</span>;
+}
+
 const STEP_CLASS      = 0;
 const STEP_GEAR       = 1;
 const STEP_TECHNIQUES = 2;
@@ -209,7 +218,7 @@ export default function BuilderPage() {
                   }}
                 >
                   <div className="flex items-center gap-3 mb-2.5 sm:mb-3">
-                    <span className="text-3xl sm:text-4xl">{c.icon}</span>
+                    <ClassIcon classId={c.id} icon={c.icon} theme={theme} size={48} />
                     <div>
                       <div
                         className="font-extrabold text-base sm:text-lg text-gray-900 dark:text-gray-100"
@@ -251,7 +260,7 @@ export default function BuilderPage() {
             {/* Sub-header */}
             <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800 px-4 py-2.5 flex flex-wrap items-center gap-2 sm:gap-4">
               <div className="flex items-center gap-2 shrink-0">
-                <span className="text-lg">{cls?.icon}</span>
+                {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={22} />}
                 <span className="font-bold text-sm" style={{ color: cls?.accentColor ?? '#f59e0b' }}>
                   {cls?.name}
                 </span>
@@ -403,7 +412,7 @@ export default function BuilderPage() {
             {/* Class badge */}
             <div className="flex justify-center mb-6">
               <div className="flex items-center gap-2.5 px-4 py-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl">
-                <span className="text-2xl">{cls?.icon}</span>
+                {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={32} />}
                 <span className="font-bold text-sm" style={{ color: cls?.accentColor }}>{cls?.name}</span>
               </div>
             </div>
@@ -509,7 +518,7 @@ export default function BuilderPage() {
                   >
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-2.5">Class</div>
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="text-[28px] sm:text-[32px]">{cls?.icon}</span>
+                      {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={40} />}
                       <div>
                         <div className="font-extrabold text-base sm:text-lg" style={{ color: cls?.accentColor }}>
                           {cls?.name}

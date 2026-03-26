@@ -38,7 +38,7 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
     >
       {/* Header */}
       <div style={{ background: cls?.color ?? '#374151', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
-        <span style={{ fontSize: 36 }}>{cls?.icon ?? '❓'}</span>
+        {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={44} />}
         <div>
           <div style={{ fontWeight: 900, fontSize: 20, color: '#0f172a' }}>{build.name}</div>
           <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#0f172a', opacity: 0.75 }}>
@@ -102,6 +102,17 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
       </div>
     </div>
   );
+}
+
+// ─── Class icon with image + emoji fallback ───────────────────────────────────
+
+function ClassIcon({ classId, icon, theme, size = 32 }: { classId: string; icon: string; theme: 'light' | 'dark'; size?: number }) {
+  const [error, setError] = useState(false);
+  const imgSrc = theme === 'dark' ? `/images/${classId}_dark.png` : null;
+  if (imgSrc && !error) {
+    return <img src={imgSrc} alt="" onError={() => setError(true)} style={{ width: size, height: size, objectFit: 'contain', flexShrink: 0 }} />;
+  }
+  return <span style={{ fontSize: size * 0.8, flexShrink: 0 }}>{icon}</span>;
 }
 
 // ─── Gear icon with image + emoji fallback ────────────────────────────────────
@@ -255,7 +266,7 @@ export default function DashboardPage() {
                     className="px-4 py-3.5 flex items-center gap-3"
                     style={{ background: cls?.color ?? '#374151' }}
                   >
-                    <span className="text-[28px]">{cls?.icon ?? '❓'}</span>
+                    {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={36} />}
                     <div>
                       <div className="font-extrabold text-base text-gray-950">{build.name}</div>
                       <div className="text-xs opacity-85 uppercase tracking-widest text-gray-950">
