@@ -264,12 +264,12 @@ export default function DashboardPage() {
                   {/* Class header */}
                   <div
                     className="px-4 py-3.5 flex items-center gap-3"
-                    style={{ background: '#7f1d1d' }}
+                    style={{ background: theme === 'dark' ? '#7f1d1d' : '#f59e0b' }}
                   >
                     {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={48} />}
                     <div>
-                      <div className="font-extrabold text-base text-white">{build.name}</div>
-                      <div className="text-xs opacity-85 uppercase tracking-widest text-white">
+                      <div className={`font-extrabold text-base ${theme === 'dark' ? 'text-white' : 'text-gray-950'}`}>{build.name}</div>
+                      <div className={`text-xs opacity-85 uppercase tracking-widest ${theme === 'dark' ? 'text-white' : 'text-gray-950'}`}>
                         {cls?.name ?? 'Unknown Class'}
                       </div>
                     </div>
