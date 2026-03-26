@@ -58,7 +58,7 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
             return (
               <div key={slot.id}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <GearIcon gear={gear} theme={theme} size={16} />
+                  <GearIcon gear={gear} theme={theme} size={22} />
                   <span style={{ fontSize: 12, fontWeight: 700, color: RARITY_COLOR[gear.rarity] }}>{gear.name}</span>
                 </div>
                 {attrs.length > 0 && (
@@ -272,7 +272,7 @@ export default function DashboardPage() {
                         const gear = getGearById(build.gears?.[slot.id]);
                         return gear ? (
                           <div key={slot.id} className="flex items-center gap-1.5 min-w-0">
-                            <GearIcon gear={gear} theme={theme} size={16} />
+                            <GearIcon gear={gear} theme={theme} size={22} />
                             <span className="text-[11px] font-semibold truncate" style={{ color: RARITY_COLOR[gear.rarity] }}>
                               {gear.name}
                             </span>
