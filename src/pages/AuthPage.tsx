@@ -37,7 +37,7 @@ export default function AuthPage() {
         className="fixed top-4 right-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-400 rounded-lg px-3 py-1.5 cursor-pointer text-sm hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
         aria-label="Toggle theme"
       >
-        {theme === 'dark' ? 'Light' : 'Dark'}
+        {theme === 'dark' ? '☀️' : '🌙'}
       </button>
 
       {/* Hero */}
