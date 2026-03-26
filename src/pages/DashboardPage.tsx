@@ -183,7 +183,13 @@ export default function DashboardPage() {
     if (!shareCardRef.current || !shareBuild) return;
     setCapturing(true);
     try {
-      const dataUrl = await toPng(shareCardRef.current, { pixelRatio: 2 });
+      const el = shareCardRef.current;
+      const dataUrl = await toPng(el, {
+        pixelRatio: 2,
+        width: el.scrollWidth,
+        height: el.scrollHeight,
+        style: { overflow: 'visible' },
+      });
       const link    = document.createElement('a');
       link.download = `${shareBuild.name.replace(/\s+/g, '_')}_build.png`;
       link.href     = dataUrl;
