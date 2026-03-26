@@ -268,8 +268,8 @@ export default function DashboardPage() {
                   >
                     {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={48} />}
                     <div>
-                      <div className="font-extrabold text-base text-gray-950">{build.name}</div>
-                      <div className="text-xs opacity-85 uppercase tracking-widest text-gray-950">
+                      <div className="font-extrabold text-base text-white">{build.name}</div>
+                      <div className="text-xs opacity-85 uppercase tracking-widest text-white">
                         {cls?.name ?? 'Unknown Class'}
                       </div>
                     </div>
