@@ -266,7 +266,7 @@ export default function DashboardPage() {
                     className="px-4 py-3.5 flex items-center gap-3"
                     style={{ background: cls?.color ?? '#374151' }}
                   >
-                    {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={36} />}
+                    {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={48} />}
                     <div>
                       <div className="font-extrabold text-base text-gray-950">{build.name}</div>
                       <div className="text-xs opacity-85 uppercase tracking-widest text-gray-950">
