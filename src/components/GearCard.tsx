@@ -59,10 +59,10 @@ export default function GearCard({
               src={imgSrc}
               alt={gear.name}
               onError={() => setImgError(true)}
-              style={{ width: compact ? 22 : 30, height: compact ? 22 : 30, objectFit: 'contain' }}
+              style={{ width: compact ? 30 : 36, height: compact ? 30 : 36, objectFit: 'contain' }}
             />
           ) : (
-            <span style={{ fontSize: compact ? 18 : 24 }}>{gear.icon}</span>
+            <span style={{ fontSize: compact ? 22 : 28 }}>{gear.icon}</span>
           )}
           <div className="w-1/2 min-w-0">
             <div className={`font-bold text-gray-900 dark:text-gray-100 ${compact ? 'text-[13px]' : 'text-[15px]'}`}>
