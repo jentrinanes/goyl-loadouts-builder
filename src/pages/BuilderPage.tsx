@@ -9,10 +9,14 @@ import GearCard from '../components/GearCard';
 import type { StatSet, StatKey, Gear } from '../types';
 
 function GearIcon({ gear, theme, size = 16 }: { gear: Gear; theme: 'light' | 'dark'; size?: number }) {
+  const [imgSrc, setImgSrc] = useState(theme === 'dark' ? `/images/${gear.id}_dark.webp` : null);
   const [error, setError] = useState(false);
-  const imgSrc = theme === 'dark' ? `/images/${gear.id}_dark.png` : null;
+  const handleError = () => {
+    if (imgSrc?.endsWith('.webp')) setImgSrc(`/images/${gear.id}_dark.png`);
+    else setError(true);
+  };
   if (imgSrc && !error) {
-    return <img src={imgSrc} alt="" onError={() => setError(true)} style={{ width: size, height: size, objectFit: 'contain', flexShrink: 0 }} />;
+    return <img src={imgSrc} alt="" onError={handleError} style={{ width: size, height: size, objectFit: 'contain', flexShrink: 0 }} />;
   }
   return <span style={{ fontSize: size - 2, flexShrink: 0 }}>{gear.icon}</span>;
 }
