@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 
 type AuthMode = 'login' | 'register';
 
@@ -12,8 +11,6 @@ export default function AuthPage() {
   const [error, setError]       = useState('');
   const { login, register }     = useAuth();
   const navigate                = useNavigate();
-  const { theme, toggleTheme }  = useTheme();
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
@@ -31,15 +28,6 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-950 flex flex-col items-center justify-center p-5">
-      {/* Theme toggle */}
-      <button
-        onClick={toggleTheme}
-        className="fixed top-4 right-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-400 rounded-lg px-3 py-1.5 cursor-pointer text-sm hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
-        aria-label="Toggle theme"
-      >
-        {theme === 'dark' ? '☀️' : '🌙'}
-      </button>
-
       {/* Hero */}
       <div className="text-center mb-10">
         <div className="text-6xl mb-2">⛩️</div>

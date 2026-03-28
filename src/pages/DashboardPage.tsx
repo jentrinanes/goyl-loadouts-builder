@@ -140,7 +140,7 @@ function GearIcon({ gear, theme, size = 16 }: { gear: Gear; theme: 'light' | 'da
 export default function DashboardPage() {
   const { user, logout }            = useAuth();
   const navigate                    = useNavigate();
-  const { theme, toggleTheme }      = useTheme();
+  const { theme }                   = useTheme();
   const [builds, setBuilds]           = useState<Build[]>([]);
   const [loading, setLoading]         = useState(false);
   const [error, setError]             = useState('');
@@ -209,13 +209,6 @@ export default function DashboardPage() {
           <span className="text-gray-500 text-sm hidden sm:block">
             <strong className="text-gray-700 dark:text-gray-200">{user?.username}</strong>
           </span>
-          <button
-            onClick={toggleTheme}
-            className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg px-3 sm:px-3.5 py-1.5 cursor-pointer text-sm hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? '☀️' : '🌙'}
-          </button>
           <button
             onClick={() => { void logout().then(() => navigate('/')); }}
             className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg px-3 sm:px-3.5 py-1.5 cursor-pointer text-sm hover:text-gray-900 dark:hover:text-gray-200 transition-colors"

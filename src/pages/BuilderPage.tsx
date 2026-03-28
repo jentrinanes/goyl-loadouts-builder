@@ -71,7 +71,7 @@ export default function BuilderPage() {
   const { id }   = useParams<{ id: string }>();
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
 
   const [step, setStep]                     = useState(STEP_CLASS);
   const [buildName, setBuildName]           = useState('My Build');
@@ -184,15 +184,7 @@ export default function BuilderPage() {
 
         <div />
 
-        <div className="w-8 sm:w-[80px] flex justify-end">
-          <button
-            onClick={toggleTheme}
-            className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg px-3 py-1.5 cursor-pointer text-sm hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? '☀️' : '🌙'}
-          </button>
-        </div>
+        <div className="w-8 sm:w-[80px]" />
       </header>
 
       <div className="flex-1 flex overflow-hidden">
