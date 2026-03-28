@@ -124,11 +124,15 @@ function ClassIcon({ classId, icon, theme, size = 32 }: { classId: string; icon:
 // ─── Gear icon with image + emoji fallback ────────────────────────────────────
 
 function GearIcon({ gear, theme, size = 16 }: { gear: Gear; theme: 'light' | 'dark'; size?: number }) {
+  const [imgSrc, setImgSrc] = useState(theme === 'dark' ? `/images/${gear.id}_dark.webp` : null);
   const [error, setError] = useState(false);
-  const imgSrc = theme === 'dark' ? `/images/${gear.id}_dark.png` : null;
+  const handleError = () => {
+    if (imgSrc?.endsWith('.webp')) setImgSrc(`/images/${gear.id}_dark.png`);
+    else setError(true);
+  };
   if (imgSrc && !error) {
     return (
-      <img src={imgSrc} alt="" onError={() => setError(true)}
+      <img src={imgSrc} alt="" onError={handleError}
         style={{ width: size, height: size, objectFit: 'contain', flexShrink: 0 }} />
     );
   }
