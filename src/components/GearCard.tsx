@@ -24,9 +24,19 @@ export default function GearCard({
   onAttributeChange,
   displayAttributes,
 }: GearCardProps) {
-  const [imgError, setImgError] = useState(false);
   const { theme } = useTheme();
-  const imgSrc = theme === 'dark' ? `/images/${gear.id}_dark.png` : null;
+  const [imgSrc, setImgSrc] = useState(
+    theme === 'dark' ? `/images/${gear.id}_dark.webp` : null
+  );
+  const [imgError, setImgError] = useState(false);
+
+  const handleImgError = () => {
+    if (imgSrc?.endsWith('.webp')) {
+      setImgSrc(`/images/${gear.id}_dark.png`);
+    } else {
+      setImgError(true);
+    }
+  };
   const rarityColor    = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
   const showAttributes = selected && !compact && !!onAttributeChange;
 
@@ -58,7 +68,7 @@ export default function GearCard({
             <img
               src={imgSrc}
               alt={gear.name}
-              onError={() => setImgError(true)}
+              onError={handleImgError}
               style={{ width: compact ? 30 : 36, height: compact ? 30 : 36, objectFit: 'contain' }}
             />
           ) : (
