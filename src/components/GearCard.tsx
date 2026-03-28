@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RARITY_COLOR } from '../data/gear';
 import { useTheme } from '../context/ThemeContext';
 import type { Gear } from '../types';
@@ -25,10 +25,13 @@ export default function GearCard({
   displayAttributes,
 }: GearCardProps) {
   const { theme } = useTheme();
-  const [imgSrc, setImgSrc] = useState(
-    theme === 'dark' ? `/images/${gear.id}_dark.webp` : null
-  );
+  const [imgSrc, setImgSrc] = useState(theme === 'dark' ? `/images/${gear.id}_dark.webp` : null);
   const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgSrc(theme === 'dark' ? `/images/${gear.id}_dark.webp` : null);
+    setImgError(false);
+  }, [gear.id, theme]);
 
   const handleImgError = () => {
     if (imgSrc?.endsWith('.webp')) {
