@@ -334,7 +334,7 @@ export default function DashboardPage() {
                           onClick={(e) => { e.stopPropagation(); setShareBuild(build); }}
                           className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-md px-2.5 py-1 cursor-pointer text-xs hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
                         >
-                          Share
+                          Details
                         </button>
                         <button
                           onClick={(e) => { e.stopPropagation(); navigate(`/builder/${build.id}`); }}
