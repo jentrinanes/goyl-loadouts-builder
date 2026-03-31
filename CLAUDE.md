@@ -244,21 +244,10 @@ Each class has 5 technique slots. Slot 1 is always a fixed `default`; slots 2–
 # Frontend
 npm run dev       # Start Vite dev server
 npm run build     # Production build
-npm run preview   # Preview production build locally
 npx tsc --noEmit  # Type-check without building
 npm run lint      # ESLint
 
 # API (run from api/ directory)
 cd api && npm run build   # Compile TypeScript to _api_dist/
-cd api && npm run watch   # TypeScript watch mode
 cd api && func start      # Start Azure Functions locally (requires Azure Functions Core Tools)
-# Note: `cd api && npm start` runs build then func start in one step
 ```
-
-## Tests
-There are no tests in this project.
-
-## CI/CD & Hosting
-- **CI** (`.github/workflows/ci.yml`) — runs on PRs and pushes to `master`: builds frontend + API, type-checks frontend
-- **Deploy** (`.github/workflows/deploy.yml`) — runs on push to `master`: builds both, deploys to **Azure Static Web Apps** using `dist/` as the app and `api/` as the functions location
-- Requires `AZURE_STATIC_WEB_APPS_API_TOKEN` secret in the GitHub repo

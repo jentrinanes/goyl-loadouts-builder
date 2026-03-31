@@ -297,7 +297,7 @@ export default function DashboardPage() {
                         return gear ? (
                           <div key={slot.id} className="flex items-center gap-1.5 min-w-0">
                             <GearIcon gear={gear} theme={theme} size={22} />
-                            <span className="text-[13px] font-semibold truncate" style={{ color: RARITY_COLOR[gear.rarity] }}>
+                            <span className="text-[11px] font-semibold truncate" style={{ color: RARITY_COLOR[gear.rarity] }}>
                               {gear.name}
                             </span>
                           </div>
