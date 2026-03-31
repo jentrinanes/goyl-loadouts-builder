@@ -22,35 +22,89 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
   const techFixed  = dark ? '#64748b' : '#9ca3af';
   const techSelect = dark ? '#fbbf24' : '#b45309';
 
-
-  const gearSlots = getSlotsForClass(build.classId);
-
   return (
-    <div
-      style={{
-        width: 700,
-        background: bg,
-        borderRadius: 20,
-        overflow: 'hidden',
-        fontFamily: 'system-ui, sans-serif',
-        border: `2px solid ${cls?.color ?? '#374151'}88`,
-      }}
-    >
-      {/* Header */}
+    <div style={{ width: 420, background: bg, borderRadius: 20, overflow: 'hidden', fontFamily: 'system-ui, sans-serif', border: `2px solid ${cls?.color ?? '#374151'}88` }}>
       <div style={{ background: dark ? '#7f1d1d' : '#f59e0b', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
         {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={44} />}
         <div>
           <div style={{ fontWeight: 900, fontSize: 20, color: dark ? '#ffffff' : '#0f172a' }}>{build.name}</div>
-          <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: dark ? '#ffffff' : '#0f172a', opacity: 0.75 }}>
-            {cls?.name ?? 'Unknown Class'}
-          </div>
+          <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: dark ? '#ffffff' : '#0f172a', opacity: 0.75 }}>{cls?.name ?? 'Unknown Class'}</div>
         </div>
       </div>
+      <div style={{ padding: '18px 20px', background: bodyBg }}>
+        <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Gear</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 4 }}>
+          {getSlotsForClass(build.classId).map((slot) => {
+            const gear  = getGearById(build.gears?.[slot.id]);
+            const attrs = (build.gearAttributes?.[slot.id] ?? []).filter(Boolean);
+            if (!gear) return null;
+            const rarityColor = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
+            return (
+              <div key={slot.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: dark ? '#111827' : '#f9fafb', borderRadius: 12, padding: '8px 12px', border: `2px solid ${rarityColor}55`, position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: rarityColor, borderRadius: '12px 0 0 12px' }} />
+                <div style={{ paddingLeft: 6, display: 'flex', alignItems: 'center', gap: 8, width: '50%' }}>
+                  <GearIcon gear={gear} theme={theme} size={30} />
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: dark ? '#f1f5f9' : '#111827' }}>{gear.name}</div>
+                    <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: rarityColor }}>{gear.rarity} · {gear.category}</div>
+                  </div>
+                </div>
+                <div style={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  {attrs.map((attr) => {
+                    const max = gear.attributeMaxValues?.[attr];
+                    return <span key={attr} style={{ fontSize: 11, fontWeight: 600, color: rarityColor }}>+ {attr}{max !== undefined ? ` (${max}%)` : ''}</span>;
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        {cls?.techniques && (
+          <div style={{ marginTop: 14, paddingTop: 14, borderTop: `1px solid ${divider}` }}>
+            <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Techniques</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+              {cls.techniques.map(({ slot, default: def }) => {
+                const selected = def ?? build.techniques?.[slot];
+                if (!selected) return null;
+                return (
+                  <div key={slot} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <span style={{ fontSize: 10, color: slotLabel, fontWeight: 700, width: 16 }}>T{slot}</span>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: def ? techFixed : techSelect }}>{selected}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
-      {/* Body — two columns */}
-      <div style={{ display: 'flex', gap: 0, background: bodyBg }}>
+function ExportCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) {
+  const cls  = getClassById(build.classId);
+  const dark = theme === 'dark';
 
-        {/* Left: Gear */}
+  const bg         = dark ? '#0f172a' : '#ffffff';
+  const bodyBg     = dark ? '#0f172a' : '#ffffff';
+  const divider    = dark ? '#1e293b' : '#e5e7eb';
+  const labelColor = dark ? '#64748b' : '#9ca3af';
+  const slotLabel  = dark ? '#475569' : '#9ca3af';
+  const techFixed  = dark ? '#64748b' : '#9ca3af';
+  const techSelect = dark ? '#fbbf24' : '#b45309';
+
+  const gearSlots = getSlotsForClass(build.classId);
+
+  return (
+    <div style={{ width: 700, background: bg, borderRadius: 20, overflow: 'hidden', fontFamily: 'system-ui, sans-serif', border: `2px solid ${cls?.color ?? '#374151'}88` }}>
+      <div style={{ background: dark ? '#7f1d1d' : '#f59e0b', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
+        {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={44} />}
+        <div>
+          <div style={{ fontWeight: 900, fontSize: 20, color: dark ? '#ffffff' : '#0f172a' }}>{build.name}</div>
+          <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: dark ? '#ffffff' : '#0f172a', opacity: 0.75 }}>{cls?.name ?? 'Unknown Class'}</div>
+        </div>
+      </div>
+      <div style={{ display: 'flex', background: bodyBg }}>
         <div style={{ flex: '0 0 420px', padding: '18px 20px', borderRight: `1px solid ${divider}` }}>
           <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Gear</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -60,13 +114,7 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
               if (!gear) return null;
               const rarityColor = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
               return (
-                <div key={slot.id} style={{
-                  display: 'flex', alignItems: 'center', gap: 8,
-                  background: dark ? '#111827' : '#f9fafb',
-                  borderRadius: 12, padding: '8px 12px',
-                  border: `2px solid ${rarityColor}55`,
-                  position: 'relative', overflow: 'hidden',
-                }}>
+                <div key={slot.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: dark ? '#111827' : '#f9fafb', borderRadius: 12, padding: '8px 12px', border: `2px solid ${rarityColor}55`, position: 'relative', overflow: 'hidden' }}>
                   <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: rarityColor, borderRadius: '12px 0 0 12px' }} />
                   <div style={{ paddingLeft: 6, display: 'flex', alignItems: 'center', gap: 8, width: '50%' }}>
                     <GearIcon gear={gear} theme={theme} size={30} />
@@ -78,11 +126,7 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
                   <div style={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                     {attrs.map((attr) => {
                       const max = gear.attributeMaxValues?.[attr];
-                      return (
-                        <span key={attr} style={{ fontSize: 11, fontWeight: 600, color: rarityColor }}>
-                          + {attr}{max !== undefined ? ` (${max}%)` : ''}
-                        </span>
-                      );
+                      return <span key={attr} style={{ fontSize: 11, fontWeight: 600, color: rarityColor }}>+ {attr}{max !== undefined ? ` (${max}%)` : ''}</span>;
                     })}
                   </div>
                 </div>
@@ -90,8 +134,6 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
             })}
           </div>
         </div>
-
-        {/* Right: Techniques */}
         <div style={{ flex: 1, padding: '18px 20px' }}>
           {cls?.techniques && (
             <>
@@ -101,11 +143,7 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
                   const selected = def ?? build.techniques?.[slot];
                   if (!selected) return null;
                   return (
-                    <div key={slot} style={{
-                      display: 'flex', alignItems: 'center', gap: 10,
-                      background: dark ? '#111827' : '#f9fafb',
-                      borderRadius: 10, padding: '8px 12px',
-                    }}>
+                    <div key={slot} style={{ display: 'flex', alignItems: 'center', gap: 10, background: dark ? '#111827' : '#f9fafb', borderRadius: 10, padding: '8px 12px' }}>
                       <span style={{ fontSize: 10, color: slotLabel, fontWeight: 700, width: 16 }}>T{slot}</span>
                       <span style={{ fontSize: 13, fontWeight: 600, color: def ? techFixed : techSelect }}>{selected}</span>
                     </div>
@@ -115,7 +153,6 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
             </>
           )}
         </div>
-
       </div>
     </div>
   );
@@ -167,6 +204,7 @@ export default function DashboardPage() {
   const [deleteBuildId, setDeleteBuildId] = useState<string | null>(null);
   const [capturing, setCapturing]     = useState(false);
   const shareCardRef                  = useRef<HTMLDivElement>(null);
+  const exportCardRef                 = useRef<HTMLDivElement>(null);
 
   const loadBuilds = async () => {
     setLoading(true);
@@ -200,17 +238,12 @@ export default function DashboardPage() {
     if (!shareCardRef.current || !shareBuild) return;
     setCapturing(true);
     try {
-      const el = shareCardRef.current;
-      const scale = 3;
+      const el = exportCardRef.current;
       const dataUrl = await toPng(el, {
         pixelRatio: 3,
-        width: el.scrollWidth * scale,
-        height: el.scrollHeight * scale,
-        style: {
-          overflow: 'visible',
-          transform: `scale(${scale})`,
-          transformOrigin: 'top left',
-        },
+        width: el.scrollWidth,
+        height: el.scrollHeight,
+        style: { overflow: 'visible' },
       });
       const link    = document.createElement('a');
       link.download = `${shareBuild.name.replace(/\s+/g, '_')}_build.png`;
@@ -462,6 +495,15 @@ export default function DashboardPage() {
                 Delete
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Hidden export card — captured for PNG download */}
+      {shareBuild && (
+        <div style={{ position: 'fixed', top: -9999, left: -9999, pointerEvents: 'none' }}>
+          <div ref={exportCardRef}>
+            <ExportCard build={shareBuild} theme={theme} />
           </div>
         </div>
       )}
