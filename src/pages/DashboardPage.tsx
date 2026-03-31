@@ -26,7 +26,7 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
   return (
     <div
       style={{
-        width: 420,
+        width: 560,
         background: bg,
         borderRadius: 20,
         overflow: 'hidden',
@@ -36,10 +36,10 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
     >
       {/* Header */}
       <div style={{ background: dark ? '#7f1d1d' : '#f59e0b', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
-        {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={44} />}
+        {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={52} />}
         <div>
-          <div style={{ fontWeight: 900, fontSize: 20, color: dark ? '#ffffff' : '#0f172a' }}>{build.name}</div>
-          <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: dark ? '#ffffff' : '#0f172a', opacity: 0.75 }}>
+          <div style={{ fontWeight: 900, fontSize: 24, color: dark ? '#ffffff' : '#0f172a' }}>{build.name}</div>
+          <div style={{ fontSize: 13, letterSpacing: 3, textTransform: 'uppercase', color: dark ? '#ffffff' : '#0f172a', opacity: 0.75 }}>
             {cls?.name ?? 'Unknown Class'}
           </div>
         </div>
@@ -47,7 +47,7 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
 
       <div style={{ padding: '18px 20px', background: bodyBg }}>
         {/* Gear */}
-        <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Gear</div>
+        <div style={{ fontSize: 11, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Gear</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 4 }}>
           {getSlotsForClass(build.classId).map((slot) => {
             const gear  = getGearById(build.gears?.[slot.id]);
@@ -64,17 +64,17 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
               }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: rarityColor, borderRadius: '12px 0 0 12px' }} />
                 <div style={{ paddingLeft: 6, display: 'flex', alignItems: 'center', gap: 8, width: '50%' }}>
-                  <GearIcon gear={gear} theme={theme} size={30} />
+                  <GearIcon gear={gear} theme={theme} size={36} />
                   <div>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: dark ? '#f1f5f9' : '#111827' }}>{gear.name}</div>
-                    <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: rarityColor }}>{gear.rarity} · {gear.category}</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: dark ? '#f1f5f9' : '#111827' }}>{gear.name}</div>
+                    <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: rarityColor }}>{gear.rarity} · {gear.category}</div>
                   </div>
                 </div>
                 <div style={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {attrs.map((attr) => {
                     const max = gear.attributeMaxValues?.[attr];
                     return (
-                      <span key={attr} style={{ fontSize: 11, fontWeight: 600, color: rarityColor }}>
+                      <span key={attr} style={{ fontSize: 13, fontWeight: 600, color: rarityColor }}>
                         + {attr}{max !== undefined ? ` (${max}%)` : ''}
                       </span>
                     );
@@ -88,15 +88,15 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
         {/* Techniques */}
         {cls?.techniques && (
           <div style={{ marginTop: 14, paddingTop: 14, borderTop: `1px solid ${divider}` }}>
-            <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Techniques</div>
+            <div style={{ fontSize: 11, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Techniques</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
               {cls.techniques.map(({ slot, default: def }) => {
                 const selected = def ?? build.techniques?.[slot];
                 if (!selected) return null;
                 return (
                   <div key={slot} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ fontSize: 10, color: slotLabel, fontWeight: 700, width: 16 }}>T{slot}</span>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: def ? techFixed : techSelect }}>{selected}</span>
+                    <span style={{ fontSize: 12, color: slotLabel, fontWeight: 700, width: 20 }}>T{slot}</span>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: def ? techFixed : techSelect }}>{selected}</span>
                   </div>
                 );
               })}
