@@ -297,7 +297,7 @@ export default function DashboardPage() {
                         return gear ? (
                           <div key={slot.id} className="flex items-center gap-1.5 min-w-0">
                             <GearIcon gear={gear} theme={theme} size={22} />
-                            <span className="text-[13px] font-semibold truncate" style={{ color: RARITY_COLOR[gear.rarity] }}>
+                            <span className="text-[12px] font-semibold" style={{ color: RARITY_COLOR[gear.rarity] }}>
                               {gear.name}
                             </span>
                           </div>
@@ -318,7 +318,7 @@ export default function DashboardPage() {
                             return selected ? (
                               <div key={slot} className="flex items-center gap-2">
                                 <span className="text-[10px] text-gray-400 dark:text-gray-600 font-bold w-4 shrink-0">T{slot}</span>
-                                <span className={`text-[11px] font-semibold ${def ? 'text-gray-500 dark:text-gray-500' : 'text-amber-600 dark:text-amber-300'}`}>
+                                <span className={`text-[12px] font-semibold ${def ? 'text-gray-500 dark:text-gray-500' : 'text-amber-600 dark:text-amber-300'}`}>
                                   {selected}
                                 </span>
                               </div>
