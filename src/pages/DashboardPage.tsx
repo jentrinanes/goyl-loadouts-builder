@@ -235,7 +235,7 @@ export default function DashboardPage() {
   };
 
   const handleDownload = async () => {
-    if (!shareCardRef.current || !shareBuild) return;
+    if (!exportCardRef.current || !shareBuild) return;
     setCapturing(true);
     try {
       const el = exportCardRef.current;
