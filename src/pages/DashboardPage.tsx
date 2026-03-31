@@ -190,7 +190,7 @@ export default function DashboardPage() {
     setCapturing(true);
     try {
       const el = shareCardRef.current;
-      const scale = 2;
+      const scale = 3;
       const dataUrl = await toPng(el, {
         pixelRatio: 3,
         width: el.scrollWidth * scale,
