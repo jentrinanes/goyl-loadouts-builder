@@ -1051,7 +1051,7 @@ export const getGearById = (id: string | undefined): Gear | undefined =>
 export const RARITY_COLOR: Record<GearRarity, string> = {
   Common:    '#9ca3af',
   Rare:      '#3b82f6',
-  Epic:      '#a855f7',
+  Epic:      '#c084fc',
   Legendary: '#f59e0b',
 };
 
