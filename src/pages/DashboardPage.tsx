@@ -191,7 +191,7 @@ export default function DashboardPage() {
     try {
       const el = shareCardRef.current;
       const dataUrl = await toPng(el, {
-        pixelRatio: 2,
+        pixelRatio: 3,
         width: el.scrollWidth,
         height: el.scrollHeight,
         style: { overflow: 'visible' },
