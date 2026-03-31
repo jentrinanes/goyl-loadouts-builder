@@ -23,10 +23,12 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
   const techSelect = dark ? '#fbbf24' : '#b45309';
 
 
+  const gearSlots = getSlotsForClass(build.classId);
+
   return (
     <div
       style={{
-        width: 420,
+        width: 700,
         background: bg,
         borderRadius: 20,
         overflow: 'hidden',
@@ -45,65 +47,74 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
         </div>
       </div>
 
-      <div style={{ padding: '18px 20px', background: bodyBg }}>
-        {/* Gear */}
-        <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Gear</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 4 }}>
-          {getSlotsForClass(build.classId).map((slot) => {
-            const gear  = getGearById(build.gears?.[slot.id]);
-            const attrs = (build.gearAttributes?.[slot.id] ?? []).filter(Boolean);
-            if (!gear) return null;
-            const rarityColor = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
-            return (
-              <div key={slot.id} style={{
-                display: 'flex', alignItems: 'center', gap: 8,
-                background: dark ? '#111827' : '#f9fafb',
-                borderRadius: 12, padding: '8px 12px',
-                border: `2px solid ${rarityColor}55`,
-                position: 'relative', overflow: 'hidden',
-              }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: rarityColor, borderRadius: '12px 0 0 12px' }} />
-                <div style={{ paddingLeft: 6, display: 'flex', alignItems: 'center', gap: 8, width: '50%' }}>
-                  <GearIcon gear={gear} theme={theme} size={30} />
-                  <div>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: dark ? '#f1f5f9' : '#111827' }}>{gear.name}</div>
-                    <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: rarityColor }}>{gear.rarity} · {gear.category}</div>
+      {/* Body — two columns */}
+      <div style={{ display: 'flex', gap: 0, background: bodyBg }}>
+
+        {/* Left: Gear */}
+        <div style={{ flex: '0 0 420px', padding: '18px 20px', borderRight: `1px solid ${divider}` }}>
+          <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Gear</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {gearSlots.map((slot) => {
+              const gear  = getGearById(build.gears?.[slot.id]);
+              const attrs = (build.gearAttributes?.[slot.id] ?? []).filter(Boolean);
+              if (!gear) return null;
+              const rarityColor = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
+              return (
+                <div key={slot.id} style={{
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  background: dark ? '#111827' : '#f9fafb',
+                  borderRadius: 12, padding: '8px 12px',
+                  border: `2px solid ${rarityColor}55`,
+                  position: 'relative', overflow: 'hidden',
+                }}>
+                  <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: rarityColor, borderRadius: '12px 0 0 12px' }} />
+                  <div style={{ paddingLeft: 6, display: 'flex', alignItems: 'center', gap: 8, width: '50%' }}>
+                    <GearIcon gear={gear} theme={theme} size={30} />
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: dark ? '#f1f5f9' : '#111827' }}>{gear.name}</div>
+                      <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: rarityColor }}>{gear.rarity} · {gear.category}</div>
+                    </div>
+                  </div>
+                  <div style={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    {attrs.map((attr) => {
+                      const max = gear.attributeMaxValues?.[attr];
+                      return (
+                        <span key={attr} style={{ fontSize: 11, fontWeight: 600, color: rarityColor }}>
+                          + {attr}{max !== undefined ? ` (${max}%)` : ''}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
-                <div style={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  {attrs.map((attr) => {
-                    const max = gear.attributeMaxValues?.[attr];
-                    return (
-                      <span key={attr} style={{ fontSize: 11, fontWeight: 600, color: rarityColor }}>
-                        + {attr}{max !== undefined ? ` (${max}%)` : ''}
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
-        {/* Techniques */}
-        {cls?.techniques && (
-          <div style={{ marginTop: 14, paddingTop: 14, borderTop: `1px solid ${divider}` }}>
-            <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Techniques</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-              {cls.techniques.map(({ slot, default: def }) => {
-                const selected = def ?? build.techniques?.[slot];
-                if (!selected) return null;
-                return (
-                  <div key={slot} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ fontSize: 10, color: slotLabel, fontWeight: 700, width: 16 }}>T{slot}</span>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: def ? techFixed : techSelect }}>{selected}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
+        {/* Right: Techniques */}
+        <div style={{ flex: 1, padding: '18px 20px' }}>
+          {cls?.techniques && (
+            <>
+              <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Techniques</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {cls.techniques.map(({ slot, default: def }) => {
+                  const selected = def ?? build.techniques?.[slot];
+                  if (!selected) return null;
+                  return (
+                    <div key={slot} style={{
+                      display: 'flex', alignItems: 'center', gap: 10,
+                      background: dark ? '#111827' : '#f9fafb',
+                      borderRadius: 10, padding: '8px 12px',
+                    }}>
+                      <span style={{ fontSize: 10, color: slotLabel, fontWeight: 700, width: 16 }}>T{slot}</span>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: def ? techFixed : techSelect }}>{selected}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </div>
 
       </div>
     </div>
