@@ -590,22 +590,34 @@ export default function BuilderPage() {
                     <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
                       <div className="text-xs text-gray-500 uppercase tracking-widest mb-3">Techniques</div>
                       <div className="flex flex-col gap-2">
-                        {cls.techniques.map(({ slot, default: def }) => (
-                          <div key={slot} className="flex items-center gap-2">
-                            <span className="text-[10px] text-gray-400 dark:text-gray-600 font-bold uppercase w-20 shrink-0 whitespace-nowrap">
-                              Technique {slot}
-                            </span>
-                            <span className={`text-xs font-semibold ${
-                              def
-                                ? 'text-gray-500 dark:text-gray-500'
-                                : techniques[slot]
-                                  ? 'text-amber-600 dark:text-amber-300'
-                                  : 'text-gray-400 dark:text-gray-600 italic'
-                            }`}>
-                              {def ?? techniques[slot] ?? '— not selected —'}
-                            </span>
-                          </div>
-                        ))}
+                        {cls.techniques.map(({ slot, default: def, image, optionImages }) => {
+                          const selected = def ?? techniques[slot];
+                          const imgKey = def ? image : (selected ? optionImages?.[selected] : undefined);
+                          return (
+                            <div key={slot} className="flex items-center gap-2">
+                              <span className="text-[10px] text-gray-400 dark:text-gray-600 font-bold uppercase w-20 shrink-0 whitespace-nowrap">
+                                Technique {slot}
+                              </span>
+                              {imgKey && (
+                                <img
+                                  src={`/images/${imgKey}_${theme}.png`}
+                                  alt={selected ?? ''}
+                                  className="w-6 h-6 object-contain shrink-0"
+                                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = `/images/${imgKey}_dark.png`; }}
+                                />
+                              )}
+                              <span className={`text-xs font-semibold ${
+                                def
+                                  ? 'text-gray-500 dark:text-gray-500'
+                                  : selected
+                                    ? 'text-amber-600 dark:text-amber-300'
+                                    : 'text-gray-400 dark:text-gray-600 italic'
+                              }`}>
+                                {selected ?? '— not selected —'}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
