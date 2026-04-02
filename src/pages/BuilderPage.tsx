@@ -422,7 +422,7 @@ export default function BuilderPage() {
 
             {cls?.techniques ? (
               <div className="max-w-[580px] mx-auto flex flex-col gap-4">
-                {cls.techniques.map(({ slot, default: def, description, options, optionDescriptions, optionImages }) => (
+                {cls.techniques.map(({ slot, default: def, image, description, options, optionDescriptions, optionImages }) => (
                   <div
                     key={slot}
                     className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5"
@@ -434,8 +434,11 @@ export default function BuilderPage() {
                     {def ? (
                       /* Fixed / default technique */
                       <div className="flex items-start justify-between gap-3">
-                        <div className="flex items-start gap-2">
-                          <span className="text-amber-400 text-base mt-0.5">✦</span>
+                        <div className="flex items-start gap-3">
+                          {image
+                            ? <img src={`/images/${image}_dark.png`} alt={def} className="w-10 h-10 object-contain shrink-0" />
+                            : <span className="text-amber-400 text-base mt-0.5">✦</span>
+                          }
                           <div>
                             <div className="font-semibold text-gray-700 dark:text-gray-300 text-sm">{def}</div>
                             {description && (

@@ -66,11 +66,12 @@ export const CLASSES: ClassDef[] = [
       ghostWeapon: GHOST_TOOL_ITEMS,
     },
     techniques: [
-      { slot: 1, default: 'Eye of Uchitsune', description: 'Target 3 enemies and fire a guaranteed headshot at each target.' },
+      { slot: 1, default: 'Eye of Uchitsune', image: 'eye_of_uchitsune', description: 'Target 3 enemies and fire a guaranteed headshot at each target.' },
       { slot: 2, options: ['Empowered Hunt', 'Shadow Flame Arrow'], optionDescriptions: {
         'Empowered Hunt': 'Increase damage and speed of Ranged weapons for a brief duration. While active, projectiles gain Piercing and have a massive chance of not consuming ammo.',
         'Shadow Flame Arrow': 'Fire an arrow that deals explosive damage on impact and leaves lingering flames.',
       }, optionImages: {
+        'Empowered Hunt': 'empowered_hunt',
         'Shadow Flame Arrow': 'shadow_flame_arrow',
       }},
       { slot: 3, options: ['Lethal Proximity', 'Spirited', 'Ability Cooldown'], optionDescriptions: {
@@ -80,6 +81,7 @@ export const CLASSES: ClassDef[] = [
       }, optionImages: {
         'Lethal Proximity': 'lethal_proximity',
         'Spirited': 'spirited',
+        'Ability Cooldown': 'ability_cooldown',
       }},
       { slot: 4, options: ['Resupply', 'Point Blank', 'Serrated Shots'], optionDescriptions: {
         'Resupply': 'Refill 30% of all ammo types. Press x while aiming to activate. Costs 1 Spirit.',

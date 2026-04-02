@@ -14,6 +14,7 @@ export type StatKey = keyof StatSet;
 export interface TechniqueSlot {
   slot: number;
   default?: string;
+  image?: string;
   description?: string;
   options?: string[];
   optionDescriptions?: Record<string, string>;
