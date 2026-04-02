@@ -88,6 +88,7 @@ export const CLASSES: ClassDef[] = [
         'Point Blank': 'Body shots with Ranged weapons have a 40% chance to inflict headshot damage.',
         'Serrated Shots': 'Arrows and Bullets inflict Maim for a brief duration, making the target Vulnerable to any weapon.',
       }, optionImages: {
+        'Resupply': 'resupply',
         'Point Blank': 'point_blank',
         'Serrated Shots': 'serrated_shots',
       }},
