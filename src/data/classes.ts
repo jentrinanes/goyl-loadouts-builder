@@ -80,7 +80,7 @@ export const CLASSES: ClassDef[] = [
         'Ability Cooldown': 'Decrease Class Ability cooldown by 15%.',
       }, optionImages: {
         'Lethal Proximity': 'lethal_proximity',
-        'Spirited': 'spirited',
+        'Spirited': 'spirited_archer',
         'Ability Cooldown': 'ability_cooldown',
       }},
       { slot: 4, options: ['Resupply', 'Point Blank', 'Serrated Shots'], optionDescriptions: {
@@ -133,6 +133,9 @@ export const CLASSES: ClassDef[] = [
         'Enhanced Ghost Tools': 'Increase damage of all Ghost Tools by 35%.',
         'Enhanced Impalement': 'Increase thrown weapon damage by 25%.',
         'Ability Cooldown': 'Decrease Class Ability cooldown by 15%.',
+      }, optionImages: {
+        'Enhanced Ghost Tools': 'enhanced_ghost_tools',
+        'Enhanced Impalement': 'enhanced_impalement',
       }},
       { slot: 4, options: ['Spirit Shatter', 'Spirited', 'Status Effect Duration'], optionDescriptions: {
         'Spirit Shatter': 'Thrown weapons shatter on impact dealing damage to nearby enemies and inflict Weaken.',
