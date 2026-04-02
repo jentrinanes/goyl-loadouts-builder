@@ -81,7 +81,7 @@ export const CLASSES: ClassDef[] = [
       }, optionImages: {
         'Lethal Proximity': 'lethal_proximity',
         'Spirited': 'spirited_archer',
-        'Ability Cooldown': 'ability_cooldown',
+        'Ability Cooldown': 'ability_cooldown_archer',
       }},
       { slot: 4, options: ['Resupply', 'Point Blank', 'Serrated Shots'], optionDescriptions: {
         'Resupply': 'Refill 30% of all ammo types. Press x while aiming to activate. Costs 1 Spirit.',
@@ -136,6 +136,7 @@ export const CLASSES: ClassDef[] = [
       }, optionImages: {
         'Enhanced Ghost Tools': 'enhanced_ghost_tools',
         'Enhanced Impalement': 'enhanced_impalement',
+        'Ability Cooldown': 'ability_cooldown_mercenary',
       }},
       { slot: 4, options: ['Spirit Shatter', 'Spirited', 'Status Effect Duration'], optionDescriptions: {
         'Spirit Shatter': 'Thrown weapons shatter on impact dealing damage to nearby enemies and inflict Weaken.',
