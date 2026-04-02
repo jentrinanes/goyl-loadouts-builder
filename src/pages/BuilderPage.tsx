@@ -422,7 +422,7 @@ export default function BuilderPage() {
 
             {cls?.techniques ? (
               <div className="max-w-[580px] mx-auto flex flex-col gap-4">
-                {cls.techniques.map(({ slot, default: def, description, options, optionDescriptions }) => (
+                {cls.techniques.map(({ slot, default: def, description, options, optionDescriptions, optionImages }) => (
                   <div
                     key={slot}
                     className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5"
@@ -456,17 +456,26 @@ export default function BuilderPage() {
                             <button
                               key={opt}
                               onClick={() => setTechniques((prev) => ({ ...prev, [slot]: opt }))}
-                              className={`text-left px-4 py-3 rounded-xl text-sm font-semibold border-2 transition-all cursor-pointer
+                              className={`text-left px-4 py-3 rounded-xl text-sm font-semibold border-2 transition-all cursor-pointer flex items-center gap-3
                                 ${isSelected
                                   ? 'bg-amber-400 text-gray-950 border-amber-400'
                                   : 'bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400'}`}
                             >
-                              <div>{isSelected && <span className="mr-1.5">✓</span>}{opt}</div>
-                              {optionDescriptions?.[opt] && (
-                                <div className={`text-xs font-normal mt-1 ${isSelected ? 'text-gray-800' : 'text-gray-500 dark:text-gray-500'}`}>
-                                  {optionDescriptions[opt]}
-                                </div>
+                              {optionImages?.[opt] && (
+                                <img
+                                  src={`/images/${optionImages[opt]}_dark.png`}
+                                  alt={opt}
+                                  className="w-10 h-10 object-contain shrink-0"
+                                />
                               )}
+                              <div className="flex-1">
+                                <div>{isSelected && <span className="mr-1.5">✓</span>}{opt}</div>
+                                {optionDescriptions?.[opt] && (
+                                  <div className={`text-xs font-normal mt-1 ${isSelected ? 'text-gray-800' : 'text-gray-500 dark:text-gray-500'}`}>
+                                    {optionDescriptions[opt]}
+                                  </div>
+                                )}
+                              </div>
                             </button>
                           );
                         })}

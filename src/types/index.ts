@@ -17,6 +17,7 @@ export interface TechniqueSlot {
   description?: string;
   options?: string[];
   optionDescriptions?: Record<string, string>;
+  optionImages?: Record<string, string>;
 }
 
 export interface ClassDef {

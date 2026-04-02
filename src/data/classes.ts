@@ -70,21 +70,33 @@ export const CLASSES: ClassDef[] = [
       { slot: 2, options: ['Empowered Hunt', 'Shadow Flame Arrow'], optionDescriptions: {
         'Empowered Hunt': 'Increase damage and speed of Ranged weapons for a brief duration. While active, projectiles gain Piercing and have a massive chance of not consuming ammo.',
         'Shadow Flame Arrow': 'Fire an arrow that deals explosive damage on impact and leaves lingering flames.',
+      }, optionImages: {
+        'Shadow Flame Arrow': 'shadow_flame_arrow',
       }},
       { slot: 3, options: ['Lethal Proximity', 'Spirited', 'Ability Cooldown'], optionDescriptions: {
         'Lethal Proximity': 'Increase Ranged Damage by 30% for targets within 12 meters.',
         'Spirited': 'Increase maximum Spirit by 2.',
         'Ability Cooldown': 'Decrease Class Ability cooldown by 15%.',
+      }, optionImages: {
+        'Lethal Proximity': 'lethal_proximity',
+        'Spirited': 'spirited',
       }},
       { slot: 4, options: ['Resupply', 'Point Blank', 'Serrated Shots'], optionDescriptions: {
         'Resupply': 'Refill 30% of all ammo types. Press x while aiming to activate. Costs 1 Spirit.',
         'Point Blank': 'Body shots with Ranged weapons have a 40% chance to inflict headshot damage.',
         'Serrated Shots': 'Arrows and Bullets inflict Maim for a brief duration, making the target Vulnerable to any weapon.',
+      }, optionImages: {
+        'Point Blank': 'point_blank',
+        'Serrated Shots': 'serrated_shots',
       }},
       { slot: 5, options: ['Consuming Flames', 'All-Seeing Eye', 'Bountiful Ammo'], optionDescriptions: {
         'Consuming Flames': 'Shots from your Ultimate trigger a Shadow-Flame explosion, inflicting damage to nearby enemies and setting them on fire.',
         'All-Seeing Eye': 'Ultimate can target 2 more enemies.',
         'Bountiful Ammo': 'Firing Ultimate restores 65% of all ammo types.',
+      }, optionImages: {
+        'Consuming Flames': 'consuming_flames',
+        'All-Seeing Eye': 'all_seeing_eye',
+        'Bountiful Ammo': 'bountiful_ammo',
       }},
     ],
   },
