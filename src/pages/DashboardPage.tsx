@@ -18,7 +18,6 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
   const bodyBg     = dark ? '#0f172a' : '#ffffff';
   const divider    = dark ? '#1e293b' : '#e5e7eb';
   const labelColor = dark ? '#64748b' : '#9ca3af';
-  const slotLabel  = dark ? '#475569' : '#9ca3af';
   const techFixed  = dark ? '#64748b' : '#9ca3af';
   const techSelect = dark ? '#fbbf24' : '#b45309';
 
@@ -68,7 +67,6 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
                 if (!selected) return null;
                 return (
                   <div key={slot} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ fontSize: 10, color: slotLabel, fontWeight: 700, width: 16 }}>T{slot}</span>
                     <span style={{ fontSize: 12, fontWeight: 600, color: def ? techFixed : techSelect }}>{selected}</span>
                   </div>
                 );
@@ -89,7 +87,6 @@ function ExportCard({ build, theme }: { build: Build; theme: 'light' | 'dark' })
   const bodyBg     = dark ? '#0f172a' : '#ffffff';
   const divider    = dark ? '#1e293b' : '#e5e7eb';
   const labelColor = dark ? '#64748b' : '#9ca3af';
-  const slotLabel  = dark ? '#475569' : '#9ca3af';
   const techFixed  = dark ? '#64748b' : '#9ca3af';
   const techSelect = dark ? '#fbbf24' : '#b45309';
 
@@ -144,7 +141,6 @@ function ExportCard({ build, theme }: { build: Build; theme: 'light' | 'dark' })
                   if (!selected) return null;
                   return (
                     <div key={slot} style={{ display: 'flex', alignItems: 'center', gap: 10, background: dark ? '#111827' : '#f9fafb', borderRadius: 10, padding: '8px 12px' }}>
-                      <span style={{ fontSize: 10, color: slotLabel, fontWeight: 700, width: 16 }}>T{slot}</span>
                       <span style={{ fontSize: 13, fontWeight: 600, color: def ? techFixed : techSelect }}>{selected}</span>
                     </div>
                   );
@@ -369,7 +365,6 @@ export default function DashboardPage() {
                             const selected = def ?? build.techniques?.[slot];
                             return selected ? (
                               <div key={slot} className="flex items-center gap-2">
-                                <span className="text-[10px] text-gray-400 dark:text-gray-600 font-bold w-4 shrink-0">T{slot}</span>
                                 <span className={`text-[11px] font-semibold ${def ? 'text-gray-500 dark:text-gray-500' : 'text-amber-600 dark:text-amber-300'}`}>
                                   {selected}
                                 </span>
