@@ -11,6 +11,6 @@ output "static_web_app_api_key" {
 
 output "cosmosdb_connection_string" {
   description = "Cosmos DB primary connection string"
-  value       = azurerm_cosmosdb_account.main.primary_sql_connection_string
+  value       = local.cosmos_connection_string
   sensitive   = true
 }

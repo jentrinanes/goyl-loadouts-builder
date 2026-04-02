@@ -12,7 +12,7 @@ terraform {
     resource_group_name  = "rg-terraform-state"
     storage_account_name = "goylterraformstate"
     container_name       = "tfstate"
-    key                  = "prod.terraform.tfstate"
+    key                  = "prod.terraform.tfstate"  # overridden via -backend-config at init time
   }
 }
 
@@ -43,8 +43,8 @@ resource "azurerm_static_web_app" "main" {
   sku_size = "Free"
 
   app_settings = {
-    COSMOS_CONNECTION_STRING = azurerm_cosmosdb_account.main.primary_sql_connection_string
-    COSMOS_DB_NAME           = "yotei-legends"
+    COSMOS_CONNECTION_STRING = local.cosmos_connection_string
+    COSMOS_DB_NAME           = local.cosmos_db_name
     HMAC_SECRET              = var.hmac_secret
   }
 
@@ -55,9 +55,12 @@ resource "azurerm_static_web_app" "main" {
 }
 
 # ── Cosmos DB ──────────────────────────────────────────────────────────────────
+# Prod: create a dedicated account with free tier.
+# Staging: reuse the prod account to avoid the one-free-tier-per-subscription limit.
 
 resource "azurerm_cosmosdb_account" "main" {
-  name                = "cosmos-${var.project_name}-${var.environment}"
+  count               = var.environment == "prod" ? 1 : 0
+  name                = "cosmos-${var.project_name}-prod"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   offer_type          = "Standard"
@@ -80,19 +83,31 @@ resource "azurerm_cosmosdb_account" "main" {
   }
 }
 
-resource "azurerm_cosmosdb_sql_database" "main" {
-  name                = "yotei-legends"
-  resource_group_name = azurerm_resource_group.main.name
-  account_name        = azurerm_cosmosdb_account.main.name
+data "azurerm_cosmosdb_account" "prod" {
+  count               = var.environment == "staging" ? 1 : 0
+  name                = "cosmos-${var.project_name}-prod"
+  resource_group_name = "rg-${var.project_name}-prod"
+}
 
-  # Share 400 RU/s across all containers — stays within the free tier (1,000 RU/s max)
+locals {
+  cosmos_account_name       = var.environment == "prod" ? azurerm_cosmosdb_account.main[0].name : data.azurerm_cosmosdb_account.prod[0].name
+  cosmos_resource_group     = var.environment == "prod" ? azurerm_resource_group.main.name : "rg-${var.project_name}-prod"
+  cosmos_connection_string  = var.environment == "prod" ? azurerm_cosmosdb_account.main[0].primary_sql_connection_string : data.azurerm_cosmosdb_account.prod[0].primary_sql_connection_string
+  cosmos_db_name            = "yotei-legends${var.environment == "prod" ? "" : "-${var.environment}"}"
+}
+
+resource "azurerm_cosmosdb_sql_database" "main" {
+  name                = local.cosmos_db_name
+  resource_group_name = local.cosmos_resource_group
+  account_name        = local.cosmos_account_name
+
   throughput = 400
 }
 
 resource "azurerm_cosmosdb_sql_container" "users" {
   name                = "users"
-  resource_group_name = azurerm_resource_group.main.name
-  account_name        = azurerm_cosmosdb_account.main.name
+  resource_group_name = local.cosmos_resource_group
+  account_name        = local.cosmos_account_name
   database_name       = azurerm_cosmosdb_sql_database.main.name
   partition_key_path  = "/id"
 
@@ -103,16 +118,16 @@ resource "azurerm_cosmosdb_sql_container" "users" {
 
 resource "azurerm_cosmosdb_sql_container" "builds" {
   name                = "builds"
-  resource_group_name = azurerm_resource_group.main.name
-  account_name        = azurerm_cosmosdb_account.main.name
+  resource_group_name = local.cosmos_resource_group
+  account_name        = local.cosmos_account_name
   database_name       = azurerm_cosmosdb_sql_database.main.name
   partition_key_path  = "/userId"
 }
 
 resource "azurerm_cosmosdb_sql_container" "sessions" {
   name                = "sessions"
-  resource_group_name = azurerm_resource_group.main.name
-  account_name        = azurerm_cosmosdb_account.main.name
+  resource_group_name = local.cosmos_resource_group
+  account_name        = local.cosmos_account_name
   database_name       = azurerm_cosmosdb_sql_database.main.name
   partition_key_path  = "/id"
   default_ttl         = 86400

@@ -188,6 +188,9 @@ export default function BuilderPage() {
           </button>
           <span className="text-xl">⛩️</span>
           <span className="text-amber-400 font-black text-sm sm:text-base tracking-widest">GOYL BUILD CREATOR</span>
+          {import.meta.env.VITE_APP_ENV === 'staging' && (
+            <span className="bg-yellow-400 text-yellow-900 text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full">staging</span>
+          )}
         </div>
 
         <div />
@@ -419,7 +422,7 @@ export default function BuilderPage() {
 
             {cls?.techniques ? (
               <div className="max-w-[580px] mx-auto flex flex-col gap-4">
-                {cls.techniques.map(({ slot, default: def, options }) => (
+                {cls.techniques.map(({ slot, default: def, description, options, optionDescriptions }) => (
                   <div
                     key={slot}
                     className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5"
@@ -430,12 +433,17 @@ export default function BuilderPage() {
 
                     {def ? (
                       /* Fixed / default technique */
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2">
-                          <span className="text-amber-400 text-base">✦</span>
-                          <span className="font-semibold text-gray-700 dark:text-gray-300 text-sm">{def}</span>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-start gap-2">
+                          <span className="text-amber-400 text-base mt-0.5">✦</span>
+                          <div>
+                            <div className="font-semibold text-gray-700 dark:text-gray-300 text-sm">{def}</div>
+                            {description && (
+                              <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{description}</div>
+                            )}
+                          </div>
                         </div>
-                        <span className="text-[10px] text-gray-400 dark:text-gray-600 uppercase tracking-widest shrink-0">
+                        <span className="text-[10px] text-gray-400 dark:text-gray-600 uppercase tracking-widest shrink-0 mt-0.5">
                           Default
                         </span>
                       </div>
@@ -453,7 +461,12 @@ export default function BuilderPage() {
                                   ? 'bg-amber-400 text-gray-950 border-amber-400'
                                   : 'bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400'}`}
                             >
-                              {isSelected && <span className="mr-1.5">✓</span>}{opt}
+                              <div>{isSelected && <span className="mr-1.5">✓</span>}{opt}</div>
+                              {optionDescriptions?.[opt] && (
+                                <div className={`text-xs font-normal mt-1 ${isSelected ? 'text-gray-800' : 'text-gray-500 dark:text-gray-500'}`}>
+                                  {optionDescriptions[opt]}
+                                </div>
+                              )}
                             </button>
                           );
                         })}

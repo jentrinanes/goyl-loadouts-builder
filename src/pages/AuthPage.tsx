@@ -37,6 +37,9 @@ export default function AuthPage() {
         >
           GOYL Build Creator
         </h1>
+        {import.meta.env.VITE_APP_ENV === 'staging' && (
+          <span className="mt-2 bg-yellow-400 text-yellow-900 text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full">staging</span>
+        )}
       </div>
 
       {/* Card */}
