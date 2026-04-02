@@ -595,9 +595,6 @@ export default function BuilderPage() {
                           const imgKey = def ? image : (selected ? optionImages?.[selected] : undefined);
                           return (
                             <div key={slot} className="flex items-center gap-2">
-                              <span className="text-[10px] text-gray-400 dark:text-gray-600 font-bold uppercase w-20 shrink-0 whitespace-nowrap">
-                                Technique {slot}
-                              </span>
                               {imgKey && (
                                 <img
                                   src={`/images/${imgKey}_${theme}.png`}
