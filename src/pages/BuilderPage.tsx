@@ -471,7 +471,7 @@ export default function BuilderPage() {
                             >
                               {optionImages?.[opt] && (
                                 <img
-                                  src={`/images/${optionImages[opt]}_${theme}.png`}
+                                  src={`/images/${optionImages[opt]}_${isSelected ? 'light' : theme}.png`}
                                   alt={opt}
                                   className="w-10 h-10 object-contain shrink-0"
                                   onError={(e) => { (e.currentTarget as HTMLImageElement).src = `/images/${optionImages![opt]}_dark.png`; }}
