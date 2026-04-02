@@ -152,6 +152,7 @@ export const CLASSES: ClassDef[] = [
         'Raging Storm': "Takemikazuchi's Smite calls down 2 more Thunderstrikes.",
         'Weakening Blast': "Takemikazuchi's Smite also inflicts Weaken and Poison, making enemies Vulnerable to any Melee weapon, increasing damage taken, and reducing damage dealt.",
       }, optionImages: {
+        'Energizing Smite': 'energizing_smite',
         'Raging Storm': 'raging_storm',
         'Weakening Blast': 'weakening_blast',
       }},
