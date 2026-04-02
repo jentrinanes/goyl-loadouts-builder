@@ -121,7 +121,7 @@ export const CLASSES: ClassDef[] = [
       ghostWeapon2: GHOST_TOOL_ITEMS,
     },
     techniques: [
-      { slot: 1, default: "Takemikazuchi's Smite", description: "Call forth a blast of Lightning that Disarms and knocks back nearby enemies. Summon 2 Thunderstrikes on nearby enemies inflicting major damage." },
+      { slot: 1, default: "Takemikazuchi's Smite", image: 'takemikazuchis_smite', description: "Call forth a blast of Lightning that Disarms and knocks back nearby enemies. Summon 2 Thunderstrikes on nearby enemies inflicting major damage." },
       { slot: 2, options: ['Spirit Throw', 'Spirit Animal'], optionDescriptions: {
         'Spirit Throw': 'Conjure a Spirit Weapon that can be thrown at a nearby enemy.',
         'Spirit Animal': 'Summon a friendly wolf companion for a short duration that inflicts Poison on nearby enemies.',
