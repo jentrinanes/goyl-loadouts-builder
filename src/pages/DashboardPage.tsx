@@ -261,6 +261,9 @@ export default function DashboardPage() {
         <div className="flex items-center gap-2.5">
           <span className="text-2xl">⛩️</span>
           <span className="text-amber-400 font-black text-base sm:text-lg tracking-widest">GOYL BUILD CREATOR</span>
+          {import.meta.env.VITE_APP_ENV === 'staging' && (
+            <span className="bg-yellow-400 text-yellow-900 text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full">staging</span>
+          )}
         </div>
         <div className="flex items-center gap-2 sm:gap-4">
           <span className="text-gray-500 text-sm hidden sm:block">

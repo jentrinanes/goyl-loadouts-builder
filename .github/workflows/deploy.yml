@@ -25,6 +25,8 @@ jobs:
         run: |
           npm install
           npm run build
+        env:
+          VITE_APP_ENV: ${{ github.ref_name == 'staging' && 'staging' || 'prod' }}
 
       - name: Install and build API
         run: |
