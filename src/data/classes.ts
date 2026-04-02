@@ -142,6 +142,10 @@ export const CLASSES: ClassDef[] = [
         'Spirit Shatter': 'Thrown weapons shatter on impact dealing damage to nearby enemies and inflict Weaken.',
         'Spirited': 'Increase maximum Spirit by 2.',
         'Status Effect Duration': 'Increase Status Effect Duration by 30%.',
+      }, optionImages: {
+        'Spirit Shatter': 'spirit_shatter',
+        'Spirited': 'spirited_mercenary',
+        'Status Effect Duration': 'status_effect_duration',
       }},
       { slot: 5, options: ['Energizing Smite', 'Raging Storm', 'Weakening Blast'], optionDescriptions: {
         'Energizing Smite': "Takemikazuchi's Smite refunds a major amount of cooldown on Class Ability and all Ghost Tools.",
