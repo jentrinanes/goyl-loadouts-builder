@@ -4,14 +4,16 @@ on:
   push:
     branches:
       - master
+      - staging
     paths:
       - 'infrastructure/**'
   pull_request:
     branches:
       - master
+      - staging
     paths:
       - 'infrastructure/**'
-  workflow_dispatch:  # Allow manual runs from GitHub UI
+  workflow_dispatch:
 
 jobs:
   terraform:
@@ -28,6 +30,7 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID:       ${{ secrets.ARM_TENANT_ID }}
       ARM_ACCESS_KEY:      ${{ secrets.ARM_ACCESS_KEY }}
+      TF_ENV:              ${{ github.ref_name == 'staging' && 'staging' || 'prod' }}
 
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +41,7 @@ jobs:
           terraform_version: '~> 1.5'
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config="key=${{ env.TF_ENV }}.terraform.tfstate"
 
       - name: Terraform Format Check
         run: terraform fmt -check
@@ -47,8 +50,8 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -var="hmac_secret=${{ secrets.HMAC_SECRET }}" -out=tfplan
+        run: terraform plan -var="environment=${{ env.TF_ENV }}" -var="hmac_secret=${{ secrets.HMAC_SECRET }}" -out=tfplan
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         run: terraform apply -auto-approve tfplan
