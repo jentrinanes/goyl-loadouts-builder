@@ -436,7 +436,12 @@ export default function BuilderPage() {
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-start gap-3">
                           {image
-                            ? <img src={`/images/${image}_dark.png`} alt={def} className="w-10 h-10 object-contain shrink-0" />
+                            ? <img
+                                src={`/images/${image}_${theme}.png`}
+                                alt={def}
+                                className="w-10 h-10 object-contain shrink-0"
+                                onError={(e) => { (e.currentTarget as HTMLImageElement).src = `/images/${image}_dark.png`; }}
+                              />
                             : <span className="text-amber-400 text-base mt-0.5">✦</span>
                           }
                           <div>
@@ -466,9 +471,10 @@ export default function BuilderPage() {
                             >
                               {optionImages?.[opt] && (
                                 <img
-                                  src={`/images/${optionImages[opt]}_dark.png`}
+                                  src={`/images/${optionImages[opt]}_${theme}.png`}
                                   alt={opt}
                                   className="w-10 h-10 object-contain shrink-0"
+                                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = `/images/${optionImages![opt]}_dark.png`; }}
                                 />
                               )}
                               <div className="flex-1">
