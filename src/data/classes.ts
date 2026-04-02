@@ -151,6 +151,9 @@ export const CLASSES: ClassDef[] = [
         'Energizing Smite': "Takemikazuchi's Smite refunds a major amount of cooldown on Class Ability and all Ghost Tools.",
         'Raging Storm': "Takemikazuchi's Smite calls down 2 more Thunderstrikes.",
         'Weakening Blast': "Takemikazuchi's Smite also inflicts Weaken and Poison, making enemies Vulnerable to any Melee weapon, increasing damage taken, and reducing damage dealt.",
+      }, optionImages: {
+        'Raging Storm': 'raging_storm',
+        'Weakening Blast': 'weakening_blast',
       }},
     ],
   },
