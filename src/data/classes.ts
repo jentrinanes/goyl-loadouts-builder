@@ -125,6 +125,9 @@ export const CLASSES: ClassDef[] = [
       { slot: 2, options: ['Spirit Throw', 'Spirit Animal'], optionDescriptions: {
         'Spirit Throw': 'Conjure a Spirit Weapon that can be thrown at a nearby enemy.',
         'Spirit Animal': 'Summon a friendly wolf companion for a short duration that inflicts Poison on nearby enemies.',
+      }, optionImages: {
+        'Spirit Throw': 'spirit_throw',
+        'Spirit Animal': 'spirit_animal',
       }},
       { slot: 3, options: ['Enhanced Ghost Tools', 'Enhanced Impalement', 'Ability Cooldown'], optionDescriptions: {
         'Enhanced Ghost Tools': 'Increase damage of all Ghost Tools by 35%.',
