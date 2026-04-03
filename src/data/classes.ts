@@ -145,7 +145,7 @@ export const CLASSES: ClassDef[] = [
       }, optionImages: {
         'Spirit Shatter': 'spirit_shatter',
         'Spirited': 'spirited_mercenary',
-        'Status Effect Duration': 'status_effect_duration',
+        'Status Effect Duration': 'status_effect_duration_mercenary',
       }},
       { slot: 5, options: ['Energizing Smite', 'Raging Storm', 'Weakening Blast'], optionDescriptions: {
         'Energizing Smite': "Takemikazuchi's Smite refunds a major amount of cooldown on Class Ability and all Ghost Tools.",
@@ -176,25 +176,40 @@ export const CLASSES: ClassDef[] = [
       ghostWeapon2: GHOST_TOOL_ITEMS,
     },
     techniques: [
-      { slot: 1, default: 'Shadow Strike', description: 'Enter the shadows and strike enemies from a distance.' },
+      { slot: 1, default: 'Shadow Strike', image: 'shadow_strike', description: 'Enter the shadows and strike enemies from a distance.' },
       { slot: 2, options: ['Toxic Vanish', 'Group Vanish'], optionDescriptions: {
         'Toxic Vanish': 'Vanish in a cloud of poisonous smoke that inflicts Stagger damage to nearby enemies and leaves them Vulnerable to all Melee weapons.',
         'Group Vanish': 'You and nearby allies briefly Vanish in a cloud of smoke.',
+      }, optionImages: {
+        'Toxic Vanish': 'toxic_vanish',
+        'Group Vanish': 'group_vanish',
       }},
       { slot: 3, options: ['Assassination Damage', 'Status Effect Duration', 'Ability Cooldown'], optionDescriptions: {
         'Assassination Damage': 'Increase damage of assassinations by 20%.',
         'Status Effect Duration': 'Increase Status Effect Duration by 40%.',
         'Ability Cooldown': 'Decrease Class Ability cooldown by 15%.',
+      }, optionImages: {
+        'Assassination Damage': 'assassination_damage',
+        'Status Effect Duration': 'status_effect_duration_assassin',
+        'Ability Cooldown': 'ability_cooldown_shinobi',
       }},
       { slot: 4, options: ['Shinobi Decoy', 'Spirited', 'Hallucination Assassination'], optionDescriptions: {
         'Shinobi Decoy': 'Assassinating enemies has a massive chance to summon a Shinobi Decoy.',
         'Spirited': 'Increase maximum Spirit by 2.',
         'Hallucination Assassination': 'Assassinations cause nearby enemies to hallucinate and fight for you for a short period of time.',
+      }, optionImages: {
+        'Shinobi Decoy': 'shinobi_decoy',
+        'Spirited': 'spirited_shinobi',
+        'Hallucination Assassination': 'hallucination_assassination',
       }},
       { slot: 5, options: ['Shadow Strike Vanish', 'Shadow Strike Upgrade', 'Shadow Strike Decoy'], optionDescriptions: {
         'Shadow Strike Vanish': 'After using Shadow Strike, you Vanish for a short time.',
         'Shadow Strike Upgrade': 'Shadow Strike can target an additional 2 enemies.',
         'Shadow Strike Decoy': 'Targets killed by Shadow Strike have a massive chance to summon a Shinobi Decoy.',
+      }, optionImages: {
+        'Shadow Strike Vanish': 'shadow_strike_vanish',
+        'Shadow Strike Upgrade': 'shadow_strike_upgrade',
+        'Shadow Strike Decoy': 'shadow_strike_decoy',
       }},
     ],
   },
