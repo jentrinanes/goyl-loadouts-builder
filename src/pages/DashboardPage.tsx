@@ -49,9 +49,9 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
                   </div>
                 </div>
                 <div style={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  {attrs.map((attr) => {
+                  {attrs.map((attr, i) => {
                     const max = gear.attributeMaxValues?.[attr];
-                    return <span key={attr} style={{ fontSize: 11, fontWeight: 600, color: rarityColor }}>+ {attr}{max !== undefined ? ` (${max}%)` : ''}</span>;
+                    return <span key={attr} style={{ fontSize: 11, fontWeight: 600, color: i === 2 ? '#fca5a5' : rarityColor }}>+ {attr}{max !== undefined ? ` (${max}%)` : ''}</span>;
                   })}
                 </div>
               </div>
@@ -125,9 +125,9 @@ function ExportCard({ build, theme }: { build: Build; theme: 'light' | 'dark' })
                     </div>
                   </div>
                   <div style={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    {attrs.map((attr) => {
+                    {attrs.map((attr, i) => {
                       const max = gear.attributeMaxValues?.[attr];
-                      return <span key={attr} style={{ fontSize: 11, fontWeight: 600, color: rarityColor }}>+ {attr}{max !== undefined ? ` (${max}%)` : ''}</span>;
+                      return <span key={attr} style={{ fontSize: 11, fontWeight: 600, color: i === 2 ? '#fca5a5' : rarityColor }}>+ {attr}{max !== undefined ? ` (${max}%)` : ''}</span>;
                     })}
                   </div>
                 </div>
