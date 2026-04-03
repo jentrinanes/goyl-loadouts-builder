@@ -27,25 +27,40 @@ export const CLASSES: ClassDef[] = [
       ghostWeapon: ['tanzutsu', 'storm_tanzutsu', 'kunai', 'spirit_kunai', 'metsubushi', 'hallucinating_metsubushi'],
     },
     techniques: [
-      { slot: 1, default: "Hachiman's Fury", description: 'Perform a series of lightning-fast strikes against a group of enemies.' },
+      { slot: 1, default: "Hachiman's Fury", image: 'hachimans_fury', description: 'Perform a series of lightning-fast strikes against a group of enemies.' },
       { slot: 2, options: ['Spirit Pull', 'Raging Flame'], optionDescriptions: {
         'Spirit Pull': 'While active, leech health from nearby enemies. Melee strikes inflict additional damage to all enemies being leeched.',
         'Raging Flame': 'While active, your Melee weapons are imbued with flame. Heavy attacks will ignite nearby enemies.',
+      }, optionImages: {
+        'Spirit Pull': 'spirit_pull',
+        'Raging Flame': 'raging_flame',
       }},
       { slot: 3, options: ['Increase Melee Damage', 'Increase Melee Stagger Damage', 'Ability Cooldown'], optionDescriptions: {
         'Increase Melee Damage': 'Increase Melee Damage by 15%.',
         'Increase Melee Stagger Damage': 'Increase Melee Stagger Damage by 25%.',
         'Ability Cooldown': 'Decrease Class Ability cooldown by 15%.',
+      }, optionImages: {
+        'Increase Melee Damage': 'increase_melee_damage',
+        'Increase Melee Stagger Damage': 'increase_melee_stagger_damage',
+        'Ability Cooldown': 'ability_cooldown_samurai',
       }},
       { slot: 4, options: ['Weapon Insight', 'Parry Damage', 'Spirited'], optionDescriptions: {
         'Weapon Insight': 'If Weapon Aligned, Focus Attacks increase Stagger damage by 30%.',
         'Parry Damage': 'Deal a major amount of Stagger damage to enemies when Parrying their attack.',
         'Spirited': 'Increase maximum Spirit by 2.',
+      }, optionImages: {
+        'Weapon Insight': 'weapon_insight',
+        'Parry Damage': 'parry_damage',
+        'Spirited': 'spirited_samurai',
       }},
       { slot: 5, options: ["Hachiman's Rage", "Hachiman's Gift", "Hachiman's Zeal"], optionDescriptions: {
         "Hachiman's Rage": "Increase the number of strikes in Hachiman's Fury by 2.",
         "Hachiman's Gift": "Heal for every hit of Hachiman's Fury.",
         "Hachiman's Zeal": "After you use Hachiman's Fury, Weapon Aligned attacks inflict double Stagger damage for 60 seconds.",
+      }, optionImages: {
+        "Hachiman's Rage": 'hachimans_rage',
+        "Hachiman's Gift": 'hachimans_gift',
+        "Hachiman's Zeal": 'hachimans_zeal',
       }},
     ],
   },
