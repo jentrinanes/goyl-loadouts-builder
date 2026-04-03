@@ -89,13 +89,13 @@ export default function GearCard({
           {/* Read-only attribute pills — aligned at 50% */}
           {displayAttributes && displayAttributes.length > 0 && (
             <div className="flex flex-wrap gap-1.5 w-1/2">
-              {displayAttributes.map((attr) => {
+              {displayAttributes.map((attr, i) => {
                 const max = gear.attributeMaxValues?.[attr];
                 return (
                   <span
                     key={attr}
-                    className="text-[11px] font-semibold w-full"
-                    style={{ color: rarityColor }}
+                    className={`text-[11px] font-semibold w-full ${i === 2 ? 'text-red-300' : ''}`}
+                    style={i !== 2 ? { color: rarityColor } : undefined}
                   >
                     + {attr}{max !== undefined ? ` (${max}%)` : ''}
                   </span>
