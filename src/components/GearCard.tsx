@@ -94,8 +94,7 @@ export default function GearCard({
                 return (
                   <span
                     key={attr}
-                    className="text-[11px] font-semibold w-full"
-                    style={{ color: rarityColor }}
+                    className="text-[11px] font-semibold w-full text-red-300"
                   >
                     + {attr}{max !== undefined ? ` (${max}%)` : ''}
                   </span>
