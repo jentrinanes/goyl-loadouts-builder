@@ -18,7 +18,6 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
   const bodyBg     = dark ? '#0f172a' : '#ffffff';
   const divider    = dark ? '#1e293b' : '#e5e7eb';
   const labelColor = dark ? '#64748b' : '#9ca3af';
-  const slotLabel  = dark ? '#475569' : '#9ca3af';
   const techFixed  = dark ? '#64748b' : '#9ca3af';
   const techSelect = dark ? '#fbbf24' : '#b45309';
 
@@ -63,12 +62,15 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
           <div style={{ marginTop: 14, paddingTop: 14, borderTop: `1px solid ${divider}` }}>
             <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Techniques</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-              {cls.techniques.map(({ slot, default: def }) => {
+              {cls.techniques.map(({ slot, default: def, image, optionImages }) => {
                 const selected = def ?? build.techniques?.[slot];
                 if (!selected) return null;
+                const imgKey = def ? image : optionImages?.[selected];
                 return (
-                  <div key={slot} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ fontSize: 10, color: slotLabel, fontWeight: 700, width: 16 }}>T{slot}</span>
+                  <div key={slot} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {imgKey && (
+                      <img src={`/images/${imgKey}_dark.png`} alt="" style={{ width: 20, height: 20, objectFit: 'contain', flexShrink: 0 }} />
+                    )}
                     <span style={{ fontSize: 12, fontWeight: 600, color: def ? techFixed : techSelect }}>{selected}</span>
                   </div>
                 );
@@ -89,7 +91,6 @@ function ExportCard({ build, theme }: { build: Build; theme: 'light' | 'dark' })
   const bodyBg     = dark ? '#0f172a' : '#ffffff';
   const divider    = dark ? '#1e293b' : '#e5e7eb';
   const labelColor = dark ? '#64748b' : '#9ca3af';
-  const slotLabel  = dark ? '#475569' : '#9ca3af';
   const techFixed  = dark ? '#64748b' : '#9ca3af';
   const techSelect = dark ? '#fbbf24' : '#b45309';
 
@@ -139,12 +140,15 @@ function ExportCard({ build, theme }: { build: Build; theme: 'light' | 'dark' })
             <>
               <div style={{ fontSize: 10, color: labelColor, textTransform: 'uppercase', letterSpacing: 3, marginBottom: 10 }}>Techniques</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {cls.techniques.map(({ slot, default: def }) => {
+                {cls.techniques.map(({ slot, default: def, image, optionImages }) => {
                   const selected = def ?? build.techniques?.[slot];
                   if (!selected) return null;
+                  const imgKey = def ? image : optionImages?.[selected];
                   return (
                     <div key={slot} style={{ display: 'flex', alignItems: 'center', gap: 10, background: dark ? '#111827' : '#f9fafb', borderRadius: 10, padding: '8px 12px' }}>
-                      <span style={{ fontSize: 10, color: slotLabel, fontWeight: 700, width: 16 }}>T{slot}</span>
+                      {imgKey && (
+                        <img src={`/images/${imgKey}_dark.png`} alt="" style={{ width: 22, height: 22, objectFit: 'contain', flexShrink: 0 }} />
+                      )}
                       <span style={{ fontSize: 13, fontWeight: 600, color: def ? techFixed : techSelect }}>{selected}</span>
                     </div>
                   );
@@ -365,16 +369,20 @@ export default function DashboardPage() {
                       <div className="mt-2.5 pt-2.5 border-t border-gray-100 dark:border-gray-800">
                         <div className="text-[10px] text-gray-400 dark:text-gray-600 uppercase tracking-widest mb-2">Techniques</div>
                         <div className="flex flex-col gap-1">
-                          {cls.techniques.map(({ slot, default: def }) => {
+                          {cls.techniques.map(({ slot, default: def, image, optionImages }) => {
                             const selected = def ?? build.techniques?.[slot];
-                            return selected ? (
+                            if (!selected) return null;
+                            const imgKey = def ? image : optionImages?.[selected];
+                            return (
                               <div key={slot} className="flex items-center gap-2">
-                                <span className="text-[10px] text-gray-400 dark:text-gray-600 font-bold w-4 shrink-0">T{slot}</span>
+                                {imgKey && (
+                                  <img src={`/images/${imgKey}_dark.png`} alt="" className="w-5 h-5 object-contain shrink-0" />
+                                )}
                                 <span className={`text-[11px] font-semibold ${def ? 'text-gray-500 dark:text-gray-500' : 'text-amber-600 dark:text-amber-300'}`}>
                                   {selected}
                                 </span>
                               </div>
-                            ) : null;
+                            );
                           })}
                         </div>
                       </div>
