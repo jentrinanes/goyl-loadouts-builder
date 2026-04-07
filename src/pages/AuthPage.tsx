@@ -30,7 +30,7 @@ export default function AuthPage() {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-950 flex flex-col items-center justify-center p-5">
       {/* Hero */}
       <div className="text-center mb-10">
-        <div className="text-6xl mb-2">⛩️</div>
+        <div className="mb-2"><img src="/images/yotei_logo.png" alt="Yotei Logo" className="w-16 h-16 object-contain mx-auto" /></div>
         <h1
           className="text-amber-400 text-3xl font-black tracking-widest m-0"
           style={{ textShadow: '0 0 30px #f59e0b88' }}
