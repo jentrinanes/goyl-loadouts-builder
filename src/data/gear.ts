@@ -474,6 +474,25 @@ export const GEARS: Gear[] = [
     rangedWeaponType: 'hankyu' as const,
   },
 
+  {
+    id: 'weightless_spirit',
+    name: 'Weightless Spirit',
+    category: 'Range',
+    rarity: 'Legendary',
+    icon: '🏹',
+    stats: { attack: 0, defense: 0, health: 0, resolve: 0, stealth: 0, ranged: 0 },
+    perk: '',
+    attributes1: ['Hankyu Damage', 'Hankyu Speed', 'Hankyu Stability', 'All Ranged Speed', 'All Ranged Headshot Damage', 'Ranged Spirit Gain'],
+    attributes2: ['All Ranged Damage', 'Ultimate Gain', 'Ultimate Damage', 'Spirit Move Damage', 'Thrown Weapon Damage', 'Perfect Parry Window'],
+    attributes3: ['Silent Arrows', 'Critical Release', 'Iron Grip', 'Fire Arrows', 'Poison Arrows'],
+    attributeMaxValues: {
+      'Hankyu Damage': 12, 'Hankyu Speed': 12, 'Hankyu Stability': 35, 'All Ranged Speed': 12, 'All Ranged Headshot Damage': 12, 'Ranged Spirit Gain': 10,
+      'All Ranged Damage': 25, 'Ultimate Gain': 16, 'Ultimate Damage': 25,
+      'Spirit Move Damage': 20, 'Thrown Weapon Damage': 20, 'Perfect Parry Window': 36,
+    },
+    rangedWeaponType: 'hankyu' as const,
+  },
+
   // --- RANGE: TANEGASHIMA (Rifle) ---
   {
     id: 'tanegashima',
