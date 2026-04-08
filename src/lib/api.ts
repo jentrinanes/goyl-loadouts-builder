@@ -84,6 +84,11 @@ export const api = {
         body: JSON.stringify({ username, password }),
       }),
     logout: () => apiFetch<void>('/auth/logout', { method: 'POST' }),
+    resetPassword: (username: string, newPassword: string) =>
+      apiFetch<{ message: string }>('/auth/reset-password', {
+        method: 'POST',
+        body: JSON.stringify({ username, newPassword }),
+      }),
   },
   builds: {
     list: async () => {

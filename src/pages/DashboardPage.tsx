@@ -263,7 +263,7 @@ export default function DashboardPage() {
       {/* Navbar */}
       <header className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 flex items-center justify-between h-14">
         <div className="flex items-center gap-2.5">
-          <span className="text-2xl">⛩️</span>
+          <img src="/images/yotei_logo.png" alt="Yotei Logo" className="w-7 h-7 object-contain" />
           <span className="text-amber-400 font-black text-base sm:text-lg tracking-widest">GOYL BUILD CREATOR</span>
           {import.meta.env.VITE_APP_ENV === 'staging' && (
             <span className="bg-yellow-400 text-yellow-900 text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full">staging</span>
