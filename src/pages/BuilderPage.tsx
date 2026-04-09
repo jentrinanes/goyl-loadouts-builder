@@ -272,6 +272,7 @@ export default function BuilderPage() {
                 <input
                   value={buildName}
                   onChange={(e) => { setBuildName(e.target.value); setSaveError(''); }}
+                  maxLength={250}
                   className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1.5 text-gray-900 dark:text-gray-100 text-sm w-full max-w-[280px] outline-none"
                   placeholder="Build name..."
                 />
@@ -538,6 +539,7 @@ export default function BuilderPage() {
                     <input
                       value={buildName}
                       onChange={(e) => { setBuildName(e.target.value); setSaveError(''); }}
+                      maxLength={250}
                       className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-gray-900 dark:text-gray-100 text-base sm:text-lg font-bold w-full outline-none"
                     />
                   </div>
