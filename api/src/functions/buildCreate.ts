@@ -7,10 +7,17 @@ async function handler(req: HttpRequest, _ctx: InvocationContext): Promise<HttpR
   try {
     const { userId } = await requireAuth(req);
     const body = await req.json() as Record<string, unknown>;
+
+    const { resources } = await buildsContainer.items
+      .query({ query: 'SELECT VALUE MAX(c.buildNumber) FROM c WHERE c.userId = @uid', parameters: [{ name: '@uid', value: userId }] })
+      .fetchAll();
+    const maxNumber = (resources[0] as number | null) ?? 0;
+
     const build = {
       ...body,
       id: crypto.randomUUID(),
-      userId, // always from token
+      userId,
+      buildNumber: maxNumber + 1,
       createdAt: Date.now(),
     };
     const { resource } = await buildsContainer.items.create(build);

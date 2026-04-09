@@ -26,7 +26,9 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
       <div style={{ background: dark ? '#7f1d1d' : '#f59e0b', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
         {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={44} />}
         <div>
-          <div style={{ fontWeight: 900, fontSize: 20, color: dark ? '#ffffff' : '#0f172a' }}>{build.name}</div>
+          <div style={{ fontWeight: 900, fontSize: 20, color: dark ? '#ffffff' : '#0f172a' }}>
+            {build.buildNumber != null && <span style={{ opacity: 0.6, marginRight: 6 }}>#{build.buildNumber}</span>}{build.name}
+          </div>
           <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: dark ? '#ffffff' : '#0f172a', opacity: 0.75 }}>{cls?.name ?? 'Unknown Class'}</div>
         </div>
       </div>
@@ -101,7 +103,9 @@ function ExportCard({ build, theme }: { build: Build; theme: 'light' | 'dark' })
       <div style={{ background: dark ? '#7f1d1d' : '#f59e0b', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
         {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={44} />}
         <div>
-          <div style={{ fontWeight: 900, fontSize: 20, color: dark ? '#ffffff' : '#0f172a' }}>{build.name}</div>
+          <div style={{ fontWeight: 900, fontSize: 20, color: dark ? '#ffffff' : '#0f172a' }}>
+            {build.buildNumber != null && <span style={{ opacity: 0.6, marginRight: 6 }}>#{build.buildNumber}</span>}{build.name}
+          </div>
           <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: dark ? '#ffffff' : '#0f172a', opacity: 0.75 }}>{cls?.name ?? 'Unknown Class'}</div>
         </div>
       </div>
@@ -337,7 +341,9 @@ export default function DashboardPage() {
                   >
                     {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={48} />}
                     <div>
-                      <div className={`font-extrabold text-base ${theme === 'dark' ? 'text-white' : 'text-gray-950'}`}>{build.name}</div>
+                      <div className={`font-extrabold text-base ${theme === 'dark' ? 'text-white' : 'text-gray-950'}`}>
+                        {build.buildNumber != null && <span className="opacity-60 mr-1">#{build.buildNumber}</span>}{build.name}
+                      </div>
                       <div className={`text-xs opacity-85 uppercase tracking-widest ${theme === 'dark' ? 'text-white' : 'text-gray-950'}`}>
                         {cls?.name ?? 'Unknown Class'}
                       </div>
