@@ -243,12 +243,33 @@ export default function DashboardPage() {
     setCapturing(true);
     try {
       const el = exportCardRef.current;
+
+      // Pre-cache all images as data URLs so html-to-image renders them reliably
+      const imgEls = Array.from(el.querySelectorAll('img'));
+      const originalSrcs = imgEls.map(img => img.src);
+      await Promise.all(imgEls.map(async (img) => {
+        try {
+          const res  = await fetch(img.src);
+          const blob = await res.blob();
+          img.src = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload  = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        } catch { /* keep original src if fetch fails */ }
+      }));
+
       const dataUrl = await toPng(el, {
         pixelRatio: 3,
         width: el.scrollWidth,
         height: el.scrollHeight,
         style: { overflow: 'visible' },
       });
+
+      // Restore original srcs
+      imgEls.forEach((img, i) => { img.src = originalSrcs[i]; });
+
       const link    = document.createElement('a');
       link.download = `${shareBuild.name.replace(/\s+/g, '_')}_build.png`;
       link.href     = dataUrl;
