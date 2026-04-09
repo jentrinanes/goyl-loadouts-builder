@@ -10,7 +10,7 @@ import type { Build, Gear } from '../types';
 
 // ─── Share card (rendered off-screen, captured as PNG) ───────────────────────
 
-function ShareCard({ build, theme, displayNumber }: { build: Build; theme: 'light' | 'dark'; displayNumber: number }) {
+function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) {
   const cls  = getClassById(build.classId);
   const dark = theme === 'dark';
 
@@ -27,7 +27,7 @@ function ShareCard({ build, theme, displayNumber }: { build: Build; theme: 'ligh
         {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={44} />}
         <div>
           <div style={{ fontWeight: 900, fontSize: 20, color: dark ? '#ffffff' : '#0f172a' }}>
-            <span style={{ opacity: 0.6, marginRight: 6 }}>#{displayNumber}</span>{build.name}
+            {build.buildNumber != null && <span style={{ opacity: 0.6, marginRight: 6 }}>#{build.buildNumber}</span>}{build.name}
           </div>
           <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: dark ? '#ffffff' : '#0f172a', opacity: 0.75 }}>{cls?.name ?? 'Unknown Class'}</div>
         </div>
@@ -85,7 +85,7 @@ function ShareCard({ build, theme, displayNumber }: { build: Build; theme: 'ligh
   );
 }
 
-function ExportCard({ build, theme, displayNumber }: { build: Build; theme: 'light' | 'dark'; displayNumber: number }) {
+function ExportCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) {
   const cls  = getClassById(build.classId);
   const dark = theme === 'dark';
 
@@ -104,7 +104,7 @@ function ExportCard({ build, theme, displayNumber }: { build: Build; theme: 'lig
         {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={44} />}
         <div>
           <div style={{ fontWeight: 900, fontSize: 20, color: dark ? '#ffffff' : '#0f172a' }}>
-            <span style={{ opacity: 0.6, marginRight: 6 }}>#{displayNumber}</span>{build.name}
+            {build.buildNumber != null && <span style={{ opacity: 0.6, marginRight: 6 }}>#{build.buildNumber}</span>}{build.name}
           </div>
           <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: dark ? '#ffffff' : '#0f172a', opacity: 0.75 }}>{cls?.name ?? 'Unknown Class'}</div>
         </div>
@@ -209,7 +209,6 @@ export default function DashboardPage() {
   const [loading, setLoading]         = useState(false);
   const [error, setError]             = useState('');
   const [shareBuild, setShareBuild]   = useState<Build | null>(null);
-  const shareBuildNumber = shareBuild ? (shareBuild.buildNumber ?? (builds.findIndex(b => b.id === shareBuild.id) + 1)) : 1;
   const [deleteBuildId, setDeleteBuildId] = useState<string | null>(null);
   const [capturing, setCapturing]     = useState(false);
   const shareCardRef                  = useRef<HTMLDivElement>(null);
@@ -326,9 +325,8 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 sm:gap-5">
-            {builds.map((build, index) => {
+            {builds.map((build) => {
               const cls = getClassById(build.classId);
-              const displayNumber = build.buildNumber ?? (index + 1);
               return (
                 <div
                   key={build.id}
@@ -344,7 +342,7 @@ export default function DashboardPage() {
                     {cls && <ClassIcon classId={cls.id} icon={cls.icon} theme={theme} size={48} />}
                     <div>
                       <div className={`font-extrabold text-base ${theme === 'dark' ? 'text-white' : 'text-gray-950'}`}>
-                        <span className="opacity-60 mr-1">#{displayNumber}</span>{build.name}
+                        {build.buildNumber != null && <span className="opacity-60 mr-1">#{build.buildNumber}</span>}{build.name}
                       </div>
                       <div className={`text-xs opacity-85 uppercase tracking-widest ${theme === 'dark' ? 'text-white' : 'text-gray-950'}`}>
                         {cls?.name ?? 'Unknown Class'}
@@ -459,7 +457,7 @@ export default function DashboardPage() {
             {/* Share card preview — scrollable so 420px card is always reachable */}
             <div className="flex-1 overflow-auto py-5 px-5 flex justify-center bg-gray-100 dark:bg-gray-950">
               <div ref={shareCardRef} className="shrink-0">
-                <ShareCard build={shareBuild} theme={theme} displayNumber={shareBuildNumber} />
+                <ShareCard build={shareBuild} theme={theme} />
               </div>
             </div>
 
@@ -522,7 +520,7 @@ export default function DashboardPage() {
       {shareBuild && (
         <div style={{ position: 'fixed', top: -9999, left: -9999, pointerEvents: 'none' }}>
           <div ref={exportCardRef}>
-            <ExportCard build={shareBuild} theme={theme} displayNumber={shareBuildNumber} />
+            <ExportCard build={shareBuild} theme={theme} />
           </div>
         </div>
       )}
