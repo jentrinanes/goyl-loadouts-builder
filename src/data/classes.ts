@@ -23,7 +23,7 @@ export const CLASSES: ClassDef[] = [
     meleeSlotTypes: { melee1: 'katana', melee2: 'dual_katana', melee3: 'yari', melee4: 'odachi' },
     rangeSlotTypes: { range1: ['hankyu', 'tanegashima', 'bomb'] },
     slotAllowedItems: {
-      charm: ['basic_charm', 'spirit_brew', 'harmonious_bell', 'risky_parry', 'samurais_bracers', 'samurais_honor', 'daimyos_generosity', 'shadows_bite'],
+      charm: ['basic_charm', 'spirit_brew', 'harmonious_bell', 'risky_parry', 'samurais_bracers', 'senseis_guidance', 'samurais_honor', 'daimyos_generosity', 'shadows_bite'],
       ghostWeapon: ['tanzutsu', 'storm_tanzutsu', 'kunai', 'spirit_kunai', 'metsubushi', 'hallucinating_metsubushi'],
     },
     techniques: [
@@ -77,7 +77,7 @@ export const CLASSES: ClassDef[] = [
     meleeSlotTypes: { melee1: 'katana', melee2: 'yari', melee3: 'kusarigama' },
     rangeSlotTypes: { range1: ['yumi'], range2: ['hankyu', 'tanegashima', 'bomb'] },
     slotAllowedItems: {
-      charm: ['basic_charm', 'archers_supplies', 'harmonious_bell', 'spirit_brew', 'risky_parry', 'samurais_honor', 'daimyos_generosity', 'shadows_bite'],
+      charm: ['basic_charm', 'archers_supplies', 'harmonious_bell', 'spirit_brew', 'risky_parry', 'senseis_guidance', 'samurais_honor', 'daimyos_generosity', 'shadows_bite'],
       ghostWeapon: GHOST_TOOL_ITEMS,
     },
     techniques: [
@@ -131,7 +131,7 @@ export const CLASSES: ClassDef[] = [
     meleeSlotTypes: { melee1: 'katana', melee2: 'dual_katana', melee3: 'odachi' },
     rangeSlotTypes: { range1: ['tanegashima', 'bomb', 'hankyu'] },
     slotAllowedItems: {
-      charm: ['basic_charm', 'harmonious_bell', 'spirit_brew', 'mercenarys_best_friend', 'risky_parry', 'samurais_honor', 'daimyos_generosity', 'shadows_bite'],
+      charm: ['basic_charm', 'harmonious_bell', 'spirit_brew', 'mercenarys_best_friend', 'risky_parry', 'senseis_guidance', 'samurais_honor', 'daimyos_generosity', 'shadows_bite'],
       ghostWeapon: ['tanzutsu', 'storm_tanzutsu', 'kunai', 'spirit_kunai', 'metsubushi', 'hallucinating_metsubushi'],
       ghostWeapon2: GHOST_TOOL_ITEMS,
     },
@@ -186,7 +186,7 @@ export const CLASSES: ClassDef[] = [
     meleeSlotTypes: { melee1: 'katana', melee2: 'yari', melee3: 'kusarigama' },
     rangeSlotTypes: { range1: ['hankyu', 'tanegashima', 'bomb'] },
     slotAllowedItems: {
-      charm: ['basic_charm', 'spirit_brew', 'harmonious_bell', 'risky_parry', 'shinobis_shadow', 'samurais_honor', 'daimyos_generosity', 'shadows_bite'],
+      charm: ['basic_charm', 'spirit_brew', 'harmonious_bell', 'risky_parry', 'shinobis_shadow', 'senseis_guidance', 'samurais_honor', 'daimyos_generosity', 'shadows_bite'],
       ghostWeapon: ['kunai', 'spirit_kunai', 'metsubushi', 'hallucinating_metsubushi', 'tanzutsu', 'storm_tanzutsu'],
       ghostWeapon2: GHOST_TOOL_ITEMS,
     },

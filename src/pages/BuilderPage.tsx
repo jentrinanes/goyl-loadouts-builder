@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { CLASSES, getClassById } from '../data/classes';
 import { getSlotsForClass, getGearsByCategory, getGearById, RARITY_COLOR } from '../data/gear';
-import { api } from '../lib/api';
+import { api, sanitize } from '../lib/api';
 import GearCard from '../components/GearCard';
 import type { StatSet, StatKey, Gear } from '../types';
 
@@ -271,7 +271,8 @@ export default function BuilderPage() {
               <div className="flex-1 min-w-[120px]">
                 <input
                   value={buildName}
-                  onChange={(e) => { setBuildName(e.target.value); setSaveError(''); }}
+                  onChange={(e) => { setBuildName(sanitize(e.target.value)); setSaveError(''); }}
+                  maxLength={250}
                   className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1.5 text-gray-900 dark:text-gray-100 text-sm w-full max-w-[280px] outline-none"
                   placeholder="Build name..."
                 />
@@ -537,7 +538,8 @@ export default function BuilderPage() {
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Build Name</div>
                     <input
                       value={buildName}
-                      onChange={(e) => { setBuildName(e.target.value); setSaveError(''); }}
+                      onChange={(e) => { setBuildName(sanitize(e.target.value)); setSaveError(''); }}
+                      maxLength={250}
                       className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-gray-900 dark:text-gray-100 text-base sm:text-lg font-bold w-full outline-none"
                     />
                   </div>

@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { api } from '../lib/api';
+import { api, sanitize } from '../lib/api';
 
 type AuthMode = 'login' | 'register' | 'reset';
 
@@ -81,7 +81,8 @@ export default function AuthPage() {
             <input
               type="text"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(sanitize(e.target.value))}
+              maxLength={250}
               required
               placeholder="Enter your username"
               className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-gray-900 dark:text-gray-100 text-base outline-none"
@@ -96,7 +97,8 @@ export default function AuthPage() {
               <input
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(sanitize(e.target.value))}
+                maxLength={250}
                 required
                 placeholder="Enter your password"
                 className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-gray-900 dark:text-gray-100 text-base outline-none"
@@ -112,7 +114,8 @@ export default function AuthPage() {
               <input
                 type="password"
                 value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(e) => setNewPassword(sanitize(e.target.value))}
+                maxLength={250}
                 required
                 placeholder="Enter new password"
                 className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-gray-900 dark:text-gray-100 text-base outline-none"

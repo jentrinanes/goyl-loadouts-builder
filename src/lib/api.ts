@@ -39,6 +39,11 @@ export function setStoredUser(user: User): void {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
+/** Strip HTML tags and angle brackets to prevent XSS injection. */
+export function sanitize(value: string): string {
+  return value.replace(/<[^>]*>/g, '').replace(/[<>]/g, '');
+}
+
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);
