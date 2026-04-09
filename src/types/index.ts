@@ -81,7 +81,6 @@ export interface Build {
   gearAttributes: Record<string, [string, string, string]>;
   techniques?: Record<number, string>;
   createdAt: number;
-  buildNumber?: number;
 }
 
 export type NewBuild = Omit<Build, 'id' | 'createdAt'> & { id?: string };
