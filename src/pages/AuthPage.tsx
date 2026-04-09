@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { api } from '../lib/api';
+import { api, sanitize } from '../lib/api';
 
 type AuthMode = 'login' | 'register' | 'reset';
 
@@ -81,7 +81,7 @@ export default function AuthPage() {
             <input
               type="text"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(sanitize(e.target.value))}
               maxLength={250}
               required
               placeholder="Enter your username"
@@ -97,7 +97,7 @@ export default function AuthPage() {
               <input
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(sanitize(e.target.value))}
                 maxLength={250}
                 required
                 placeholder="Enter your password"
@@ -114,7 +114,7 @@ export default function AuthPage() {
               <input
                 type="password"
                 value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(e) => setNewPassword(sanitize(e.target.value))}
                 maxLength={250}
                 required
                 placeholder="Enter new password"
