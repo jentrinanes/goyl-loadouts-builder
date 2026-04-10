@@ -2,19 +2,6 @@ import type { Build, User } from '../types';
 
 const TOKEN_KEY = 'yotei_token';
 const USER_KEY = 'yotei_user';
-const BUILDS_CACHE_KEY = 'yotei_builds';
-
-function getCachedBuilds(): Build[] | null {
-  try {
-    const raw = localStorage.getItem(BUILDS_CACHE_KEY);
-    return raw ? JSON.parse(raw) as Build[] : null;
-  } catch {
-    return null;
-  }
-}
-function setCachedBuilds(builds: Build[]): void {
-  localStorage.setItem(BUILDS_CACHE_KEY, JSON.stringify(builds));
-}
 
 export function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY);
@@ -25,7 +12,6 @@ export function setToken(token: string): void {
 export function clearToken(): void {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
-  localStorage.removeItem(BUILDS_CACHE_KEY);
 }
 export function getStoredUser(): User | null {
   try {
@@ -96,30 +82,10 @@ export const api = {
       }),
   },
   builds: {
-    list: async () => {
-      const cached = getCachedBuilds();
-      if (cached) return cached;
-      const builds = await apiFetch<Build[]>('/builds');
-      setCachedBuilds(builds);
-      return builds;
-    },
+    list: () => apiFetch<Build[]>('/builds'),
     get: (id: string) => apiFetch<Build>(`/builds/${id}`),
-    create: async (build: NewBuild) => {
-      const created = await apiFetch<Build>('/builds', { method: 'POST', body: JSON.stringify(build) });
-      const cached = getCachedBuilds();
-      if (cached) setCachedBuilds([...cached, created]);
-      return created;
-    },
-    update: async (id: string, build: Partial<NewBuild>) => {
-      const updated = await apiFetch<Build>(`/builds/${id}`, { method: 'PUT', body: JSON.stringify(build) });
-      const cached = getCachedBuilds();
-      if (cached) setCachedBuilds(cached.map(b => b.id === id ? updated : b));
-      return updated;
-    },
-    delete: async (id: string) => {
-      await apiFetch<void>(`/builds/${id}`, { method: 'DELETE' });
-      const cached = getCachedBuilds();
-      if (cached) setCachedBuilds(cached.filter(b => b.id !== id));
-    },
+    create: (build: NewBuild) => apiFetch<Build>('/builds', { method: 'POST', body: JSON.stringify(build) }),
+    update: (id: string, build: Partial<NewBuild>) => apiFetch<Build>(`/builds/${id}`, { method: 'PUT', body: JSON.stringify(build) }),
+    delete: (id: string) => apiFetch<void>(`/builds/${id}`, { method: 'DELETE' }),
   },
 };
