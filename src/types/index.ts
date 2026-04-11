@@ -47,6 +47,7 @@ export interface Gear {
   category: GearCategory;
   rarity: GearRarity;
   icon: string;
+  description?: string;
   stats: StatSet;
   perk: string;
   attributes1: string[];
