@@ -84,6 +84,11 @@ export default function GearCard({
             <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: rarityColor }}>
               {gear.rarity} · {gear.category}
             </div>
+            {!compact && gear.description && (
+              <div className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5 leading-tight">
+                {gear.description}
+              </div>
+            )}
           </div>
 
           {/* Read-only attribute pills — aligned at 50% */}
