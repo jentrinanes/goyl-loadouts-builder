@@ -99,7 +99,7 @@ export const CLASSES: ClassDef[] = [
         'Ability Cooldown': 'ability_cooldown_archer',
       }},
       { slot: 4, options: ['Resupply', 'Point Blank', 'Serrated Shots'], optionDescriptions: {
-        'Resupply': 'Refill 30% of all ammo types. Press x while aiming to activate. Costs 1 Spirit.',
+        'Resupply': 'Refill 25% of all ammo types. Press x while aiming to activate. Costs 1 Spirit.',
         'Point Blank': 'Body shots with Ranged weapons have a 40% chance to inflict headshot damage.',
         'Serrated Shots': 'Arrows and Bullets inflict Maim for a brief duration, making the target Vulnerable to any weapon.',
       }, optionImages: {
