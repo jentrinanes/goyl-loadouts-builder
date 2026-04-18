@@ -8,19 +8,10 @@ import { api, sanitize } from '../lib/api';
 import GearCard from '../components/GearCard';
 import type { StatSet, StatKey, Gear } from '../types';
 
-function GearIcon({ gear, theme, size = 16 }: { gear: Gear; theme: 'light' | 'dark'; size?: number }) {
-  const [imgSrc, setImgSrc] = useState(theme === 'dark' ? `/images/${gear.id}_dark.webp` : null);
+function GearIcon({ gear, size = 16 }: { gear: Gear; size?: number }) {
   const [error, setError] = useState(false);
-  useEffect(() => {
-    setImgSrc(theme === 'dark' ? `/images/${gear.id}_dark.webp` : null);
-    setError(false);
-  }, [gear.id, theme]);
-  const handleError = () => {
-    if (imgSrc?.endsWith('.webp')) setImgSrc(`/images/${gear.id}_dark.png`);
-    else setError(true);
-  };
-  if (imgSrc && !error) {
-    return <img src={imgSrc} alt="" onError={handleError} style={{ width: size, height: size, objectFit: 'contain', flexShrink: 0 }} />;
+  if (!error) {
+    return <img src={`/images/${gear.id}_dark.png`} alt="" onError={() => setError(true)} style={{ width: size, height: size, objectFit: 'contain', flexShrink: 0 }} />;
   }
   return <span style={{ fontSize: size - 2, flexShrink: 0 }}>{gear.icon}</span>;
 }
@@ -321,7 +312,7 @@ export default function BuilderPage() {
                         <div className="text-[11px] text-gray-500 uppercase tracking-wide">{slot.label}</div>
                         {equipped ? (
                           <div className="flex items-center gap-1.5 mt-0.5">
-                            <GearIcon gear={equipped} theme={theme} size={18} />
+                            <GearIcon gear={equipped} size={18} />
                             <span
                               className="text-xs font-semibold truncate"
                               style={{ color: RARITY_COLOR[equipped.rarity] }}
