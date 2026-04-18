@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { RARITY_COLOR } from '../data/gear';
-import { useTheme } from '../context/ThemeContext';
 import type { Gear } from '../types';
 
 interface GearCardProps {
@@ -24,22 +23,11 @@ export default function GearCard({
   onAttributeChange,
   displayAttributes,
 }: GearCardProps) {
-  const { theme } = useTheme();
-  const [imgSrc, setImgSrc] = useState(theme === 'dark' ? `/images/${gear.id}_dark.webp` : null);
   const [imgError, setImgError] = useState(false);
 
   useEffect(() => {
-    setImgSrc(theme === 'dark' ? `/images/${gear.id}_dark.webp` : null);
     setImgError(false);
-  }, [gear.id, theme]);
-
-  const handleImgError = () => {
-    if (imgSrc?.endsWith('.webp')) {
-      setImgSrc(`/images/${gear.id}_dark.png`);
-    } else {
-      setImgError(true);
-    }
-  };
+  }, [gear.id]);
   const rarityColor    = RARITY_COLOR[gear.rarity] ?? '#9ca3af';
   const showAttributes = selected && !compact && !!onAttributeChange;
 
@@ -67,11 +55,11 @@ export default function GearCard({
       <div className="pl-2">
         {/* Header row */}
         <div className="flex items-center gap-2 w-full">
-          {imgSrc && !imgError ? (
+          {!imgError ? (
             <img
-              src={imgSrc}
+              src={`/images/${gear.id}_dark.png`}
               alt={gear.name}
-              onError={handleImgError}
+              onError={() => setImgError(true)}
               style={{ width: compact ? 30 : 36, height: compact ? 30 : 36, objectFit: 'contain' }}
             />
           ) : (

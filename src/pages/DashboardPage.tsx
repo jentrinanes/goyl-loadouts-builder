@@ -42,7 +42,7 @@ function ShareCard({ build, theme }: { build: Build; theme: 'light' | 'dark' }) 
               <div key={slot.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: dark ? '#111827' : '#f9fafb', borderRadius: 12, padding: '8px 12px', border: `2px solid ${rarityColor}55`, position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: rarityColor, borderRadius: '12px 0 0 12px' }} />
                 <div style={{ paddingLeft: 6, display: 'flex', alignItems: 'center', gap: 8, width: '50%' }}>
-                  <GearIcon gear={gear} theme={theme} size={30} />
+                  <GearIcon gear={gear} size={30} />
                   <div>
                     <div style={{ fontSize: 13, fontWeight: 700, color: dark ? '#f1f5f9' : '#111827' }}>{gear.name}</div>
                     <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: rarityColor }}>{gear.rarity} · {gear.category}</div>
@@ -118,7 +118,7 @@ function ExportCard({ build, theme }: { build: Build; theme: 'light' | 'dark' })
                 <div key={slot.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: dark ? '#111827' : '#f9fafb', borderRadius: 12, padding: '8px 12px', border: `2px solid ${rarityColor}55`, position: 'relative', overflow: 'hidden' }}>
                   <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: rarityColor, borderRadius: '12px 0 0 12px' }} />
                   <div style={{ paddingLeft: 6, display: 'flex', alignItems: 'center', gap: 8, width: '50%' }}>
-                    <GearIcon gear={gear} theme={theme} size={30} />
+                    <GearIcon gear={gear} size={30} />
                     <div>
                       <div style={{ fontSize: 13, fontWeight: 700, color: dark ? '#f1f5f9' : '#111827' }}>{gear.name}</div>
                       <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: rarityColor }}>{gear.rarity} · {gear.category}</div>
@@ -175,20 +175,11 @@ function ClassIcon({ classId, icon, theme, size = 32 }: { classId: string; icon:
 
 // ─── Gear icon with image + emoji fallback ────────────────────────────────────
 
-function GearIcon({ gear, theme, size = 16 }: { gear: Gear; theme: 'light' | 'dark'; size?: number }) {
-  const [imgSrc, setImgSrc] = useState(theme === 'dark' ? `/images/${gear.id}_dark.webp` : null);
+function GearIcon({ gear, size = 16 }: { gear: Gear; size?: number }) {
   const [error, setError] = useState(false);
-  useEffect(() => {
-    setImgSrc(theme === 'dark' ? `/images/${gear.id}_dark.webp` : null);
-    setError(false);
-  }, [gear.id, theme]);
-  const handleError = () => {
-    if (imgSrc?.endsWith('.webp')) setImgSrc(`/images/${gear.id}_dark.png`);
-    else setError(true);
-  };
-  if (imgSrc && !error) {
+  if (!error) {
     return (
-      <img src={imgSrc} alt="" onError={handleError}
+      <img src={`/images/${gear.id}_dark.png`} alt="" onError={() => setError(true)}
         style={{ width: size, height: size, objectFit: 'contain', flexShrink: 0 }} />
     );
   }
@@ -373,7 +364,7 @@ export default function DashboardPage() {
                         const gear = getGearById(build.gears?.[slot.id]);
                         return gear ? (
                           <div key={slot.id} className="flex items-center gap-1.5 min-w-0">
-                            <GearIcon gear={gear} theme={theme} size={22} />
+                            <GearIcon gear={gear} size={22} />
                             <span className="text-[11px] font-semibold truncate" style={{ color: RARITY_COLOR[gear.rarity] }}>
                               {gear.name}
                             </span>
