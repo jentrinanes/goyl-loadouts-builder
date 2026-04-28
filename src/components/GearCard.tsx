@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { RARITY_COLOR } from '../data/gear';
+import { RARITY_COLOR, getAttributeMaxValue } from '../data/gear';
 import type { Gear } from '../types';
 
 interface GearCardProps {
@@ -83,7 +83,7 @@ export default function GearCard({
           {displayAttributes && displayAttributes.length > 0 && (
             <div className="flex flex-wrap gap-1.5 w-1/2">
               {displayAttributes.map((attr, i) => {
-                const max = gear.attributeMaxValues?.[attr];
+                const max = getAttributeMaxValue(gear, attr, i as 0 | 1 | 2);
                 return (
                   <span
                     key={attr}
@@ -125,7 +125,7 @@ export default function GearCard({
                   >
                     <option value="">— Select —</option>
                     {attrOptions[i].map((opt) => {
-                      const max = gear.attributeMaxValues?.[opt];
+                      const max = getAttributeMaxValue(gear, opt, i as 0 | 1 | 2);
                       return (
                         <option key={opt} value={opt}>
                           {opt}{max !== undefined ? ` (${max}%)` : ''}

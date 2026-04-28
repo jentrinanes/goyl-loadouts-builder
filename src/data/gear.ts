@@ -790,6 +790,9 @@ export const GEARS: Gear[] = [
       'Enemy Staggered Damage': 24, 'Execution Damage': 27, 'Ultimate Gain': 12, 'Ultimate Damage': 21,
       'Spirit Move Damage': 20, 'Thrown Weapon Damage': 18, 'Perfect Parry Window': 36,
     },
+    attributeMaxValuesBySlot: {
+      attributes2: { 'Assassination Damage': 21 },
+    },
   },
   {
     id: 'spirit_brew',
@@ -1192,6 +1195,13 @@ export const getGearsByCategory = (
 
 export const getGearById = (id: string | undefined): Gear | undefined =>
   GEARS.find((g) => g.id === id);
+
+const SLOT_KEYS = ['attributes1', 'attributes2', 'attributes3'] as const;
+
+export function getAttributeMaxValue(gear: Gear, attrName: string, slotIndex: 0 | 1 | 2): number | undefined {
+  const slotKey = SLOT_KEYS[slotIndex];
+  return gear.attributeMaxValuesBySlot?.[slotKey]?.[attrName] ?? gear.attributeMaxValues?.[attrName];
+}
 
 export const RARITY_COLOR: Record<GearRarity, string> = {
   Common:    '#9ca3af',

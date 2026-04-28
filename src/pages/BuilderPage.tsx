@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { CLASSES, getClassById } from '../data/classes';
-import { getSlotsForClass, getGearsByCategory, getGearById, RARITY_COLOR } from '../data/gear';
+import { getSlotsForClass, getGearsByCategory, getGearById, getAttributeMaxValue, RARITY_COLOR } from '../data/gear';
 import { api, sanitize } from '../lib/api';
 import GearCard from '../components/GearCard';
 import type { StatSet, StatKey, Gear } from '../types';
@@ -44,9 +44,9 @@ function computeAttributeTotals(
     const gear  = getGearById(gears[slot.id]);
     const attrs = gearAttributes[slot.id] ?? ['', '', ''];
     if (!gear) return;
-    attrs.forEach((attrName) => {
+    attrs.forEach((attrName, slotIndex) => {
       if (!attrName) return;
-      const max = gear.attributeMaxValues?.[attrName];
+      const max = getAttributeMaxValue(gear, attrName, slotIndex as 0 | 1 | 2);
       if (max !== undefined) {
         totals[attrName] = (totals[attrName] ?? 0) + max;
       }
