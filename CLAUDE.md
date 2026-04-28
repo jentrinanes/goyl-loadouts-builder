@@ -61,9 +61,9 @@ src/
 - `GearCategory` — `'Melee' | 'Range' | 'Charm' | 'Ghost Tool'`
 - `GearRarity` — `'Common' | 'Rare' | 'Epic' | 'Legendary'`
 - `StatSet` — `{ attack, defense, health, resolve, stealth, ranged: number }`
-- `TechniqueSlot` — `{ slot: number; default?: string; options?: string[] }` — `default` = fixed technique, `options` = player choice
+- `TechniqueSlot` — `{ slot, default?, image?, description?, options?, optionDescriptions?, optionImages? }` — `default` = fixed technique, `options` = player choice; `image`/`optionImages` are image key names (without `_dark.png`)
 - `ClassDef` — `bonuses: StatSet`, `perk`, `color`, `accentColor`, optional `meleeSlotTypes`, `rangeSlotTypes`, `slotAllowedItems`, `techniques?: TechniqueSlot[]`
-- `Gear` — `stats: StatSet`, `attributes1/2/3: string[]`, optional `attributeMaxValues?: Record<string, number>`, optional `weaponType`, `rangedWeaponType`
+- `Gear` — `stats: StatSet`, `description?: string`, `attributes1/2/3: string[]`, optional `attributeMaxValues?: Record<string, number>`, optional `weaponType`, `rangedWeaponType`
 - `Build` — `gears: Record<string, string>` (slotId → gearId), `gearAttributes: Record<string, [string, string, string]>`, optional `techniques?: Record<number, string>`
 - `NewBuild` — `Omit<Build, 'id' | 'createdAt'> & { id?: string }` — used for create/update API calls
 - `User` — `{ id: string; username: string }`
@@ -85,26 +85,26 @@ All 4 classes have slot restrictions. `slotAllowedItems` takes priority over typ
 **Samurai** 🗡️ — attack/defense; bonuses: attack+20, defense+15, health+10, resolve+10
 - melee1=katana, melee2=dual_katana, melee3=yari, melee4=odachi
 - range1=hankyu/tanegashima/bomb
-- charm=basic_charm, spirit_brew, harmonious_bell, risky_parry, samurais_bracers
+- charm=basic_charm, senseis_guidance, samurais_honor, daimyos_generosity, shadows_bite, spirit_brew, harmonious_bell, risky_parry, samurais_bracers
 - ghostWeapon=tanzutsu/storm_tanzutsu/kunai/spirit_kunai/metsubushi/hallucinating_metsubushi
 
 **Archer** 🏹 — ranged; bonuses: attack+10, defense+5, health+5, resolve+5, stealth+10, ranged+25
 - melee1=katana, melee2=yari, melee3=kusarigama
 - range1=yumi only, range2=hankyu/tanegashima/bomb
-- charm=basic_charm, archers_supplies, harmonious_bell, spirit_brew, risky_parry
+- charm=basic_charm, senseis_guidance, samurais_honor, daimyos_generosity, shadows_bite, archers_supplies, harmonious_bell, spirit_brew, risky_parry
 - ghostWeapon=GHOST_TOOL_ITEMS (smoke_bomb, caltrops, healing_incense variants)
 
 **Mercenary** ⚔️ — defense/health; bonuses: attack+15, defense+25, health+25, resolve+5
 - melee1=katana, melee2=dual_katana, melee3=odachi
 - range1=tanegashima/bomb/hankyu
-- charm=basic_charm, harmonious_bell, spirit_brew, mercenarys_best_friend, risky_parry
+- charm=basic_charm, senseis_guidance, samurais_honor, daimyos_generosity, shadows_bite, harmonious_bell, spirit_brew, mercenarys_best_friend, risky_parry
 - ghostWeapon=tanzutsu/storm_tanzutsu/kunai/spirit_kunai/metsubushi/hallucinating_metsubushi
 - ghostWeapon2=GHOST_TOOL_ITEMS
 
 **Shinobi** 🥷 — stealth; bonuses: attack+10, health+5, resolve+15, stealth+35, ranged+5
 - melee1=katana, melee2=yari, melee3=kusarigama
 - range1=hankyu/tanegashima/bomb
-- charm=basic_charm, spirit_brew, harmonious_bell, risky_parry, shinobis_shadow
+- charm=basic_charm, senseis_guidance, samurais_honor, daimyos_generosity, shadows_bite, spirit_brew, harmonious_bell, risky_parry, shinobis_shadow
 - ghostWeapon=kunai/spirit_kunai/metsubushi/hallucinating_metsubushi/tanzutsu/storm_tanzutsu
 - ghostWeapon2=GHOST_TOOL_ITEMS
 
@@ -124,20 +124,21 @@ All 4 classes have slot restrictions. `slotAllowedItems` takes priority over typ
 ### Melee (src/data/gear.ts)
 All non-legendaries are **Epic** (purple). Legendaries marked with *.
 - **Katana:** Iaido Katana, Shattering Katana, Thunderous Katana*
-- **Dual Katana:** Relentless Dual Katana, Vigilant Dual Katana, Lightning's Bite*
+- **Dual Katana:** Relentless Dual Katana, Vigilant Dual Katana, Tempest Dual Katana, Lightning's Bite*
 - **Yari:** Relentless Yari, Swift Yari, Vigilant Yari, Thunderous Yari*
 - **Kusarigama:** Nimble Kusarigama, Relentless Kusarigama, Vanishing Kusarigama*
 - **Odachi:** Odachi, Restoring Odachi, Blade of Mountains*
 
 ### Ranged (src/data/gear.ts)
 All non-legendaries are **Epic** (purple). Legendaries marked with *.
-- **Hankyu:** Hankyu, Storm Hankyu, Hurricane Hankyu*
+- **Hankyu:** Hankyu, Storm Hankyu, Hurricane Hankyu*, Weightless Spirit*
 - **Tanegashima:** Tanegashima, Lightning Tanegashima*
 - **Yumi:** Yumi, Skipping Stone Bow*, True Aim Yumi*
 - **Bombs:** Concussion Bomb, Vengeful Onibi Bomb*, Blind Bomb, Healing Blind Bomb*
 
 ### Charms (src/data/gear.ts)
-- Basic Charm (Epic), Spirit Brew*, Harmonious Bell*, Risky Parry*, Archer's Supplies*, Samurai's Bracers*, Mercenary's Best Friend*, Shinobi's Shadow*
+- **Epic:** Basic Charm, Sensei's Guidance, Samurai's Honor, Daimyo's Generosity, Shadow's Bite
+- **Legendary:** Spirit Brew*, Harmonious Bell*, Risky Parry*, Archer's Supplies*, Samurai's Bracers*, Mercenary's Best Friend*, Shinobi's Shadow*
 
 ### Ghost Tools (src/data/gear.ts)
 All non-legendaries are **Epic** (purple). Legendaries marked with *.
@@ -175,35 +176,41 @@ Each class has 5 technique slots. Slot 1 is always a fixed `default`; slots 2–
 | Epic | `#a855f7` | `purple-500` |
 | Legendary | `#f59e0b` | `amber-400` |
 
-## Light / Dark Theme
-- **Class-based dark mode** via `@custom-variant dark (&:where(.dark, .dark *));` in `index.css`
-- `ThemeProvider` (in `App.tsx`) adds/removes the `dark` class on `<html>` and persists to `localStorage`
-- Defaults to **dark**. An inline `<script>` in `index.html` applies `dark` before React mounts to prevent flash
-- Toggle button (☀️ / 🌙) is in the navbar on Dashboard & Builder, and fixed top-right on AuthPage
-- `useTheme()` returns `{ theme, toggleTheme }`
-
-### Tailwind colour pairs (light → dark)
-| Element | Light | Dark |
-|---|---|---|
-| Page background | `bg-gray-100` | `dark:bg-gray-950` |
-| Nav / panels | `bg-white` | `dark:bg-slate-900` |
-| Sidebar panel | `bg-gray-50` | `dark:bg-[#0a0f1a]` |
-| Cards | `bg-white` | `dark:bg-gray-900` |
-| Input / button bg | `bg-gray-100` | `dark:bg-gray-800` |
-| Panel borders | `border-gray-200` | `dark:border-gray-800` |
-| Input borders | `border-gray-300` | `dark:border-gray-700` |
-| Body text | `text-gray-900` | `dark:text-gray-100` |
-| Secondary text | `text-gray-700` | `dark:text-gray-200` |
-| Muted text | `text-gray-600` | `dark:text-gray-400` |
-| Very muted | `text-gray-400` | `dark:text-gray-600` |
-| StatBar track | `bg-gray-200` | `dark:bg-gray-800` |
-| Selected slot/card | `bg-blue-50` | `dark:bg-[#1e3a5f]` |
-| Selected class card | `bg-green-50` | `dark:bg-[#1e3a2f]` |
-| Disabled button | `bg-gray-200 text-gray-400` | `dark:bg-gray-700 dark:text-gray-500` |
-
+## Theme
+- **Always dark mode** — `ThemeContext` hardcodes `theme = 'dark'` and `toggleTheme` is a no-op
+- The `dark` class is permanently added to `<html>` via `useEffect` in `ThemeProvider`
+- An inline `<script>` in `index.html` pre-applies `dark` before React mounts to prevent flash
+- `useTheme()` returns `{ theme, toggleTheme }` but theme is always `'dark'`
 - **Inline styles are only used for runtime-dynamic values** — rarity colour stripes, class card border glow/shadow, stat bar fill width
-- Accent colour for actions: `bg-amber-400` / `text-amber-400` (same in both modes)
+- Accent colour for actions: `bg-amber-400` / `text-amber-400`
 - SVG weapon icons in `WeaponIcon.tsx` — add new `MeleeWeaponType` values there and in `src/types/index.ts`
+
+### Dark mode colour tokens
+| Element | Class |
+|---|---|
+| Page background | `dark:bg-gray-950` |
+| Nav / panels | `dark:bg-slate-900` |
+| Sidebar panel | `dark:bg-[#0a0f1a]` |
+| Cards | `dark:bg-gray-900` |
+| Input / button bg | `dark:bg-gray-800` |
+| Panel borders | `dark:border-gray-800` |
+| Input borders | `dark:border-gray-700` |
+| Body text | `dark:text-gray-100` |
+| Muted text | `dark:text-gray-400` |
+| Selected slot/card | `dark:bg-[#1e3a5f]` |
+| Selected class card | `dark:bg-[#1e3a2f]` |
+
+## Images (public/images/)
+- All gear images are `{gear_id}_dark.png` — loaded directly, no webp fallback
+- Technique images are `{image_key}_dark.png` (fixed slot) or `{image_key}_light.png` (selected option button)
+- Class images are `{class_id}_dark.png`
+- `GearCard` and `GearIcon` components load `_dark.png` directly; `onError` shows emoji fallback
+- Image cache headers: `Cache-Control: public, max-age=31536000, immutable` — **never overwrite existing image files**, always use new filenames to avoid stale browser cache
+
+## AuthPage
+- 3 tabs: **Sign In**, **Register**, **Reset** (password reset by username)
+- All inputs have `maxLength={250}` and `sanitize()` applied on submit
+- Reset calls `POST /api/auth/reset-password` with `{ username, newPassword }` — no auth required
 
 ## Builder Page Behaviour
 - **4 steps**: Class (0) → Gear (1) → Techniques (2) → Review (3)
@@ -221,21 +228,22 @@ Each class has 5 technique slots. Slot 1 is always a fixed `default`; slots 2–
 - Review step: left column = build name + class + techniques; right column = equipped gear list + Attribute Totals (sum of `attributeMaxValues` across all selected attributes)
 
 ## Dashboard Features
-- Lists all builds for the authenticated user (fetched via `api.builds.list()`)
+- Lists all builds for the authenticated user (fetched directly from API — no caching)
 - **Copy build** — creates a duplicate via `api.builds.create`
-- **Share build** — exports a PNG of the build card via `html-to-image`
+- **Share build** — exports a PNG of the build card via `html-to-image`; pre-converts all `<img>` srcs to base64 data URLs before capture to avoid missing images
 - **Delete build** — calls `api.builds.delete`
 - **Edit build** — navigates to `/builder/:id`
 
 ## API Layer (src/lib/api.ts)
 - `apiFetch` attaches `Authorization: Bearer <token>`; on 401 clears token and redirects to `/`
-- `api.auth.login / register / logout`
+- `sanitize(str)` — strips HTML/JS angle-bracket content from user input; applied to all auth and build name inputs
+- `api.auth.login / register / logout / resetPassword`
 - `api.builds.list / get / create / update / delete`
 
 ## Azure Functions API (api/)
 - Sessions are UUID tokens stored in the `sessions` Cosmos container with an `expiresAt` timestamp (24-hour TTL)
 - `requireAuth(req)` in `middleware.ts` extracts the Bearer token and calls `validateSession`
-- Auth endpoints: `POST /api/auth/login`, `POST /api/auth/register`, `POST /api/auth/logout`
+- Auth endpoints: `POST /api/auth/login`, `POST /api/auth/register`, `POST /api/auth/logout`, `POST /api/auth/reset-password`
 - Build endpoints: `GET /api/builds`, `POST /api/builds`, `GET /api/builds/:id`, `PUT /api/builds/:id`, `DELETE /api/builds/:id`
 - Local dev requires `api/local.settings.json` with `COSMOS_CONNECTION_STRING` and optionally `COSMOS_DB_NAME` (default: `yotei-legends`)
 
