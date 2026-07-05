@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toPng } from 'html-to-image';
 import { useTheme } from '../context/ThemeContext';
 import { api } from '../lib/api';
+import ImportLegacyBuilds from '../components/ImportLegacyBuilds';
 import { getClassById } from '../data/classes';
 import { getGearById, getSlotsForClass, RARITY_COLOR } from '../data/gear';
 import type { Build, Gear } from '../types';
@@ -289,12 +290,15 @@ export default function DashboardPage() {
               {builds.length} build{builds.length !== 1 ? 's' : ''} saved
             </p>
           </div>
-          <button
-            onClick={() => navigate('/builder')}
-            className="bg-amber-400 text-gray-950 border-none rounded-xl px-5 sm:px-6 py-2.5 sm:py-3 font-bold text-sm cursor-pointer tracking-widest hover:bg-amber-300 transition-colors self-start sm:self-auto"
-          >
-            + New Build
-          </button>
+          <div className="flex gap-2 self-start sm:self-auto">
+            <ImportLegacyBuilds onImported={loadBuilds} />
+            <button
+              onClick={() => navigate('/builder')}
+              className="bg-amber-400 text-gray-950 border-none rounded-xl px-5 sm:px-6 py-2.5 sm:py-3 font-bold text-sm cursor-pointer tracking-widest hover:bg-amber-300 transition-colors"
+            >
+              + New Build
+            </button>
+          </div>
         </div>
 
         {loading ? (
