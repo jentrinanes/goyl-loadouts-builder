@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { CLASSES, getClassById } from '../data/classes';
 import { getSlotsForClass, getGearsByCategory, getGearById, getAttributeMaxValue, RARITY_COLOR } from '../data/gear';
@@ -68,7 +67,6 @@ function computeTotalStats(classId: string | null, gears: Record<string, string>
 
 export default function BuilderPage() {
   const { id }   = useParams<{ id: string }>();
-  const { user } = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
 
@@ -88,7 +86,7 @@ export default function BuilderPage() {
       setLoadingBuild(true);
       api.builds.get(id)
         .then((existing) => {
-          if (existing && existing.userId === user!.id) {
+          if (existing) {
             setBuildName(existing.name);
             setSelectedClass(existing.classId);
             setGears(existing.gears ?? {});
@@ -98,13 +96,13 @@ export default function BuilderPage() {
           }
         })
         .catch(() => {
-          // Build not found or unauthorized — stay on class selection
+          // Build not found — stay on class selection
         })
         .finally(() => {
           setLoadingBuild(false);
         });
     }
-  }, [id, user]);
+  }, [id]);
 
   const cls                = getClassById(selectedClass);
   const slots              = getSlotsForClass(selectedClass);
@@ -142,9 +140,9 @@ export default function BuilderPage() {
     setSaving(true);
     try {
       if (id) {
-        await api.builds.update(id, { userId: user!.id, name: buildName, classId: selectedClass!, gears, gearAttributes, techniques });
+        await api.builds.update(id, { name: buildName, classId: selectedClass!, gears, gearAttributes, techniques });
       } else {
-        await api.builds.create({ userId: user!.id, name: buildName, classId: selectedClass!, gears, gearAttributes, techniques });
+        await api.builds.create({ name: buildName, classId: selectedClass!, gears, gearAttributes, techniques });
       }
       navigate('/dashboard');
     } catch (err) {

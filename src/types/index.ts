@@ -69,18 +69,10 @@ export interface GearSlot {
   category: GearCategory;
 }
 
-// ─── Auth ────────────────────────────────────────────────────────────────────
-
-export interface User {
-  id: string;
-  username: string;
-}
-
 // ─── Build ───────────────────────────────────────────────────────────────────
 
 export interface Build {
   id: string;
-  userId: string;
   name: string;
   classId: string;
   gears: Record<string, string>;
@@ -90,12 +82,3 @@ export interface Build {
 }
 
 export type NewBuild = Omit<Build, 'id' | 'createdAt'> & { id?: string };
-
-// ─── Auth context ─────────────────────────────────────────────────────────────
-
-export interface AuthContextValue {
-  user: User | null;
-  login: (username: string, password: string) => Promise<void>;
-  register: (username: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
-}

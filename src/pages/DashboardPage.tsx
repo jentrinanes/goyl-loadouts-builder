@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toPng } from 'html-to-image';
-import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { api } from '../lib/api';
 import { getClassById } from '../data/classes';
@@ -189,7 +188,6 @@ function GearIcon({ gear, size = 16 }: { gear: Gear; size?: number }) {
 // ─── Main page ────────────────────────────────────────────────────────────────
 
 export default function DashboardPage() {
-  const { user, logout }            = useAuth();
   const navigate                    = useNavigate();
   const { theme }                   = useTheme();
   const [builds, setBuilds]           = useState<Build[]>([]);
@@ -212,7 +210,7 @@ export default function DashboardPage() {
       setLoading(false);
     }
   };
-  useEffect(() => { void loadBuilds(); }, [user]);
+  useEffect(() => { void loadBuilds(); }, []);
 
   const handleDelete = async () => {
     if (!deleteBuildId) return;
@@ -280,17 +278,6 @@ export default function DashboardPage() {
           {import.meta.env.VITE_APP_ENV === 'staging' && (
             <span className="bg-yellow-400 text-yellow-900 text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full">staging</span>
           )}
-        </div>
-        <div className="flex items-center gap-2 sm:gap-4">
-          <span className="text-gray-500 text-sm hidden sm:block">
-            <strong className="text-gray-700 dark:text-gray-200">{user?.username}</strong>
-          </span>
-          <button
-            onClick={() => { void logout().then(() => navigate('/')); }}
-            className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg px-3 sm:px-3.5 py-1.5 cursor-pointer text-sm hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
-          >
-            Sign Out
-          </button>
         </div>
       </header>
 

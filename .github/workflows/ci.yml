@@ -31,9 +31,3 @@ jobs:
 
       - name: Type check frontend
         run: npx tsc --noEmit
-
-      - name: Install and build API
-        run: |
-          cd api
-          npm install
-          npm run build

@@ -1,7 +1,7 @@
 # GOYL Build Creator
 
 A fan app for **Ghost of Yotei** — create, save, and share character builds.
-Built with React 19 + Vite + TypeScript, styled with Tailwind CSS v4, and backed by Azure Cosmos DB.
+Built with React 19 + Vite + TypeScript, styled with Tailwind CSS v4. Builds are saved locally in your browser.
 
 ---
 
@@ -26,10 +26,8 @@ Built with React 19 + Vite + TypeScript, styled with Tailwind CSS v4, and backed
 | Frontend | React 19 + React Router v7 + TypeScript (strict) |
 | Styling | Tailwind CSS v4 + class-based dark mode |
 | Build tool | Vite |
-| Backend API | Azure Functions v4 (Node.js) |
-| Database | Azure Cosmos DB (NoSQL / SQL API) |
+| Storage | Browser localStorage |
 | Hosting | Azure Static Web Apps (Free tier) |
-| IaC | Terraform |
 | CI/CD | GitHub Actions |
 
 ---

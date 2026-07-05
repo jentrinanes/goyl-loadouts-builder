@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Yotei Legends — Claude Context
 
 ## What This Is
-A Ghost of Yotei fan app for creating and saving character builds. Built with React 19 + Vite + TypeScript (strict). Styled with **Tailwind CSS v4**. Builds are persisted to **Azure Cosmos DB** via an **Azure Functions v4** backend.
+A Ghost of Yotei fan app for creating and saving character builds. Built with React 19 + Vite + TypeScript (strict). Styled with **Tailwind CSS v4**. Builds are persisted entirely client-side in **browser localStorage** — no backend, no accounts.
 
 ## Tech Stack
 - **React 19** + **React Router v7**
@@ -13,44 +13,27 @@ A Ghost of Yotei fan app for creating and saving character builds. Built with Re
 - **Vite** (`vite.config.ts`) with `@tailwindcss/vite` plugin
 - **Tailwind CSS v4** — utility classes throughout; inline styles only for runtime-dynamic colours (rarity, class)
 - **ESLint** flat config (`eslint.config.js`) with typescript-eslint v8
-- **Azure Functions v4** (Node.js) — REST API in `api/` directory
-- **Azure Cosmos DB** — NoSQL/SQL API; containers: `users`, `builds`, `sessions`
-- **localStorage** — stores auth token (`yotei_token`) and cached user (`yotei_user`) only
+- **localStorage** — stores all builds under a single `yotei_builds` key (JSON array)
 
 ## Project Structure
 ```
-api/                      # Azure Functions v4 backend (separate npm package)
-  src/
-    functions/            # HTTP triggers: authLogin, authRegister, authLogout,
-                          #   buildsGet, buildCreate, buildGetOne, buildUpdate, buildDelete, debugSession
-    lib/
-      auth.ts             # hashPassword, createSession (UUID token, 24h TTL), validateSession, deleteSession
-      cosmos.ts           # CosmosClient — exports usersContainer, buildsContainer, sessionsContainer
-      middleware.ts       # requireAuth(req) — validates Bearer token, returns SessionPayload
-  tsconfig.json           # Compiles to _api_dist/
-
 src/
   types/index.ts          # Single source of truth for all shared types
   data/
     classes.ts            # 4 classes with full slot restrictions + technique definitions
     gear.ts               # All gear items + class-specific slot layouts + helper functions
   lib/
-    api.ts                # REST client (apiFetch with Bearer auth), token helpers, api.auth.*, api.builds.*
-  store/
-    authStore.ts          # Stub — auth is via src/lib/api.ts
-    buildStore.ts         # Stub — builds are via src/lib/api.ts
+    api.ts                # localStorage-backed api.builds.* (list/get/create/update/delete), sanitize()
   context/
-    AuthContext.tsx       # useAuth() hook — wraps api.auth.*; throws if used outside provider
     ThemeContext.tsx      # useTheme() hook + ThemeProvider; persists to localStorage
   components/
     GearCard.tsx          # Gear item card (compact + full variants)
     WeaponIcon.tsx        # SVG icons per MeleeWeaponType; falls back to emoji
     StatBar.tsx           # Horizontal stat bar with Tailwind colour classes
   pages/
-    AuthPage.tsx          # Public login / register page
     DashboardPage.tsx     # Lists saved builds; copy, delete, PNG share via html-to-image
     BuilderPage.tsx       # 4-step build creator (Class → Gear → Techniques → Review)
-  App.tsx                 # Routes — wrapped in ThemeProvider > AuthProvider
+  App.tsx                 # Routes — wrapped in ThemeProvider; no auth guards
   main.tsx                # Entry point
   index.css               # @import "tailwindcss" + @custom-variant dark + scrollbar styles
 ```
@@ -65,8 +48,7 @@ src/
 - `ClassDef` — `bonuses: StatSet`, `perk`, `color`, `accentColor`, optional `meleeSlotTypes`, `rangeSlotTypes`, `slotAllowedItems`, `techniques?: TechniqueSlot[]`
 - `Gear` — `stats: StatSet`, `description?: string`, `attributes1/2/3: string[]`, optional `attributeMaxValues?: Record<string, number>`, optional `weaponType`, `rangedWeaponType`
 - `Build` — `gears: Record<string, string>` (slotId → gearId), `gearAttributes: Record<string, [string, string, string]>`, optional `techniques?: Record<number, string>`
-- `NewBuild` — `Omit<Build, 'id' | 'createdAt'> & { id?: string }` — used for create/update API calls
-- `User` — `{ id: string; username: string }`
+- `NewBuild` — `Omit<Build, 'id' | 'createdAt'> & { id?: string }` — used for create/update calls
 
 ## Class-Specific Gear Slot Layouts (src/data/gear.ts)
 `getSlotsForClass(classId)` returns one of three slot arrays:
@@ -207,11 +189,6 @@ Each class has 5 technique slots. Slot 1 is always a fixed `default`; slots 2–
 - `GearCard` and `GearIcon` components load `_dark.png` directly; `onError` shows emoji fallback
 - Image cache headers: `Cache-Control: public, max-age=31536000, immutable` — **never overwrite existing image files**, always use new filenames to avoid stale browser cache
 
-## AuthPage
-- 3 tabs: **Sign In**, **Register**, **Reset** (password reset by username)
-- All inputs have `maxLength={250}` and `sanitize()` applied on submit
-- Reset calls `POST /api/auth/reset-password` with `{ username, newPassword }` — no auth required
-
 ## Builder Page Behaviour
 - **4 steps**: Class (0) → Gear (1) → Techniques (2) → Review (3)
 - Step labels shown in navbar header; completed steps show a ✓ badge
@@ -222,40 +199,31 @@ Each class has 5 technique slots. Slot 1 is always a fixed `default`; slots 2–
 - Attributes reset when a different weapon is selected for the same slot
 - Techniques step: slot 1 is always fixed (displayed, not clickable); slots 2–5 are radio-style buttons
 - "Choose Techniques →" button is disabled until all gear slots are filled; "Review Build →" disabled until all choice techniques are selected
-- Builder also supports editing existing builds: `GET /builds/:id` pre-populates state, save calls `PUT /builds/:id`
+- Builder also supports editing existing builds: `api.builds.get(id)` pre-populates state, save calls `api.builds.update(id, ...)`
 - Mobile: horizontal slot bar (`flex md:hidden`) for slot navigation; sidebar is `hidden md:flex`
 - Gear list uses `flex flex-col gap-3` (not a grid)
 - Review step: left column = build name + class + techniques; right column = equipped gear list + Attribute Totals (sum of `attributeMaxValues` across all selected attributes)
 
 ## Dashboard Features
-- Lists all builds for the authenticated user (fetched directly from API — no caching)
+- Lists all builds in this browser (read from `localStorage` on mount — no server, no caching layer)
 - **Copy build** — creates a duplicate via `api.builds.create`
 - **Share build** — exports a PNG of the build card via `html-to-image`; pre-converts all `<img>` srcs to base64 data URLs before capture to avoid missing images
 - **Delete build** — calls `api.builds.delete`
 - **Edit build** — navigates to `/builder/:id`
 
 ## API Layer (src/lib/api.ts)
-- `apiFetch` attaches `Authorization: Bearer <token>`; on 401 clears token and redirects to `/`
-- `sanitize(str)` — strips HTML/JS angle-bracket content from user input; applied to all auth and build name inputs
-- `api.auth.login / register / logout / resetPassword`
-- `api.builds.list / get / create / update / delete`
+- `sanitize(str)` — strips HTML/JS angle-bracket content from user input; applied to build name inputs
+- `api.builds.list / get / create / update / delete` — read/write a JSON array under the `yotei_builds` localStorage key; `create` generates the id via `crypto.randomUUID()` and stamps `createdAt`
+- All methods return `Promise`s (for API-call-shaped call sites) even though the underlying storage access is synchronous
 
-## Azure Functions API (api/)
-- Sessions are UUID tokens stored in the `sessions` Cosmos container with an `expiresAt` timestamp (24-hour TTL)
-- `requireAuth(req)` in `middleware.ts` extracts the Bearer token and calls `validateSession`
-- Auth endpoints: `POST /api/auth/login`, `POST /api/auth/register`, `POST /api/auth/logout`, `POST /api/auth/reset-password`
-- Build endpoints: `GET /api/builds`, `POST /api/builds`, `GET /api/builds/:id`, `PUT /api/builds/:id`, `DELETE /api/builds/:id`
-- Local dev requires `api/local.settings.json` with `COSMOS_CONNECTION_STRING` and optionally `COSMOS_DB_NAME` (default: `yotei-legends`)
+## Branch Workflow
+- All development happens on `staging` — never commit directly to `master`
+- `master` receives merges from `staging` only when releasing
 
 ## Common Commands
 ```bash
-# Frontend
 npm run dev       # Start Vite dev server
 npm run build     # Production build
 npx tsc --noEmit  # Type-check without building
 npm run lint      # ESLint
-
-# API (run from api/ directory)
-cd api && npm run build   # Compile TypeScript to _api_dist/
-cd api && func start      # Start Azure Functions locally (requires Azure Functions Core Tools)
 ```

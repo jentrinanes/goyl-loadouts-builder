@@ -1,91 +1,53 @@
-import type { Build, User } from '../types';
+import type { Build, NewBuild } from '../types';
 
-const TOKEN_KEY = 'yotei_token';
-const USER_KEY = 'yotei_user';
-
-export function getToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY);
-}
-export function setToken(token: string): void {
-  localStorage.setItem(TOKEN_KEY, token);
-}
-export function clearToken(): void {
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(USER_KEY);
-}
-export function getStoredUser(): User | null {
-  try {
-    const raw = localStorage.getItem(USER_KEY);
-    return raw ? JSON.parse(raw) as User : null;
-  } catch {
-    return null;
-  }
-}
-export function setStoredUser(user: User): void {
-  localStorage.setItem(USER_KEY, JSON.stringify(user));
-}
+const BUILDS_KEY = 'yotei_builds';
 
 /** Strip HTML tags and angle brackets to prevent XSS injection. */
 export function sanitize(value: string): string {
   return value.replace(/<[^>]*>/g, '').replace(/[<>]/g, '');
 }
 
-export class ApiError extends Error {
-  constructor(public status: number, message: string) {
-    super(message);
-    this.name = 'ApiError';
+function readBuilds(): Build[] {
+  try {
+    const raw = localStorage.getItem(BUILDS_KEY);
+    return raw ? JSON.parse(raw) as Build[] : [];
+  } catch {
+    return [];
   }
 }
 
-async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const token = getToken();
-  const res = await fetch(`/api${path}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { 'X-Auth-Token': token } : {}),
-      ...(options.headers ?? {}),
-    },
-  });
-  if (res.status === 401) {
-    clearToken();
-    window.location.href = '/';
-    throw new ApiError(401, 'Session expired');
-  }
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({})) as { message?: string };
-    throw new ApiError(res.status, body.message ?? res.statusText);
-  }
-  if (res.status === 204) return undefined as T;
-  return res.json() as Promise<T>;
+function writeBuilds(builds: Build[]): void {
+  localStorage.setItem(BUILDS_KEY, JSON.stringify(builds));
 }
-
-type NewBuild = Omit<Build, 'id' | 'createdAt'>;
 
 export const api = {
-  auth: {
-    login: (username: string, password: string) =>
-      apiFetch<{ token: string; user: User }>('/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({ username, password }),
-      }),
-    register: (username: string, password: string) =>
-      apiFetch<{ token: string; user: User }>('/auth/register', {
-        method: 'POST',
-        body: JSON.stringify({ username, password }),
-      }),
-    logout: () => apiFetch<void>('/auth/logout', { method: 'POST' }),
-    resetPassword: (username: string, newPassword: string) =>
-      apiFetch<{ message: string }>('/auth/reset-password', {
-        method: 'POST',
-        body: JSON.stringify({ username, newPassword }),
-      }),
-  },
   builds: {
-    list: () => apiFetch<Build[]>('/builds'),
-    get: (id: string) => apiFetch<Build>(`/builds/${id}`),
-    create: (build: NewBuild) => apiFetch<Build>('/builds', { method: 'POST', body: JSON.stringify(build) }),
-    update: (id: string, build: Partial<NewBuild>) => apiFetch<Build>(`/builds/${id}`, { method: 'PUT', body: JSON.stringify(build) }),
-    delete: (id: string) => apiFetch<void>(`/builds/${id}`, { method: 'DELETE' }),
+    list: (): Promise<Build[]> => Promise.resolve(readBuilds()),
+
+    get: (id: string): Promise<Build | undefined> =>
+      Promise.resolve(readBuilds().find((b) => b.id === id)),
+
+    create: (build: NewBuild): Promise<Build> => {
+      const builds = readBuilds();
+      const created: Build = { ...build, id: crypto.randomUUID(), createdAt: Date.now() };
+      writeBuilds([...builds, created]);
+      return Promise.resolve(created);
+    },
+
+    update: (id: string, build: Partial<NewBuild>): Promise<Build> => {
+      const builds = readBuilds();
+      const index = builds.findIndex((b) => b.id === id);
+      if (index === -1) return Promise.reject(new Error('Build not found'));
+      const updated: Build = { ...builds[index], ...build };
+      const next = [...builds];
+      next[index] = updated;
+      writeBuilds(next);
+      return Promise.resolve(updated);
+    },
+
+    delete: (id: string): Promise<void> => {
+      writeBuilds(readBuilds().filter((b) => b.id !== id));
+      return Promise.resolve();
+    },
   },
 };
